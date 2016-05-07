@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">PickMeUp</string>
+    <string name="title_activity_add_route">Agregar Ruta</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="new_route_message">Publica una nueva ruta</string>
 </resources>
