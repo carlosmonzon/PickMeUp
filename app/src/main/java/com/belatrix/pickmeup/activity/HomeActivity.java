@@ -1,10 +1,16 @@
-package com.belatrix.pickmeup;
+package com.belatrix.pickmeup.activity;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
-import android.widget.TextView;
+
+import com.belatrix.pickmeup.enums.Departure;
+import com.belatrix.pickmeup.enums.Destination;
+import com.belatrix.pickmeup.R;
+import com.belatrix.pickmeup.model.Route;
+import com.belatrix.pickmeup.adapter.RouteAdapter;
+import com.belatrix.pickmeup.model.User;
+import com.belatrix.pickmeup.enums.UserType;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -36,7 +42,5 @@ public class HomeActivity extends AppCompatActivity {
 
         routeAdapter.addAll(routes);
         routeAdapter.notifyDataSetChanged();
-
-       // new setListTask().execute();
     }
 }

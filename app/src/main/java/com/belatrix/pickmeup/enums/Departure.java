@@ -1,4 +1,4 @@
-package com.belatrix.pickmeup;
+package com.belatrix.pickmeup.enums;
 
 /**
  * Created by gzavaleta on 09/05/16.

@@ -1,4 +1,6 @@
-package com.belatrix.pickmeup;
+package com.belatrix.pickmeup.model;
+
+import com.belatrix.pickmeup.enums.UserType;
 
 /**
  * Created by gzavaleta on 09/05/16.

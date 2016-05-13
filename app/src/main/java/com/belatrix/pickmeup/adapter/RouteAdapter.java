@@ -1,12 +1,14 @@
-package com.belatrix.pickmeup;
+package com.belatrix.pickmeup.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+
+import com.belatrix.pickmeup.R;
+import com.belatrix.pickmeup.model.Route;
 
 import java.util.ArrayList;
 import java.util.Date;
