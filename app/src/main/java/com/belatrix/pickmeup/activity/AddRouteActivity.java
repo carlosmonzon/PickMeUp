@@ -1,4 +1,4 @@
-package com.belatrix.pickmeup;
+package com.belatrix.pickmeup.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -7,10 +7,12 @@ import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
+import com.belatrix.pickmeup.R;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class AddRoute extends AppCompatActivity {
+public class AddRouteActivity extends AppCompatActivity {
 
     private Spinner paymentMethodSpn;
 
