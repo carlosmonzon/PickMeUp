@@ -1,47 +1,63 @@
 package com.belatrix.pickmeup.adapter;
 
-import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.belatrix.pickmeup.R;
 import com.belatrix.pickmeup.model.Route;
 
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by gzavaleta on 09/05/16.
  */
-public class RouteAdapter extends ArrayAdapter<Route>{
+public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.MyViewHolder> {
+    private List<Route> routeList;
 
-    public RouteAdapter(Context context, ArrayList<Route> routes) {
-        super(context, 0, routes);
+    public RouteAdapter(List<Route> routeList) {
+        this.routeList = routeList;
     }
 
-    public View getView(int position, View convertView, ViewGroup parent){
+    @Override
+    public void onBindViewHolder(MyViewHolder holder, int position) {
+        Route route = routeList.get(position);
+        holder.txtDepartureName.setText(route.getDeparture().toString());
+        holder.txtDestinationName.setText(route.getDestination().toString());
+        holder.txtUserName.setText(route.getRouteOwner().getName());
+        holder.txtDepartureTime.setText((new Date().toString()));
+        holder.txtPlaceAvailable.setText(Integer.toString(route.getPlaceAvailable()));
+    }
 
-        final Route item = getItem(position);
+    @Override
+    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View itemView = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.route_item, parent, false);
 
-        if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.route_item, parent, false);
+        return new MyViewHolder(itemView);
+    }
+
+    @Override
+    public int getItemCount() {
+        return routeList.size();
+    }
+
+    public class MyViewHolder extends RecyclerView.ViewHolder {
+        public TextView txtDepartureName, txtDestinationName, txtUserName, txtDepartureTime,
+                txtPlaceAvailable;
+
+        public MyViewHolder(View view) {
+            super(view);
+
+            txtDepartureName = (TextView) view.findViewById(R.id.txtDepartureName);
+            txtDestinationName = (TextView) view.findViewById(R.id.txtDestinationName);
+            txtUserName = (TextView) view.findViewById(R.id.txtUserName);
+            txtDepartureTime = (TextView) view.findViewById(R.id.txtDepartureTime);
+            txtPlaceAvailable = (TextView) view.findViewById(R.id.txtPlaceAvailable);
         }
-
-        TextView txtDepartureName = (TextView) convertView.findViewById(R.id.txtDepartureName);
-        TextView txtDestinationName = (TextView) convertView.findViewById(R.id.txtDestinationName);
-        TextView txtUserName = (TextView) convertView.findViewById(R.id.txtUserName);
-        TextView txtDepartureTime = (TextView) convertView.findViewById(R.id.txtDepartureTime);
-        TextView txtPlaceAvailable = (TextView) convertView.findViewById(R.id.txtPlaceAvailable);
-
-        txtDepartureName.setText(item.getDeparture().toString());
-        txtDestinationName.setText(item.getDestination().toString());
-        txtUserName.setText(item.getRouteOwner().getName());
-        txtDepartureTime.setText(new Date().toString());
-        txtPlaceAvailable.setText(Integer.toString(item.getPlaceAvailable()));
-        return convertView;
     }
 
 }
