@@ -16,9 +16,17 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".activity.HomeActivity"
+            android:label="@string/title_activity_home"
+            android:theme="@style/AppTheme.NoActionBar">
+            android:name=".AddRoute"
+            android:label="@string/title_activity_add_route" >
+        </activity>
             android:name=".activity.AddRouteActivity"
-            android:label="@string/title_activity_add_route"></activity>
-        <activity android:name=".activity.MenuActivity"></activity>
+            android:label="@string/title_activity_add_route">
+        <activity android:name=".activity.MenuActivity">
+
+        </activity>
     </application>
 
 </manifest>
