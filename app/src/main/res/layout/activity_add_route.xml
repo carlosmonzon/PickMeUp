@@ -1,124 +1,134 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"
     tools:context=".activity.AddRouteActivity">
 
-    <TextView
-        android:id="@+id/message_txv"
-        android:layout_weight="0"
-        android:padding="10dp"
-        android:textAlignment="center"
-        android:textSize="18sp"
-        android:textColor="@android:color/black"
-        android:background="@color/colorMessage"
-        android:layout_width="match_parent"
-        android:text="@string/new_route_message"
-        android:layout_height="wrap_content" />
-
-    <ScrollView
-        android:layout_weight="1"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <RelativeLayout
+        <TextView
+            android:id="@+id/message_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp">
-            
+            android:background="@color/colorMessage"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="@string/new_route_message"
+            android:textColor="@android:color/black"
+            android:textSize="18sp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/message_tv"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_vertical_margin">
+
             <TextView
-                android:id="@+id/from_txv"
-                android:text="Salida"
-                style="@style/addRouteLabel" />
+                android:id="@+id/from_tv"
+                style="@style/addRouteLabel"
+                android:text="@string/departure" />
 
             <EditText
-                android:id="@+id/from_edt"
-                android:layout_below="@+id/from_txv"
-                style="@style/addRouteEditText" />
+                android:id="@+id/from_et"
+                style="@style/addRouteEditText"
+                android:layout_below="@+id/from_tv"
+                android:hint="@string/departure" />
 
             <TextView
-                android:id="@+id/to_txv"
-                android:text="Destino"
-                android:layout_below="@+id/from_edt"
-                style="@style/addRouteLabel" />
+                android:id="@+id/to_tv"
+                style="@style/addRouteLabel"
+                android:layout_below="@+id/from_et"
+                android:text="@string/destination" />
 
             <EditText
-                android:id="@+id/to_edt"
-                android:layout_below="@+id/to_txv"
-                style="@style/addRouteEditText" />
+                android:id="@+id/to_et"
+                style="@style/addRouteEditText"
+                android:layout_below="@+id/to_tv"
+                android:hint="@string/destination" />
 
             <TextView
-                android:id="@+id/cost_txv"
-                android:text="Costo (S/)"
-                android:layout_below="@+id/to_edt"
-                style="@style/addRouteLabel" />
+                android:id="@+id/cost_tv"
+                style="@style/addRouteLabel"
+                android:layout_below="@+id/to_et"
+                android:text="@string/cost" />
 
             <EditText
-                android:id="@+id/cost_edt"
-                android:layout_below="@+id/cost_txv"
-                android:numeric="decimal"
-                style="@style/addRouteEditText" />
+                android:id="@+id/cost_et"
+                style="@style/addRouteEditText"
+                android:layout_below="@+id/cost_tv"
+                android:hint="@string/cost"
+                android:inputType="numberDecimal" />
 
             <TextView
-                android:id="@+id/payment_method_txv"
-                android:text="Forma de pago"
-                android:layout_below="@+id/cost_edt"
-                style="@style/addRouteLabel" />
+                android:id="@+id/payment_method_tv"
+                style="@style/addRouteLabel"
+                android:layout_below="@+id/cost_et"
+                android:text="@string/payment_method" />
 
             <Spinner
                 android:id="@+id/payment_method_spn"
-                android:paddingTop="5dp"
-                android:layout_below="@+id/payment_method_txv"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"></Spinner>
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/payment_method_tv"
+                android:paddingTop="5dp" />
 
             <TextView
-                android:id="@+id/departure_time_txv"
-                android:text="Partida"
+                android:id="@+id/departure_time_tv"
+                style="@style/addRouteLabel"
                 android:layout_below="@+id/payment_method_spn"
-                style="@style/addRouteLabel" />
+                android:text="@string/departure_time" />
 
             <EditText
-                android:id="@+id/departure_time_edt"
-                android:layout_below="@+id/departure_time_txv"
-                style="@style/addRouteEditText" />
-
-            <TextView
-                android:id="@+id/contact_txv"
-                android:text="Contacto"
-                android:layout_below="@+id/departure_time_edt"
-                style="@style/addRouteLabel" />
-
-            <EditText
-                android:id="@+id/contact_edt"
-                android:layout_below="@+id/contact_txv"
-                style="@style/addRouteEditText" />
-
-            <TextView
-                android:id="@+id/streets_txv"
-                android:text="Avenidas, Calles, Comentarios"
-                android:layout_below="@+id/contact_edt"
-                style="@style/addRouteLabel" />
-
-            <EditText
-                android:id="@+id/streets_edt"
-                android:layout_below="@+id/streets_txv"
+                android:id="@+id/departure_time_et"
                 style="@style/addRouteEditText"
-                android:singleLine="false"
-                android:lines="5"/>
+                android:layout_below="@+id/departure_time_tv"
+                android:hint="@string/departure_time" />
+
+            <TextView
+                android:id="@+id/contact_tv"
+                style="@style/addRouteLabel"
+                android:layout_below="@+id/departure_time_et"
+                android:text="@string/contact" />
+
+            <EditText
+                android:id="@+id/contact_et"
+                style="@style/addRouteEditText"
+                android:layout_below="@+id/contact_tv"
+                android:hint="@string/contact" />
+
+            <TextView
+                android:id="@+id/streets_tv"
+                style="@style/addRouteLabel"
+                android:layout_below="@+id/contact_et"
+                android:text="@string/avenues_streets_comments" />
+
+            <EditText
+                android:id="@+id/streets_et"
+                style="@style/addRouteEditText"
+                android:layout_below="@+id/streets_tv"
+                android:gravity="top"
+                android:hint="@string/avenues_streets_comments"
+                android:lines="5"
+                android:singleLine="false" />
+
+            <Button
+                android:id="@+id/publish_btn"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/streets_et"
+                android:background="@color/colorPrimary"
+                android:text="@string/publish"
+                android:textColor="@android:color/white" />
 
         </RelativeLayout>
 
-    </ScrollView>
+    </RelativeLayout>
 
-    <Button
-        android:layout_weight="0"
-        android:id="@+id/publish_btn"
-        android:text="Publicar"
-        android:layout_alignParentBottom="true"
-        android:textColor="@android:color/white"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-</LinearLayout>
+</ScrollView>

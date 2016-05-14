@@ -11,9 +11,11 @@
     <!-- Add Route -->
     <style name="addRouteLabel">
         <item name="android:textSize">16sp</item>
-        <item name="android:paddingTop">5dp</item>
+        <item name="android:layout_marginTop">12dp</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">3dp</item>
+        <item name="android:layout_marginRight">3dp</item>
         <item name="android:textColor">@color/colorLabelAddRoute</item>
     </style>
 

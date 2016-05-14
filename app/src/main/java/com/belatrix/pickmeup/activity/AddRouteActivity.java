@@ -21,6 +21,8 @@ public class AddRouteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_route);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         paymentMethodSpn = (Spinner) findViewById(R.id.payment_method_spn);
 
         // TODO: Make this dynamically?
@@ -28,7 +30,6 @@ public class AddRouteActivity extends AppCompatActivity {
         List<String> paymentMethods = new ArrayList<String>();
         paymentMethods.add("Contado");
         paymentMethods.add("Crédito");
-        paymentMethods.add("Belapuntos");
 
         ArrayAdapter<String> adapter =
                 new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, paymentMethods);

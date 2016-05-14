@@ -1,8 +1,16 @@
 <resources>
     <string name="app_name">PickMeUp</string>
     <string name="title_activity_add_route">Agregar Ruta</string>
-
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="new_route_message">Publica una nueva ruta</string>
+    <string name="departure">Salida</string>
+    <string name="destination">Destino</string>
+    <string name="cost">Costo (S/)</string>
+    <string name="payment_method">Forma de pago</string>
+    <string name="departure_time">Partida</string>
+    <string name="contact">Contacto</string>
+    <string name="avenues_streets_comments">Avenidas, Calles, Comentarios</string>
+    <string name="publish">Publicar</string>
+
 </resources>
