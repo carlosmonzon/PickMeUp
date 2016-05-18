@@ -9,13 +9,19 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:showIn="@layout/app_bar_test_navigation">
+    tools:context="com.belatrix.pickmeup.activity.NavDrawerActivity"
+    tools:showIn="@layout/app_bar_nav_drawer">
+
 
     <Button
         android:id="@+id/add_route_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Add New Route"
-        />
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="159dp" />
+
 
 </RelativeLayout>
