@@ -13,10 +13,10 @@ public class Route {
     private Departure departure;
     private Destination destination;
     private User routeOwner;
-    private Date departureTime;
+    private String departureTime;
     private int placeAvailable;
 
-    public Route(int id, Departure departure, Destination destination, User routeOwner, Date departureTime, int placeAvailable) {
+    public Route(int id, Departure departure, Destination destination, User routeOwner, String departureTime, int placeAvailable) {
         this.id = id;
         this.departure = departure;
         this.destination = destination;
@@ -57,11 +57,11 @@ public class Route {
         this.routeOwner = routeOwner;
     }
 
-    public Date getDepartureTime() {
+    public String getDepartureTime() {
         return departureTime;
     }
 
-    public void setDepartureTime(Date departureTime) {
+    public void setDepartureTime(String departureTime) {
         this.departureTime = departureTime;
     }
 
