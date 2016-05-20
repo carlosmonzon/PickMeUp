@@ -44,10 +44,7 @@ public class LoginActivity extends AppCompatActivity {
                 else{
                     Toast.makeText(getApplicationContext(), "Wrong Credentials",Toast.LENGTH_SHORT).show();
 
-                    txtUsername.setVisibility(View.VISIBLE);
-                    txtUsername.setBackgroundColor(Color.RED);
                     counter--;
-                    txtUsername.setText(Integer.toString(counter));
 
                     if (counter == 0) {
                         btnLogin.setEnabled(false);

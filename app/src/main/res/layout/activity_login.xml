@@ -4,12 +4,14 @@
     android:layout_height="match_parent"  android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:gravity="center"
     android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".activity.LoginActivity">
 
     <TextView android:text="@string/app_name" android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/text_app_name"
-        android:textSize="35dp"
+        style="@style/TextAppearance.AppCompat.Display2"
+        android:textColor="@android:color/white"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"/>
 
@@ -39,13 +41,14 @@
         android:hint="@string/text_password" />
 
     <Button
+        android:theme="@style/loginButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="login"
         android:id="@+id/loginButtom"
         android:onClick="login"
         android:layout_below="@+id/passwordText"
-        android:layout_toRightOf="@+id/text_app_name"
-        android:layout_toEndOf="@+id/text_app_name"/>
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"/>
 
 </RelativeLayout>
