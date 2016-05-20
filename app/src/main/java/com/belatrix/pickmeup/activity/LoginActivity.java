@@ -32,13 +32,14 @@ public class LoginActivity extends AppCompatActivity {
         txtPassword=(EditText)findViewById(R.id.passwordText);
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
+                //Todo: Call service for authentication and Authorization
                 if(txtUsername.getText().toString().equals("admin") &&
-
                         txtPassword.getText().toString().equals("admin")) {
                     Toast.makeText(getApplicationContext(), "Redirecting...",Toast.LENGTH_SHORT).show();
-                    homeActivity(v);
+                    goToHomeActivity(v);
                 }
                 else{
                     Toast.makeText(getApplicationContext(), "Wrong Credentials",Toast.LENGTH_SHORT).show();
@@ -56,8 +57,8 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    public void homeActivity(View view) {
-        Intent intent = new Intent(this, AddRouteActivity.class);
+    public void goToHomeActivity(View view) {
+        Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
     }
 
