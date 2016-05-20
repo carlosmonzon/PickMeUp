@@ -19,6 +19,8 @@
             android:name=".activity.AddRouteActivity"
             android:label="@string/title_activity_add_route"></activity>
         <activity android:name=".activity.MenuActivity"></activity>
+        <activity android:name=".activity.LoginActivity" android:label="@string/title_activity_login"></activity>
+
     </application>
 
 </manifest>

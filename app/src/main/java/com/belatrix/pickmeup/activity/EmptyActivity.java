@@ -27,4 +27,9 @@ public class EmptyActivity extends AppCompatActivity {
             }
         });
     }
+
+    public void openLoginActivity(View view){
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+    }
 }
