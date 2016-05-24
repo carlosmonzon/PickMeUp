@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    card_view:cardPreventCornerOverlap="false"
+    card_view:cardUseCompatPadding="true"
+    card_view:cardCornerRadius="4dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:id="@+id/imgDestination"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:textColor="@android:color/darker_gray"
+            />
+
+
+        <TextView
+            android:id="@+id/txtDeparture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imgDestination"
+            android:padding="15dp"
+            android:text="S"
+            android:textColor="@android:color/darker_gray" />
+
+        <TextView
+            android:id="@+id/txtDestination"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtDeparture"
+            android:padding="15dp"
+            android:text="D"
+            android:textColor="@android:color/darker_gray" />
+
+
+        <TextView
+            android:id="@+id/txtDepartureName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imgDestination"
+            android:layout_toRightOf="@+id/txtDeparture"
+            android:padding="15dp"
+            android:text="Belatrix - San Isidro"
+            android:textColor="@android:color/darker_gray"/>
+
+
+        <TextView
+            android:id="@+id/txtUserName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/txtPlaceAvailable"
+            android:layout_below="@+id/imgDestination"
+            android:padding="15dp"
+            android:text="Gustavo Zavaleta"
+            android:textColor="@android:color/darker_gray"
+             />
+
+
+        <TextView
+            android:id="@+id/txtDestinationName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtDepartureName"
+            android:layout_toRightOf="@+id/txtDestination"
+            android:padding="15dp"
+            android:text="San Borja"
+
+           />
+
+        <TextView
+            android:id="@+id/txtDepartureTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/txtPlaceAvailable"
+            android:layout_below="@+id/txtUserName"
+            android:padding="15dp"
+            android:text="5:30 pm"
+            />
+
+        <TextView
+            android:id="@+id/txtPlaceAvailable"
+            android:layout_width="wrap_content"
+            android:layout_below="@+id/imgDestination"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_alignParentRight="true"
+            android:padding="15dp"
+            android:text="3"
+            android:layout_centerVertical="true"
+             />
+
+
+
+
+    </RelativeLayout>
+</android.support.v7.widget.CardView>
