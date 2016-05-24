@@ -13,5 +13,11 @@
     <string name="contact">Contacto</string>
     <string name="avenues_streets_comments">Avenidas, Calles, Comentarios</string>
     <string name="publish">Publicar</string>
+    <string name="add_route_from_empty_error">Ingrese el origen</string>
+    <string name="add_route_to_empty_error">Ingrese el destino</string>
+    <string name="add_route_cost_empty_error">Ingrese el costo</string>
+    <string name="add_route_departure_time_empty_error">Ingrese la hora de salida</string>
+    <string name="add_route_contact_empty_error">Ingrese el contacto</string>
+    <string name="add_route_streets_empty_error">Ingrese las avenidas o calles</string>
 
 </resources>
