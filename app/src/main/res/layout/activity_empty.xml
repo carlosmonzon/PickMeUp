@@ -25,5 +25,13 @@
         android:onClick="openHomeActivity"
         android:layout_below="@+id/add_route_btn"
         />
+    <Button
+        android:id="@+id/login_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Login"
+        android:onClick="openLoginActivity"
+        android:layout_below="@+id/home_activity_button"
+        />
 
 </RelativeLayout>
