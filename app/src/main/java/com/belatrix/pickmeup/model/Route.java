@@ -9,14 +9,21 @@ import java.util.Date;
  * Created by gzavaleta on 09/05/16.
  */
 public class Route {
+
     private int id;
+
     private Departure departure;
+
     private Destination destination;
+
     private User routeOwner;
+
     private String departureTime;
+
     private int placeAvailable;
 
-    public Route(int id, Departure departure, Destination destination, User routeOwner, String departureTime, int placeAvailable) {
+    public Route(int id, Departure departure, Destination destination, User routeOwner, String departureTime,
+            int placeAvailable) {
         this.id = id;
         this.departure = departure;
         this.destination = destination;

@@ -17,6 +17,7 @@ import java.util.List;
  * Created by gzavaleta on 09/05/16.
  */
 public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.MyViewHolder> {
+
     private List<Route> routeList;
 
     public RouteAdapter(List<Route> routeList) {
@@ -53,8 +54,10 @@ public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.MyViewHolder
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
+
         public TextView txtDepartureName, txtDestinationName, txtUserName, txtDepartureTime,
                 txtPlaceAvailable;
+
         public ImageView imgDestination;
 
         public MyViewHolder(View view) {

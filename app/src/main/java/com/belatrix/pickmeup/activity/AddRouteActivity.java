@@ -18,12 +18,19 @@ import java.util.List;
 public class AddRouteActivity extends AppCompatActivity {
 
     private Spinner paymentMethodSpn;
+
     private Button addRouteBtn;
+
     private EditText fromEt;
+
     private EditText toEt;
+
     private EditText costEt;
+
     private EditText departureTimeEt;
+
     private EditText contactEt;
+
     private EditText streetsEt;
 
     @Override
@@ -120,8 +127,9 @@ public class AddRouteActivity extends AppCompatActivity {
 
         // TODO: validate spinner. setError on spinner?
 
-        if (hasError)
+        if (hasError) {
             return;
+        }
 
         // call to save the new route
     }

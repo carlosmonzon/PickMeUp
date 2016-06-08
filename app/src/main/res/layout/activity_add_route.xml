@@ -1,9 +1,9 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_weight="1"
-    tools:context=".activity.AddRouteActivity">
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            tools:context=".activity.AddRouteActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -18,7 +18,7 @@
             android:padding="10dp"
             android:text="@string/new_route_message"
             android:textColor="@android:color/black"
-            android:textSize="18sp" />
+            android:textSize="18sp"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -32,81 +32,81 @@
             <TextView
                 android:id="@+id/from_tv"
                 style="@style/addRouteLabel"
-                android:text="@string/departure" />
+                android:text="@string/departure"/>
 
             <EditText
                 android:id="@+id/from_et"
                 style="@style/addRouteEditText"
                 android:layout_below="@+id/from_tv"
-                android:hint="@string/departure" />
+                android:hint="@string/departure"/>
 
             <TextView
                 android:id="@+id/to_tv"
                 style="@style/addRouteLabel"
                 android:layout_below="@+id/from_et"
-                android:text="@string/destination" />
+                android:text="@string/destination"/>
 
             <EditText
                 android:id="@+id/to_et"
                 style="@style/addRouteEditText"
                 android:layout_below="@+id/to_tv"
-                android:hint="@string/destination" />
+                android:hint="@string/destination"/>
 
             <TextView
                 android:id="@+id/cost_tv"
                 style="@style/addRouteLabel"
                 android:layout_below="@+id/to_et"
-                android:text="@string/cost" />
+                android:text="@string/cost"/>
 
             <EditText
                 android:id="@+id/cost_et"
                 style="@style/addRouteEditText"
                 android:layout_below="@+id/cost_tv"
                 android:hint="@string/cost"
-                android:inputType="numberDecimal" />
+                android:inputType="numberDecimal"/>
 
             <TextView
                 android:id="@+id/payment_method_tv"
                 style="@style/addRouteLabel"
                 android:layout_below="@+id/cost_et"
-                android:text="@string/payment_method" />
+                android:text="@string/payment_method"/>
 
             <Spinner
                 android:id="@+id/payment_method_spn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/payment_method_tv"
-                android:paddingTop="5dp" />
+                android:paddingTop="5dp"/>
 
             <TextView
                 android:id="@+id/departure_time_tv"
                 style="@style/addRouteLabel"
                 android:layout_below="@+id/payment_method_spn"
-                android:text="@string/departure_time" />
+                android:text="@string/departure_time"/>
 
             <EditText
                 android:id="@+id/departure_time_et"
                 style="@style/addRouteEditText"
                 android:layout_below="@+id/departure_time_tv"
-                android:hint="@string/departure_time" />
+                android:hint="@string/departure_time"/>
 
             <TextView
                 android:id="@+id/contact_tv"
                 style="@style/addRouteLabel"
                 android:layout_below="@+id/departure_time_et"
-                android:text="@string/contact" />
+                android:text="@string/contact"/>
 
             <EditText
                 android:id="@+id/contact_et"
                 style="@style/addRouteEditText"
                 android:layout_below="@+id/contact_tv"
-                android:hint="@string/contact" />
+                android:hint="@string/contact"/>
 
             <TextView
                 android:id="@+id/streets_tv"
                 style="@style/addRouteLabel"
                 android:layout_below="@+id/contact_et"
-                android:text="@string/avenues_streets_comments" />
+                android:text="@string/avenues_streets_comments"/>
 
             <EditText
                 android:id="@+id/streets_et"
@@ -115,7 +115,7 @@
                 android:gravity="top"
                 android:hint="@string/avenues_streets_comments"
                 android:lines="5"
-                android:singleLine="false" />
+                android:singleLine="false"/>
 
             <Button
                 android:id="@+id/publish_btn"
@@ -124,7 +124,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/streets_et"
                 android:text="@string/publish"
-                android:textColor="@android:color/white" />
+                android:textColor="@android:color/white"/>
 
         </RelativeLayout>
 

@@ -6,9 +6,13 @@ import com.belatrix.pickmeup.enums.UserType;
  * Created by gzavaleta on 09/05/16.
  */
 public class User {
+
     private int id;
+
     private String name;
+
     private String mail;
+
     private UserType userType;
 
     public User(int id, String name, String mail, UserType userType) {
