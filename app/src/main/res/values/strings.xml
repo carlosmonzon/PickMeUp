@@ -28,4 +28,7 @@
     <string name="add_route_departure_time_empty_error">Ingrese la hora de salida</string>
     <string name="add_route_contact_empty_error">Ingrese el contacto</string>
     <string name="add_route_streets_empty_error">Ingrese las avenidas o calles</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
