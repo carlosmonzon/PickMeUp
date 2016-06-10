@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">PickMeUp</string>
     <string name="title_activity_home">HomeActivity</string>
-    <string name="title_activity_add_route">Agregar Ruta</string>
+    <string name="title_activity_add_route">Publicar Ruta</string>
     <string name="title_activity_login">Login</string>
 
     <string name="hello_world">Hello world!</string>
@@ -25,7 +25,11 @@
     <string name="add_route_from_empty_error">Ingrese el origen</string>
     <string name="add_route_to_empty_error">Ingrese el destino</string>
     <string name="add_route_cost_empty_error">Ingrese el costo</string>
+    <string name="add_route_payment_method_empty_error">Seleccione la forma de pago</string>
     <string name="add_route_departure_time_empty_error">Ingrese la hora de salida</string>
     <string name="add_route_contact_empty_error">Ingrese el contacto</string>
     <string name="add_route_streets_empty_error">Ingrese las avenidas o calles</string>
+    <string name="credit">Crédito</string>
+    <string name="cash">Contado</string>
+    <string name="add_route_form_error">Por favor, complete correctamente los campos</string>
 </resources>

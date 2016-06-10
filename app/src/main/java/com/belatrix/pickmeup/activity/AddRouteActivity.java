@@ -1,5 +1,7 @@
 package com.belatrix.pickmeup.activity;
 
+import android.graphics.Color;
+import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -9,6 +11,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.belatrix.pickmeup.R;
 
@@ -21,17 +25,17 @@ public class AddRouteActivity extends AppCompatActivity {
 
     private Button addRouteBtn;
 
-    private EditText fromEt;
+    private TextInputEditText fromTiet;
 
-    private EditText toEt;
+    private TextInputEditText toTiet;
 
-    private EditText costEt;
+    private TextInputEditText costTiet;
 
-    private EditText departureTimeEt;
+    private TextInputEditText departureTimeTiet;
 
-    private EditText contactEt;
+    private TextInputEditText contactTiet;
 
-    private EditText streetsEt;
+    private TextInputEditText streetsTiet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,18 +46,19 @@ public class AddRouteActivity extends AppCompatActivity {
 
         paymentMethodSpn = (Spinner) findViewById(R.id.payment_method_spn);
         addRouteBtn = (Button) findViewById(R.id.publish_btn);
-        fromEt = (EditText) findViewById(R.id.from_et);
-        toEt = (EditText) findViewById(R.id.to_et);
-        costEt = (EditText) findViewById(R.id.cost_et);
-        departureTimeEt = (EditText) findViewById(R.id.departure_time_et);
-        contactEt = (EditText) findViewById(R.id.contact_et);
-        streetsEt = (EditText) findViewById(R.id.streets_et);
+        fromTiet = (TextInputEditText) findViewById(R.id.from_tiet);
+        toTiet = (TextInputEditText) findViewById(R.id.to_tiet);
+        costTiet = (TextInputEditText) findViewById(R.id.cost_tiet);
+        departureTimeTiet = (TextInputEditText) findViewById(R.id.departure_time_tiet);
+        contactTiet = (TextInputEditText) findViewById(R.id.contact_tiet);
+        streetsTiet = (TextInputEditText) findViewById(R.id.streets_tiet);
 
         // TODO: Make this dynamically?
         // Populate spinner
         List<String> paymentMethods = new ArrayList<String>();
-        paymentMethods.add("Contado");
-        paymentMethods.add("Crédito");
+        paymentMethods.add(getResources().getString(R.string.payment_method));
+        paymentMethods.add(getResources().getString(R.string.cash));
+        paymentMethods.add(getResources().getString(R.string.credit));
 
         ArrayAdapter<String> adapter =
                 new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, paymentMethods);
@@ -69,65 +74,52 @@ public class AddRouteActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_add_route, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
     private void validateRoute() {
 
         boolean hasError = false;
 
-        if (fromEt.getText().toString().trim().equals("")) {
-            fromEt.setError(getResources().getString(R.string.add_route_from_empty_error));
+        if (fromTiet.getText().toString().trim().equals("")) {
+            fromTiet.setError(getResources().getString(R.string.add_route_from_empty_error));
             hasError = true;
         }
 
-        if (toEt.getText().toString().trim().equals("")) {
-            toEt.setError(getResources().getString(R.string.add_route_to_empty_error));
+        if (toTiet.getText().toString().trim().equals("")) {
+            toTiet.setError(getResources().getString(R.string.add_route_to_empty_error));
             hasError = true;
         }
 
-        if (costEt.getText().toString().trim().equals("")) {
-            costEt.setError(getResources().getString(R.string.add_route_cost_empty_error));
+        if (costTiet.getText().toString().trim().equals("")) {
+            costTiet.setError(getResources().getString(R.string.add_route_cost_empty_error));
             hasError = true;
         }
 
-        if (departureTimeEt.getText().toString().trim().equals("")) {
-            departureTimeEt.setError(getResources().getString(R.string.add_route_departure_time_empty_error));
+        if (paymentMethodSpn.getSelectedItem().toString().equals(getResources().getString(R.string.payment_method))) {
+            TextView errorText = (TextView) paymentMethodSpn.getSelectedView();
+            errorText.setError("x");
+            errorText.setTextColor(Color.RED);
+            errorText.setText(getResources().getString(R.string.add_route_payment_method_empty_error));
             hasError = true;
         }
 
-        if (contactEt.getText().toString().trim().equals("")) {
-            contactEt.setError(getResources().getString(R.string.add_route_contact_empty_error));
+        if (departureTimeTiet.getText().toString().trim().equals("")) {
+            departureTimeTiet.setError(getResources().getString(R.string.add_route_departure_time_empty_error));
             hasError = true;
         }
 
-        if (streetsEt.getText().toString().trim().equals("")) {
-            streetsEt.setError(getResources().getString(R.string.add_route_streets_empty_error));
+        if (contactTiet.getText().toString().trim().equals("")) {
+            contactTiet.setError(getResources().getString(R.string.add_route_contact_empty_error));
+            hasError = true;
+        }
+
+        if (streetsTiet.getText().toString().trim().equals("")) {
+            streetsTiet.setError(getResources().getString(R.string.add_route_streets_empty_error));
             hasError = true;
         }
 
         // TODO: validate spinner. setError on spinner?
 
         if (hasError) {
+            Toast.makeText(AddRouteActivity.this, getResources().getString(R.string.add_route_form_error), Toast.LENGTH_SHORT).show();
             return;
         }
 
