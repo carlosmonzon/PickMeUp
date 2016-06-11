@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">PickMeUp</string>
+    <string name="title_activity_home">HomeActivity</string>
     <string name="title_activity_add_route">Agregar Ruta</string>
+    <string name="title_activity_login">Login</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
@@ -10,4 +12,25 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="title_activity_nav_drawer">NavDrawerActivity</string>
+
+    <!-- Login Page -->
+    <string name="text_username">Username</string>
+    <string name="text_password">Password</string>
+    <string name="btn_login">Login</string>
+
+    <!-- New Route -->
+    <string name="departure">Salida</string>
+    <string name="destination">Destino</string>
+    <string name="cost">Costo (S/)</string>
+    <string name="payment_method">Forma de pago</string>
+    <string name="departure_time">Partida</string>
+    <string name="contact">Contacto</string>
+    <string name="avenues_streets_comments">Avenidas, Calles, Comentarios</string>
+    <string name="publish">Publicar</string>
+    <string name="add_route_from_empty_error">Ingrese el origen</string>
+    <string name="add_route_to_empty_error">Ingrese el destino</string>
+    <string name="add_route_cost_empty_error">Ingrese el costo</string>
+    <string name="add_route_departure_time_empty_error">Ingrese la hora de salida</string>
+    <string name="add_route_contact_empty_error">Ingrese el contacto</string>
+    <string name="add_route_streets_empty_error">Ingrese las avenidas o calles</string>
 </resources>
