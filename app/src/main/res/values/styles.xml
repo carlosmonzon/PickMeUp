@@ -17,6 +17,23 @@
         <item name="android:textColor">@color/colorLabelAddRoute</item>
     </style>
 
+    <!-- Page Detail -->
+    <style name="pageDatailLabel">
+        <item name="android:textSize">16sp</item>
+        <item name="android:paddingTop">20dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/colorLabelPageDatail</item>
+    </style>
+
+    <style name="pageDatailData">
+        <item name="android:textSize">16sp</item>
+        <item name="android:paddingTop">20dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/colorLabelPageDatailData</item>
+    </style>
+
     <style name="addRouteEditText">
         <item name="android:textSize">16sp</item>
         <item name="android:singleLine">true</item>

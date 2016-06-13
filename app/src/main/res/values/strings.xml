@@ -5,4 +5,6 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="new_route_message">Publica una nueva ruta</string>
+    <string name="page_datail">Registrate en un ruta existente</string>
+    <string name="page_datail_button">Show page detail</string>
 </resources>
