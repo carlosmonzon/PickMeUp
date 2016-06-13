@@ -1,10 +1,7 @@
 package com.belatrix.pickmeup.activity;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -25,28 +22,27 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link AllRoutes_Fragment.OnFragmentInteractionListener} interface
+ * {@link AllRoutesFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link AllRoutes_Fragment#newInstance} factory method to
+ * Use the {@link AllRoutesFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AllRoutes_Fragment extends Fragment {
+public class AllRoutesFragment extends Fragment {
 
-    private View view;
+
     private ArrayList<Route> listRoutes;
-
-    //nuevas instancias
     private RecyclerView recyclerView;
     private RouteAdapter routeAdapter;
-    //end de nuevas instancias
 
-    public AllRoutes_Fragment (){
+
+    public AllRoutesFragment(){
 
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //Inicializando las variables que se necesitan en el fragment
         listRoutes = listOfRoutes();
         routeAdapter = new RouteAdapter(listRoutes);
     }
@@ -60,8 +56,9 @@ public class AllRoutes_Fragment extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        view = inflater.inflate(R.layout.fragment_all_routes, container, false);
+        //la instancia view será la contenedora del fragment_all_routes
+        View view = inflater.inflate(R.layout.fragment_all_routes, container, false);
+        //se usa el recyclerView para el manejo de la data de la lista de rutas
         recyclerView = (RecyclerView) view.findViewById(R.id.listViewRoutes);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(mLayoutManager);
@@ -72,7 +69,7 @@ public class AllRoutes_Fragment extends Fragment {
     }
 
     public ArrayList<Route> listOfRoutes (){
-
+    //creacion de mock data
         User user = new User(1, "Gustavo", "mzavaleta@gmail.com", UserType.OWNER);
         ArrayList<Route> routes = new ArrayList<>();
         routes.add(new Route(0, Departure.BELATRIX_BEGONIAS, Destination.CALLAO, user, "05:30pm", 2));

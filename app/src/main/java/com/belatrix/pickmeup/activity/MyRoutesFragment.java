@@ -1,7 +1,5 @@
 package com.belatrix.pickmeup.activity;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -13,13 +11,17 @@ import com.belatrix.pickmeup.R;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link MyRoutes_Fragment.OnFragmentInteractionListener} interface
+ * {@link MyRoutesFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link MyRoutes_Fragment#newInstance} factory method to
+ * Use the {@link MyRoutesFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MyRoutes_Fragment extends Fragment {
-    public MyRoutes_Fragment() {
+/*
+Solo creacion del fragment MyRoutesFragment, este fragment contendrá toda la funcionalidad para la pestaña
+de Mis Rutas
+ */
+public class MyRoutesFragment extends Fragment {
+    public MyRoutesFragment() {
         // Required empty public constructor
     }
 
