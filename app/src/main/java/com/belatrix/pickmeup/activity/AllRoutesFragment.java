@@ -19,23 +19,18 @@ import com.belatrix.pickmeup.model.User;
 
 import java.util.ArrayList;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link AllRoutesFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link AllRoutesFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class AllRoutesFragment extends Fragment {
 
 
     private ArrayList<Route> listRoutes;
+
     private RecyclerView recyclerView;
+
     private RouteAdapter routeAdapter;
 
 
-    public AllRoutesFragment(){
+    public AllRoutesFragment() {
 
     }
 
@@ -55,7 +50,7 @@ public class AllRoutesFragment extends Fragment {
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+            Bundle savedInstanceState) {
         //la instancia view será la contenedora del fragment_all_routes
         View view = inflater.inflate(R.layout.fragment_all_routes, container, false);
         //se usa el recyclerView para el manejo de la data de la lista de rutas
@@ -68,8 +63,8 @@ public class AllRoutesFragment extends Fragment {
         return view;
     }
 
-    public ArrayList<Route> listOfRoutes (){
-    //creacion de mock data
+    public ArrayList<Route> listOfRoutes() {
+        //creacion de mock data
         User user = new User(1, "Gustavo", "mzavaleta@gmail.com", UserType.OWNER);
         ArrayList<Route> routes = new ArrayList<>();
         routes.add(new Route(0, Departure.BELATRIX_BEGONIAS, Destination.CALLAO, user, "05:30pm", 2));
@@ -90,7 +85,6 @@ public class AllRoutesFragment extends Fragment {
 
         return routes;
     }
-
 
 
 }

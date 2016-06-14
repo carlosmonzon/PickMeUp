@@ -8,19 +8,13 @@ import android.view.ViewGroup;
 
 import com.belatrix.pickmeup.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link MyRoutesFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link MyRoutesFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 /*
 Solo creacion del fragment MyRoutesFragment, este fragment contendrá toda la funcionalidad para la pestaña
 de Mis Rutas
  */
 public class MyRoutesFragment extends Fragment {
+
     public MyRoutesFragment() {
         // Required empty public constructor
     }
@@ -33,7 +27,7 @@ public class MyRoutesFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+            Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_my_routes, container, false);
     }
