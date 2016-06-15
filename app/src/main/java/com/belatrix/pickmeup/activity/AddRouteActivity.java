@@ -38,7 +38,8 @@ public class AddRouteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_route);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        // TODO: Commented because throws NullPointerException with NavDrawer
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         paymentMethodSpn = (Spinner) findViewById(R.id.payment_method_spn);
         addRouteBtn = (Button) findViewById(R.id.publish_btn);

@@ -21,6 +21,8 @@ public class NavDrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private Button addRouteBtn;
+    private Button homeActivity;
+    private Button loginActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,11 +30,28 @@ public class NavDrawerActivity extends AppCompatActivity
         setContentView(R.layout.activity_nav_drawer);
 
         addRouteBtn = (Button)findViewById(R.id.add_route_btn);
-
         addRouteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(NavDrawerActivity.this, AddRouteActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        loginActivity = (Button)findViewById(R.id.login_btn);
+        loginActivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(NavDrawerActivity.this, LoginActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        homeActivity = (Button)findViewById(R.id.home_activity_button);
+        homeActivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(NavDrawerActivity.this, HomeActivity.class);
                 startActivity(intent);
             }
         });
@@ -44,7 +63,7 @@ public class NavDrawerActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "This button should be send me to AddNewRoute Activity, rigth? ", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
@@ -115,4 +134,7 @@ public class NavDrawerActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
+
 }
