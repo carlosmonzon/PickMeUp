@@ -10,6 +10,8 @@ import android.widget.Button;
 
 public class EmptyActivity extends AppCompatActivity {
 
+    private Button showPageDetail;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,6 +24,15 @@ public class EmptyActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(EmptyActivity.this, AddRouteActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        showPageDetail = (Button) findViewById(R.id.page_detail_btn);
+        showPageDetail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(EmptyActivity.this, DetailPageActivity.class);
                 startActivity(intent);
             }
         });

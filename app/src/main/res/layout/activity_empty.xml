@@ -34,4 +34,11 @@
             android:layout_below="@+id/home_activity_button"
     />
 
+    <Button
+        android:id="@+id/page_detail_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Page Detail"
+        />
+
 </RelativeLayout>

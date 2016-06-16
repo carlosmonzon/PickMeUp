@@ -5,4 +5,6 @@
     <color name="colorAccent">#FF4081</color>
     <color name="colorMessage">#CFD8DC</color>
     <color name="colorLabelAddRoute">#45505C</color>
+    <color name="colorLabelPageDatail">#00509a</color>
+    <color name="colorLabelPageDatailData">#c0cbff</color>
 </resources>
