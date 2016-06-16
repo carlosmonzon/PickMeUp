@@ -88,8 +88,14 @@ public class AddRouteActivity extends AppCompatActivity {
     }
 
     private void validateRoute() {
-
         boolean hasError = false;
+
+        fromTil.setError(null);
+        toTil.setError(null);
+        costTil.setError(null);
+        departureTimeTil.setError(null);
+        contactTil.setError(null);
+        streetsTil.setError(null);
 
         if (fromTiet.getText().toString().trim().equals("")) {
             fromTil.setError(getResources().getString(R.string.add_route_from_empty_error));

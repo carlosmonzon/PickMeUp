@@ -15,9 +15,12 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <!-- @style/AppTheme.NoActionBar es añadido para que el activity no añada el toolbar por default-->
+        <!-- el toolbar de HomeActivity se manejará en la misma activity-->
         <activity
             android:name=".activity.HomeActivity"
-            android:label="@string/title_activity_home"/>
+            android:label="@string/title_activity_home"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".activity.AddRouteActivity"
             android:label="@string/title_activity_add_route"/>
