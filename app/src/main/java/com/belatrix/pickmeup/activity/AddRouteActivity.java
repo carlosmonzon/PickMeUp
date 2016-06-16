@@ -1,14 +1,14 @@
 package com.belatrix.pickmeup.activity;
 
+import android.support.design.widget.TextInputEditText;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.belatrix.pickmeup.R;
 
@@ -21,17 +21,29 @@ public class AddRouteActivity extends AppCompatActivity {
 
     private Button addRouteBtn;
 
-    private EditText fromEt;
+    private TextInputLayout fromTil;
 
-    private EditText toEt;
+    private TextInputEditText fromTiet;
 
-    private EditText costEt;
+    private TextInputLayout toTil;
 
-    private EditText departureTimeEt;
+    private TextInputEditText toTiet;
 
-    private EditText contactEt;
+    private TextInputLayout costTil;
 
-    private EditText streetsEt;
+    private TextInputEditText costTiet;
+
+    private TextInputLayout departureTimeTil;
+
+    private TextInputEditText departureTimeTiet;
+
+    private TextInputLayout contactTil;
+
+    private TextInputEditText contactTiet;
+
+    private TextInputLayout streetsTil;
+
+    private TextInputEditText streetsTiet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,18 +55,24 @@ public class AddRouteActivity extends AppCompatActivity {
 
         paymentMethodSpn = (Spinner) findViewById(R.id.payment_method_spn);
         addRouteBtn = (Button) findViewById(R.id.publish_btn);
-        fromEt = (EditText) findViewById(R.id.from_et);
-        toEt = (EditText) findViewById(R.id.to_et);
-        costEt = (EditText) findViewById(R.id.cost_et);
-        departureTimeEt = (EditText) findViewById(R.id.departure_time_et);
-        contactEt = (EditText) findViewById(R.id.contact_et);
-        streetsEt = (EditText) findViewById(R.id.streets_et);
+        fromTil = (TextInputLayout) findViewById(R.id.from_til);
+        fromTiet = (TextInputEditText) findViewById(R.id.from_tiet);
+        toTil = (TextInputLayout) findViewById(R.id.to_til);
+        toTiet = (TextInputEditText) findViewById(R.id.to_tiet);
+        costTil = (TextInputLayout) findViewById(R.id.cost_til);
+        costTiet = (TextInputEditText) findViewById(R.id.cost_tiet);
+        departureTimeTil = (TextInputLayout) findViewById(R.id.departure_time_til);
+        departureTimeTiet = (TextInputEditText) findViewById(R.id.departure_time_tiet);
+        contactTil = (TextInputLayout) findViewById(R.id.contact_til);
+        contactTiet = (TextInputEditText) findViewById(R.id.contact_tiet);
+        streetsTil = (TextInputLayout) findViewById(R.id.streets_til);
+        streetsTiet = (TextInputEditText) findViewById(R.id.streets_tiet);
 
         // TODO: Make this dynamically?
         // Populate spinner
         List<String> paymentMethods = new ArrayList<String>();
-        paymentMethods.add("Contado");
-        paymentMethods.add("Crédito");
+        paymentMethods.add(getResources().getString(R.string.cash));
+        paymentMethods.add(getResources().getString(R.string.credit));
 
         ArrayAdapter<String> adapter =
                 new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, paymentMethods);
@@ -70,66 +88,48 @@ public class AddRouteActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_add_route, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
     private void validateRoute() {
-
         boolean hasError = false;
 
-        if (fromEt.getText().toString().trim().equals("")) {
-            fromEt.setError(getResources().getString(R.string.add_route_from_empty_error));
+        fromTil.setError(null);
+        toTil.setError(null);
+        costTil.setError(null);
+        departureTimeTil.setError(null);
+        contactTil.setError(null);
+        streetsTil.setError(null);
+
+        if (fromTiet.getText().toString().trim().equals("")) {
+            fromTil.setError(getResources().getString(R.string.add_route_from_empty_error));
             hasError = true;
         }
 
-        if (toEt.getText().toString().trim().equals("")) {
-            toEt.setError(getResources().getString(R.string.add_route_to_empty_error));
+        if (toTiet.getText().toString().trim().equals("")) {
+            toTil.setError(getResources().getString(R.string.add_route_to_empty_error));
             hasError = true;
         }
 
-        if (costEt.getText().toString().trim().equals("")) {
-            costEt.setError(getResources().getString(R.string.add_route_cost_empty_error));
+        if (costTiet.getText().toString().trim().equals("")) {
+            costTil.setError(getResources().getString(R.string.add_route_cost_empty_error));
             hasError = true;
         }
 
-        if (departureTimeEt.getText().toString().trim().equals("")) {
-            departureTimeEt.setError(getResources().getString(R.string.add_route_departure_time_empty_error));
+        if (departureTimeTiet.getText().toString().trim().equals("")) {
+            departureTimeTil.setError(getResources().getString(R.string.add_route_departure_time_empty_error));
             hasError = true;
         }
 
-        if (contactEt.getText().toString().trim().equals("")) {
-            contactEt.setError(getResources().getString(R.string.add_route_contact_empty_error));
+        if (contactTiet.getText().toString().trim().equals("")) {
+            contactTil.setError(getResources().getString(R.string.add_route_contact_empty_error));
             hasError = true;
         }
 
-        if (streetsEt.getText().toString().trim().equals("")) {
-            streetsEt.setError(getResources().getString(R.string.add_route_streets_empty_error));
+        if (streetsTiet.getText().toString().trim().equals("")) {
+            streetsTil.setError(getResources().getString(R.string.add_route_streets_empty_error));
             hasError = true;
         }
-
-        // TODO: validate spinner. setError on spinner?
 
         if (hasError) {
-            return;
+            Toast.makeText(AddRouteActivity.this, getResources().getString(R.string.add_route_form_error), Toast.LENGTH_SHORT).show();
         }
 
         // call to save the new route
