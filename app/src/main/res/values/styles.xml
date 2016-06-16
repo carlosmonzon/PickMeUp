@@ -61,6 +61,7 @@
     <style name="loginLink" parent="TextAppearance.AppCompat.Body1">
         <item name="android:textColor">@android:color/white</item>
         <item name="android:clickable">true</item>
+        <item name="android:autoLink">all</item>
     </style>
 
     <style name="loginButton">
