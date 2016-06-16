@@ -2,6 +2,7 @@ package com.belatrix.pickmeup.activity;
 
 import android.graphics.Color;
 import android.support.design.widget.TextInputEditText;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -25,15 +26,27 @@ public class AddRouteActivity extends AppCompatActivity {
 
     private Button addRouteBtn;
 
+    private TextInputLayout fromTil;
+
     private TextInputEditText fromTiet;
+
+    private TextInputLayout toTil;
 
     private TextInputEditText toTiet;
 
+    private TextInputLayout costTil;
+
     private TextInputEditText costTiet;
+
+    private TextInputLayout departureTimeTil;
 
     private TextInputEditText departureTimeTiet;
 
+    private TextInputLayout contactTil;
+
     private TextInputEditText contactTiet;
+
+    private TextInputLayout streetsTil;
 
     private TextInputEditText streetsTiet;
 
@@ -46,17 +59,22 @@ public class AddRouteActivity extends AppCompatActivity {
 
         paymentMethodSpn = (Spinner) findViewById(R.id.payment_method_spn);
         addRouteBtn = (Button) findViewById(R.id.publish_btn);
+        fromTil = (TextInputLayout) findViewById(R.id.from_til);
         fromTiet = (TextInputEditText) findViewById(R.id.from_tiet);
+        toTil = (TextInputLayout) findViewById(R.id.to_til);
         toTiet = (TextInputEditText) findViewById(R.id.to_tiet);
+        costTil = (TextInputLayout) findViewById(R.id.cost_til);
         costTiet = (TextInputEditText) findViewById(R.id.cost_tiet);
+        departureTimeTil = (TextInputLayout) findViewById(R.id.departure_time_til);
         departureTimeTiet = (TextInputEditText) findViewById(R.id.departure_time_tiet);
+        contactTil = (TextInputLayout) findViewById(R.id.contact_til);
         contactTiet = (TextInputEditText) findViewById(R.id.contact_tiet);
+        streetsTil = (TextInputLayout) findViewById(R.id.streets_til);
         streetsTiet = (TextInputEditText) findViewById(R.id.streets_tiet);
 
         // TODO: Make this dynamically?
         // Populate spinner
         List<String> paymentMethods = new ArrayList<String>();
-        paymentMethods.add(getResources().getString(R.string.payment_method));
         paymentMethods.add(getResources().getString(R.string.cash));
         paymentMethods.add(getResources().getString(R.string.credit));
 
@@ -79,40 +97,32 @@ public class AddRouteActivity extends AppCompatActivity {
         boolean hasError = false;
 
         if (fromTiet.getText().toString().trim().equals("")) {
-            fromTiet.setError(getResources().getString(R.string.add_route_from_empty_error));
+            fromTil.setError(getResources().getString(R.string.add_route_from_empty_error));
             hasError = true;
         }
 
         if (toTiet.getText().toString().trim().equals("")) {
-            toTiet.setError(getResources().getString(R.string.add_route_to_empty_error));
+            toTil.setError(getResources().getString(R.string.add_route_to_empty_error));
             hasError = true;
         }
 
         if (costTiet.getText().toString().trim().equals("")) {
-            costTiet.setError(getResources().getString(R.string.add_route_cost_empty_error));
-            hasError = true;
-        }
-
-        if (paymentMethodSpn.getSelectedItem().toString().equals(getResources().getString(R.string.payment_method))) {
-            TextView errorText = (TextView) paymentMethodSpn.getSelectedView();
-            errorText.setError("x");
-            errorText.setTextColor(Color.RED);
-            errorText.setText(getResources().getString(R.string.add_route_payment_method_empty_error));
+            costTil.setError(getResources().getString(R.string.add_route_cost_empty_error));
             hasError = true;
         }
 
         if (departureTimeTiet.getText().toString().trim().equals("")) {
-            departureTimeTiet.setError(getResources().getString(R.string.add_route_departure_time_empty_error));
+            departureTimeTil.setError(getResources().getString(R.string.add_route_departure_time_empty_error));
             hasError = true;
         }
 
         if (contactTiet.getText().toString().trim().equals("")) {
-            contactTiet.setError(getResources().getString(R.string.add_route_contact_empty_error));
+            contactTil.setError(getResources().getString(R.string.add_route_contact_empty_error));
             hasError = true;
         }
 
         if (streetsTiet.getText().toString().trim().equals("")) {
-            streetsTiet.setError(getResources().getString(R.string.add_route_streets_empty_error));
+            streetsTil.setError(getResources().getString(R.string.add_route_streets_empty_error));
             hasError = true;
         }
 
