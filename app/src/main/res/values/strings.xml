@@ -9,9 +9,14 @@
     <string name="new_route_message">Publica una nueva ruta</string>
 
     <!-- Login Page -->
-    <string name="text_username">Username</string>
-    <string name="text_password">Password</string>
-    <string name="btn_login">Login</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="forgot_login"><u>Forgot password?</u></string>
+    <string name="sign_in"><u>Sign In</u></string>
+    <string name="username_empty_error">The username should not be empty</string>
+    <string name="password_empty_error">The password should not be empty</string>
+    <string name="username_invalid_error">The username should be an email address</string>
 
     <!-- New Route -->
     <string name="departure">Salida</string>
