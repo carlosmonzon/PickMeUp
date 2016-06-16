@@ -17,7 +17,7 @@
     <string name="password">Password</string>
     <string name="login">Login</string>
     <string name="forgot_login"><u>Forgot password?</u></string>
-    <string name="sign_in"><u>Sign In</u></string>
+    <string name="sign_up"><u>Sign Up</u></string>
     <string name="username_empty_error">The username should not be empty</string>
     <string name="password_empty_error">The password should not be empty</string>
     <string name="username_invalid_error">The username should be an email address</string>
