@@ -1,5 +1,13 @@
 package com.belatrix.pickmeup.fragment;
 
+import com.belatrix.pickmeup.R;
+import com.belatrix.pickmeup.adapter.RouteAdapter;
+import com.belatrix.pickmeup.enums.Departure;
+import com.belatrix.pickmeup.enums.Destination;
+import com.belatrix.pickmeup.enums.UserType;
+import com.belatrix.pickmeup.model.Route;
+import com.belatrix.pickmeup.model.User;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -8,14 +16,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.belatrix.pickmeup.R;
-import com.belatrix.pickmeup.adapter.RouteAdapter;
-import com.belatrix.pickmeup.enums.Departure;
-import com.belatrix.pickmeup.enums.Destination;
-import com.belatrix.pickmeup.enums.UserType;
-import com.belatrix.pickmeup.model.Route;
-import com.belatrix.pickmeup.model.User;
 
 import java.util.ArrayList;
 

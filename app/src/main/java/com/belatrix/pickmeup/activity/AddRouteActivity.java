@@ -1,16 +1,16 @@
 package com.belatrix.pickmeup.activity;
 
+import com.belatrix.pickmeup.R;
+
+import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
-
-import com.belatrix.pickmeup.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,8 +50,7 @@ public class AddRouteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_route);
 
-        // TODO: Commented because throws NullPointerException with NavDrawer
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         paymentMethodSpn = (Spinner) findViewById(R.id.payment_method_spn);
         addRouteBtn = (Button) findViewById(R.id.publish_btn);
