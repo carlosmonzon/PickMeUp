@@ -1,18 +1,13 @@
 package com.belatrix.pickmeup.activity;
 
-import android.graphics.Color;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.belatrix.pickmeup.R;
@@ -126,11 +121,8 @@ public class AddRouteActivity extends AppCompatActivity {
             hasError = true;
         }
 
-        // TODO: validate spinner. setError on spinner?
-
         if (hasError) {
             Toast.makeText(AddRouteActivity.this, getResources().getString(R.string.add_route_form_error), Toast.LENGTH_SHORT).show();
-            return;
         }
 
         // call to save the new route
