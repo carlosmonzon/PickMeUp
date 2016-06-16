@@ -74,7 +74,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void login(View view){
-        Log.d(TAG, "Login");
+        //Log.d(TAG, "Login");
         if(!validateLogin()){
             onLoginFailed();
             return;
@@ -144,10 +144,14 @@ public class LoginActivity extends AppCompatActivity {
 
     public void goToForgotUsernamePassword(View view){
         //Todo: Go to Forgot Username Password
+        Intent intent = new Intent(this, HomeActivity.class);
+        startActivity(intent);
     }
 
     public void goToSignIn(View view){
         //Todo: Go to Sign In
+        Intent intent = new Intent(this, HomeActivity.class);
+        startActivity(intent);
     }
 
     public boolean validateLogin(){

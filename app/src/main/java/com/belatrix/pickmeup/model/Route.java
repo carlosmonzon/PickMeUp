@@ -1,9 +1,7 @@
 package com.belatrix.pickmeup.model;
 
-import com.belatrix.pickmeup.enums.Destination;
 import com.belatrix.pickmeup.enums.Departure;
-
-import java.util.Date;
+import com.belatrix.pickmeup.enums.Destination;
 
 /**
  * Created by gzavaleta on 09/05/16.
