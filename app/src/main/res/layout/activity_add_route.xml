@@ -18,34 +18,46 @@
             android:paddingRight="@dimen/activity_horizontal_margin"
             android:paddingTop="@dimen/activity_vertical_margin">
 
-            <android.support.design.widget.TextInputLayout
+
+            <TextView
                 android:id="@+id/from_til"
-                app:errorEnabled="true"
-                style="@style/addRouteLabel">
+                android:textSize="12sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:text="@string/departure"/>
 
-                <android.support.design.widget.TextInputEditText
-                    android:id="@+id/from_tiet"
-                    style="@style/addRouteEditText"
-                    android:hint="@string/departure" />
-
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/to_til"
+            <Spinner
+                android:id="@+id/departure_spn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_below="@+id/from_til"
-                app:errorEnabled="true"
-                style="@style/addRouteLabel">
+                style="@style/Widget.AppCompat.Spinner.Underlined"
+                android:paddingTop="10dp"
+                android:layout_marginBottom="20dp"/>
 
-                <android.support.design.widget.TextInputEditText
-                    android:id="@+id/to_tiet"
-                    style="@style/addRouteEditText"
-                    android:hint="@string/destination"/>
+            <TextView
+                android:id="@+id/to_til"
+                android:textSize="12sp"
+                android:layout_below="@+id/departure_spn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:text="@string/destination"/>
 
-            </android.support.design.widget.TextInputLayout>
+            <Spinner
+                android:id="@+id/destination_spn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/to_til"
+                style="@style/Widget.AppCompat.Spinner.Underlined"
+                android:paddingTop="10dp"
+                android:layout_marginBottom="20dp"/>
+
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/cost_til"
-                android:layout_below="@+id/to_til"
+                android:layout_below="@+id/destination_spn"
                 app:errorEnabled="true"
                 style="@style/addRouteLabel">
 
@@ -118,11 +130,20 @@
             </android.support.design.widget.TextInputLayout>
 
             <Button
-                android:id="@+id/publish_btn"
+                android:id="@+id/favorite_btn"
                 android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/streets_til"
+                android:text="@string/favorite"
+                android:textColor="@android:color/white"/>
+
+            <Button
+                android:id="@+id/publish_btn"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/favorite_btn"
                 android:text="@string/publish"
                 android:textColor="@android:color/white"/>
 

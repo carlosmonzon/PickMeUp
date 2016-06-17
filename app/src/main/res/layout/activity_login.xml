@@ -78,4 +78,14 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"/>
 
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Remember"
+        android:id="@+id/checkBoxRemember"
+        android:layout_below="@+id/forgot_username_password_link"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textColor="#ffffff" />
+
 </RelativeLayout>

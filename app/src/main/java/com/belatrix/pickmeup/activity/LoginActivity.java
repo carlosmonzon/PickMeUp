@@ -1,9 +1,13 @@
 package com.belatrix.pickmeup.activity;
 
+import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.view.View;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
@@ -11,7 +15,6 @@ import android.widget.Toast;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.app.ProgressDialog;
-
 
 import com.belatrix.pickmeup.R;
 
@@ -37,6 +40,7 @@ public class LoginActivity extends AppCompatActivity {
     private TextInputLayout tilUsername;
 
     private TextInputLayout tilPassword;
+    private CheckBox chRemember;
 
     private int counter = 3;
 
@@ -46,7 +50,6 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
         btnLogin = (Button) findViewById(R.id.login_btn);
         inputUsername = (TextInputEditText) findViewById(R.id.username_tiet);
         inputPassword = (TextInputEditText) findViewById(R.id.password_tiet);
@@ -54,6 +57,9 @@ public class LoginActivity extends AppCompatActivity {
         textSingIn = (TextView) findViewById(R.id.sign_up_link);
         tilUsername = (TextInputLayout) findViewById(R.id.username_til);
         tilPassword = (TextInputLayout) findViewById(R.id.password_til);
+        chRemember = (CheckBox) findViewById(R.id.checkBoxRemember);
+        readCredentials();
+
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
 
@@ -121,7 +127,8 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 }, 3000);
 
-        if (authenticated) {
+        if(authenticated){
+            checkPreferences();
             goToHomeActivity(view);
         }
     }
@@ -182,6 +189,38 @@ public class LoginActivity extends AppCompatActivity {
 
     public final static boolean isValidEmail(CharSequence target) {
         return Patterns.EMAIL_ADDRESS.matcher(target).matches();
+    }
+
+    public void checkPreferences(){
+        String username = inputUsername.getText().toString();
+        String password = inputPassword.getText().toString();
+        Boolean remember = chRemember.isChecked();
+
+        if (remember){
+            saveCredentials(username, password, remember);
+        }else{
+            saveCredentials(null,null,false);
+        }
+    }
+
+    public void saveCredentials(String username,String password, Boolean remember){
+        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("username", username);
+        editor.putString("password", password);
+        editor.putBoolean("remember", remember);
+        editor.commit();
+    }
+
+    public void readCredentials(){
+        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+        String username = sharedPref.getString("username", null);
+        String password = sharedPref.getString("password", null);
+        Boolean remember = sharedPref.getBoolean("remember", false);
+
+        inputUsername.setText(username);
+        inputPassword.setText(password);
+        chRemember.setChecked(remember);
     }
 
 }
