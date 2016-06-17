@@ -147,9 +147,8 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void goToForgotUsernamePassword(View view) {
-        //Todo: Go to Forgot Username Password
-        Intent intent = new Intent(this, HomeActivity.class);
+    public void goToForgotUsernamePassword(View view){
+        Intent intent = new Intent(this, ForgotPasswordActivity.class);
         startActivity(intent);
     }
 
