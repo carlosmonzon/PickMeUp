@@ -1,38 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.belatrix.pickmeup">
+    package="com.belatrix.pickmeup">
+
+    <!-- To auto-complete the email text field in the login form with the user's emails -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <application
-            android:allowBackup="true"
-            android:icon="@mipmap/ic_launcher"
-            android:label="@string/app_name"
-            android:supportsRtl="true"
-            android:theme="@style/AppTheme">
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
         <activity android:name=".activity.EmptyActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <!-- @style/AppTheme.NoActionBar es añadido para que el activity no añada el toolbar por default-->
-        <!-- el toolbar de HomeActivity se manejará en la misma activity-->
+        <!-- @style/AppTheme.NoActionBar es añadido para que el activity no añada el toolbar por default -->
+        <!-- el toolbar de HomeActivity se manejará en la misma activity -->
         <activity
-                android:name=".activity.HomeActivity"
-                android:label="@string/app_name"
-                android:theme="@style/AppTheme.NoActionBar"/>
+            android:name=".activity.HomeActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
-                android:name=".activity.AddRouteActivity"
-                android:label="@string/title_activity_add_route"/>
+            android:name=".activity.AddRouteActivity"
+            android:label="@string/title_activity_add_route" />
         <activity
             android:name=".activity.LoginActivity"
             android:label="@string/title_activity_login"
-            android:theme="@style/AppTheme.LoginTheme"/>
-
+            android:theme="@style/AppTheme.LoginTheme" />
         <activity
             android:name=".activity.DetailPageActivity"
-            android:label="@string/app_name"></activity>
+            android:label="@string/app_name" />
+        <activity
+            android:name=".activity.ForgotPasswordActivity"
+            android:label="@string/forgot_password"
+            android:parentActivityName=".activity.LoginActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activity.LoginActivity" />
+        </activity>
     </application>
 
 </manifest>
