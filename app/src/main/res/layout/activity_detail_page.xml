@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -33,7 +33,7 @@
             android:layout_toLeftOf="@+id/from_txvdata"
             android:layout_below="@+id/message_txv"
             style="@style/pageDatailLabel"
-            android:text="Salida: " />
+            android:text="Salida: "/>
 
         <TextView
             android:id="@+id/from_txvdata"
@@ -42,7 +42,7 @@
             android:layout_alignParentRight="true"
             android:layout_below="@+id/message_txv"
             style="@style/pageDatailData"
-            android:text="Belatrix - Panama" />
+            android:text="Belatrix - Panama"/>
 
         <TextView
             android:id="@+id/dest_txvlabel"
@@ -53,7 +53,7 @@
             android:layout_toLeftOf="@+id/from_txvdata"
             android:layout_below="@+id/from_txvlabel"
             style="@style/pageDatailLabel"
-            android:text="Destino: " />
+            android:text="Destino: "/>
 
         <TextView
             android:id="@+id/dest_txvdata"
@@ -62,7 +62,7 @@
             android:layout_alignParentRight="true"
             android:layout_below="@+id/from_txvlabel"
             style="@style/pageDatailData"
-            android:text="La Molina" />
+            android:text="La Molina"/>
 
         <TextView
             android:id="@+id/cost_txvlabel"
@@ -73,7 +73,7 @@
             android:layout_toLeftOf="@+id/from_txvdata"
             android:layout_below="@+id/dest_txvlabel"
             style="@style/pageDatailLabel"
-            android:text="Costo (S/.): " />
+            android:text="Costo (S/.): "/>
 
         <TextView
             android:id="@+id/cost_txvdata"
@@ -82,7 +82,7 @@
             android:layout_alignParentRight="true"
             android:layout_below="@+id/dest_txvlabel"
             style="@style/pageDatailData"
-            android:text="S/. 20.00" />
+            android:text="S/. 20.00"/>
 
         <TextView
             android:id="@+id/hour_txvlabel"
@@ -93,7 +93,7 @@
             android:layout_toLeftOf="@+id/from_txvdata"
             android:layout_below="@+id/cost_txvlabel"
             style="@style/pageDatailLabel"
-            android:text="Partida: " />
+            android:text="Partida: "/>
 
         <TextView
             android:id="@+id/hour_txvdata"
@@ -102,7 +102,7 @@
             android:layout_alignParentRight="true"
             android:layout_below="@+id/cost_txvlabel"
             style="@style/pageDatailData"
-            android:text="5:15 pm" />
+            android:text="5:15 pm"/>
 
         <TextView
             android:id="@+id/contact_txvlabel"
@@ -113,7 +113,7 @@
             android:layout_toLeftOf="@+id/from_txvdata"
             android:layout_below="@+id/hour_txvlabel"
             style="@style/pageDatailLabel"
-            android:text="Contacto: " />
+            android:text="Contacto: "/>
 
         <TextView
             android:id="@+id/contact_txvdata"
@@ -122,7 +122,7 @@
             android:layout_alignParentRight="true"
             android:layout_below="@+id/hour_txvlabel"
             style="@style/pageDatailData"
-            android:text="Carlos Monzon" />
+            android:text="Carlos Monzon"/>
 
         <TextView
             android:id="@+id/address_txvlabel"
@@ -133,7 +133,7 @@
             android:layout_toLeftOf="@+id/from_txvdata"
             android:layout_below="@+id/contact_txvlabel"
             style="@style/pageDatailLabel"
-            android:text="Avenidas      Calles      Comentarios: " />
+            android:text="Avenidas      Calles      Comentarios: "/>
 
         <TextView
             android:id="@+id/address_txvdata"
@@ -142,7 +142,7 @@
             android:layout_alignParentRight="true"
             android:layout_below="@+id/contact_txvlabel"
             style="@style/pageDatailData"
-            android:text="Republica de Panama               Todo javier prado                       Jockey plaza" />
+            android:text="Republica de Panama               Todo javier prado                       Jockey plaza"/>
 
         <TextView
             android:id="@+id/seat_txvlabel"
@@ -153,7 +153,7 @@
             android:layout_toLeftOf="@+id/from_txvdata"
             android:layout_below="@+id/address_txvlabel"
             style="@style/pageDatailLabel"
-            android:text="Asientos: " />
+            android:text="Asientos: "/>
 
         <TextView
             android:id="@+id/seat_txvdata"
@@ -162,7 +162,7 @@
             android:layout_alignParentRight="true"
             android:layout_below="@+id/address_txvlabel"
             style="@style/pageDatailData"
-            android:text="3" />
+            android:text="3"/>
 
         <TextView
             android:id="@+id/freeseat_txvlabel"
@@ -173,7 +173,7 @@
             android:layout_toLeftOf="@+id/from_txvdata"
             android:layout_below="@+id/seat_txvlabel"
             style="@style/pageDatailLabel"
-            android:text="Disponibles: " />
+            android:text="Disponibles: "/>
 
         <TextView
             android:id="@+id/freeseat_txvdata"
@@ -182,7 +182,7 @@
             android:layout_alignParentRight="true"
             android:layout_below="@+id/seat_txvlabel"
             style="@style/pageDatailData"
-            android:text="1" />
+            android:text="1"/>
 
         <TextView
             android:id="@+id/passenger_txvlabel"
@@ -193,7 +193,7 @@
             android:layout_toLeftOf="@+id/from_txvdata"
             android:layout_below="@+id/freeseat_txvlabel"
             style="@style/pageDatailLabel"
-            android:text="Pasajeros: " />
+            android:text="Pasajeros: "/>
 
         <TextView
             android:id="@+id/passenger_txvdata"
@@ -202,8 +202,7 @@
             android:layout_alignParentRight="true"
             android:layout_below="@+id/freeseat_txvlabel"
             style="@style/pageDatailData"
-            android:text="Juan Perez                                Carlos Monzon" />
-
+            android:text="Juan Perez                                Carlos Monzon"/>
 
 
     </RelativeLayout>
