@@ -33,6 +33,7 @@
     <string name="contact">Contacto</string>
     <string name="avenues_streets_comments">Avenidas, Calles, Comentarios</string>
     <string name="publish">Publicar</string>
+    <string name="favorite">Favorite</string>
     <string name="credit">Crédito</string>
     <string name="cash">Contado</string>
     <string name="add_route_form_error">Por favor, complete correctamente los campos</string>

@@ -1,8 +1,11 @@
 package com.belatrix.pickmeup.activity;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.widget.Button;
@@ -18,6 +21,8 @@ import android.util.Log;
 import android.app.ProgressDialog;
 
 
+import com.belatrix.pickmeup.Persistence.RouteFavoriteContract;
+import com.belatrix.pickmeup.Persistence.RouteFavoriteDBHelper;
 import com.belatrix.pickmeup.R;
 import com.belatrix.pickmeup.model.User;
 
@@ -54,6 +59,7 @@ public class LoginActivity extends AppCompatActivity {
         tilPassword = (TextInputLayout) findViewById(R.id.password_til);
         chRemember = (CheckBox) findViewById(R.id.checkBoxRemember);
         readCredentials();
+
         btnLogin.setOnClickListener(new View.OnClickListener() {
 
             @Override
