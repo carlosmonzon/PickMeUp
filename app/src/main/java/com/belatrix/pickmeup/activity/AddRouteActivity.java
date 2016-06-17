@@ -148,7 +148,8 @@ public class AddRouteActivity extends AppCompatActivity {
         }
 
         if (hasError) {
-            Toast.makeText(AddRouteActivity.this, getResources().getString(R.string.add_route_form_error), Toast.LENGTH_SHORT).show();
+            Toast.makeText(AddRouteActivity.this, getResources().getString(R.string.add_route_form_error),
+                    Toast.LENGTH_SHORT).show();
         }
 
         // call to save the new route

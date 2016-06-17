@@ -4,27 +4,19 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.EditText;
 import android.view.View;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
-import android.util.Log;
 import android.app.ProgressDialog;
 
-
-import com.belatrix.pickmeup.Persistence.RouteFavoriteContract;
-import com.belatrix.pickmeup.Persistence.RouteFavoriteDBHelper;
 import com.belatrix.pickmeup.R;
-import com.belatrix.pickmeup.model.User;
 
 /**
  * Created by root on 13/05/16.
@@ -32,19 +24,27 @@ import com.belatrix.pickmeup.model.User;
 public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = "LoginActivity";
+
     private static final int REQUEST_SIGN_UP = 0;
 
     private Button btnLogin;
+
     private TextInputEditText inputUsername;
+
     private TextInputEditText inputPassword;
+
     private TextView textForgotUserPass;
+
     private TextView textSingIn;
+
     private TextInputLayout tilUsername;
+
     private TextInputLayout tilPassword;
     private CheckBox chRemember;
 
     private int counter = 3;
-    private boolean authenticated=false;
+
+    private boolean authenticated = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +59,7 @@ public class LoginActivity extends AppCompatActivity {
         tilPassword = (TextInputLayout) findViewById(R.id.password_til);
         chRemember = (CheckBox) findViewById(R.id.checkBoxRemember);
         readCredentials();
+
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
 
@@ -83,9 +84,9 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    public void login(View view){
+    public void login(View view) {
         //Log.d(TAG, "Login");
-        if(!validateLogin()){
+        if (!validateLogin()) {
             onLoginFailed();
             return;
         }
@@ -101,7 +102,7 @@ public class LoginActivity extends AppCompatActivity {
         String password = inputPassword.getText().toString();
 
         //Todo: Call service for authentication and Authorization
-         if (username.equals("admin@pickmeup.com") &&
+        if (username.equals("admin@pickmeup.com") &&
                 password.equals("admin")) {
             authenticated = true;
         } else {
@@ -154,31 +155,30 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void goToForgotUsernamePassword(View view){
-        //Todo: Go to Forgot Username Password
-        Intent intent = new Intent(this, HomeActivity.class);
+        Intent intent = new Intent(this, ForgotPasswordActivity.class);
         startActivity(intent);
     }
 
-    public void goToSignIn(View view){
+    public void goToSignIn(View view) {
         //Todo: Go to Sign In
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
     }
 
-    public boolean validateLogin(){
+    public boolean validateLogin() {
         boolean valid = true;
 
-        if(inputUsername.getText().toString().trim().equals("")){
+        if (inputUsername.getText().toString().trim().equals("")) {
             tilUsername.setError(getResources().getString(R.string.username_empty_error));
             valid = false;
         }
 
-        if(inputPassword.getText().toString().trim().equals("")){
+        if (inputPassword.getText().toString().trim().equals("")) {
             tilPassword.setError(getResources().getString(R.string.password_empty_error));
             valid = false;
         }
 
-        if(!isValidEmail(inputUsername.getText().toString().trim())){
+        if (!isValidEmail(inputUsername.getText().toString().trim())) {
             tilUsername.setError(getResources().getString(R.string.username_invalid_error));
             valid = false;
         }
@@ -187,7 +187,7 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    public final static boolean isValidEmail(CharSequence target){
+    public final static boolean isValidEmail(CharSequence target) {
         return Patterns.EMAIL_ADDRESS.matcher(target).matches();
     }
 

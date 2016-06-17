@@ -24,6 +24,14 @@
     <string name="password_empty_error">The password should not be empty</string>
     <string name="username_invalid_error">The username should be an email address</string>
 
+    <!-- Forgot Password Page -->
+    <string name="forgot_password"><u>Forgot Password</u></string>
+    <string name="email">Email</string>
+    <string name="send_email">Send email</string>
+    <string name="forgot_password_message">Enter your email address and we will send you a link to reset your password</string>
+    <string name="email_empty_error">The email should not be empty</string>
+    <string name="email_invalid_error">The email is not valid</string>
+
     <!-- New Route -->
     <string name="departure">Salida</string>
     <string name="destination">Destino</string>
@@ -46,4 +54,5 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>
