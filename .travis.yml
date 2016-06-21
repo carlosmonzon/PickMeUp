@@ -1,39 +1,31 @@
 language: android
-
 sudo: false
 cache:
   directories:
-    - $HOME/.gradle/caches/2.13
-    - $HOME/.gradle/caches/jars-1
-    - $HOME/.gradle/daemon
-    - $HOME/.gradle/native
-    - $HOME/.gradle/wrapper
-
+  - $HOME/.gradle/caches/2.13
+  - $HOME/.gradle/caches/jars-1
+  - $HOME/.gradle/daemon
+  - $HOME/.gradle/native
+  - $HOME/.gradle/wrapper
 branches:
   only:
-    - master
-
+  - master
 android:
   components:
-
-    - platform-tools
-    - tools
-    - build-tools-23.0.3
-    - android-23
-
-    # Additional components
-    - extra-google-google_play_services
-    - extra-google-m2repository
-    - extra-android-m2repository
-    - addon-google_apis-google-23
-
-
-    # Specify at least one system image,
-    # if you need to run emulator(s) during your tests
-    - sys-img-armeabi-v7a-android-23
-    - sys-img-x86-android-23
-
+  - platform-tools
+  - tools
+  - build-tools-23.0.3
+  - android-23
+  - extra-google-google_play_services
+  - extra-google-m2repository
+  - extra-android-m2repository
+  - addon-google_apis-google-23
+  - sys-img-armeabi-v7a-android-23
+  - sys-img-x86-android-23
 script:
-      - ./gradlew assembleQa -PdisablePreDex
-
-
+- ./gradlew assembleQa -PdisablePreDex
+deploy:
+  provider: testfairy
+  api-key:
+    secure: kGzONgVhvZiwJNXt6vhHCtsfXuhP3PhdcKqof+DjzFtvdrIvn7zFWjVfCN+hrBaBhc2msy7jdHXLhdjXc4WtUKypJXhiRNbFmzAIRChJZoZ4pTuAv+bw2QfRQAA5y+2MeKfduAOR0cKZT6OqYnW2o4ziZ7lHUvAgFPpNAVhg+aMPuNsh0I7u1jmB45s9GTKnCC07yLUfapMbejXe0+HjIvi/YeXo+PsN4NtYecjWfgdvyTrvutkCAlq/A2pLVHvu2zlZs2ePD2dSOENDNOFyONfwBNXEW+AWn2wQ2QqyNeGPeokdzUKisVASJhu9OX5SmGUvSgeyujLrsUlhWJJrR1NZczKFxFpC434nba44aInuGETRMJpHUuhBwoCMVD2hMw+P4UtBO3YlVmYQm2cYJMKvTNJGyj7dUNTcYSyEpvLII3paMj7Cz1ctO31Wc9xxFDaHlkqq3Sc+UcJ/egeaiETFCZ4ETkTV10HxH9Ki/jRsiRkulcHX7YwgKDo+dc9dS3HoTuYJfXMNTjJuqVEq5oxTTBs8XNoQhPaNPsNqIGuYYTGiqPLm2XBbSUGYJn7p9pQS9sMHN9mJAT1EspNyGSsuaouQYxvjxJzWdQ3Gz9gC3FP88kvtP3GRSGGEuX2/suXFoZPLnouQPVRh67bUcqmo1y0BQad2j6Jf3hZ97Ew=
+  app-file: pickmeup/build/outputs/apk/pickmeup-qa.apk
