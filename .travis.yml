@@ -31,5 +31,5 @@ deploy:
   skip_cleanup: true
   app-file: pickmeup/build/outputs/apk/pickmeup-qa.apk
   keystore-file: pickmeup/keystores/keystore.jks
-  storepass: pickmeupqa
+  storepass: pickmeup
   alias: pickmeup-qa
