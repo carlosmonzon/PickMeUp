@@ -18,10 +18,10 @@ android {
 
     signingConfigs {
         qa {
-            keyAlias 'PickMeUp-qa'
-            keyPassword 'pickmeupqa'
             storeFile file('keystores/keystore.jks')
             storePassword 'pickmeup'
+            keyAlias 'pickmeup-qa'
+            keyPassword 'pickmeupqa'
         }
     }
 
