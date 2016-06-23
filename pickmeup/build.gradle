@@ -33,7 +33,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             applicationIdSuffix QA_PACKAGE_SUFFIX
             versionNameSuffix ' QA'
-            signingConfig signingConfigs.qa
 
         }
         release {
