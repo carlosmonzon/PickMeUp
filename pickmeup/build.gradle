@@ -1,17 +1,4 @@
-buildscript {
-    //tesfairy gradle plugin: https://github.com/testfairy/testfairy-gradle-plugin
-    repositories {
-        mavenCentral()
-        maven { url 'https://www.testfairy.com/maven' }
-    }
-
-    dependencies {
-        classpath 'com.testfairy.plugins.gradle:testfairy:1.12'
-    }
-}
-
 apply plugin: 'com.android.application'
-apply plugin: 'testfairy'
 
 android {
 
@@ -39,7 +26,12 @@ android {
     }
 
     buildTypes {
-
+        debug {
+            debuggable true
+            minifyEnabled false
+            applicationIdSuffix DEBUG_PACKAGE_SUFFIX
+            versionNameSuffix ' Debug'
+        }
         qa {
             debuggable true
             minifyEnabled false
@@ -53,22 +45,6 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
-    }
-
-    testfairyConfig {
-        apiKey "79411788e7b6a44d768583e91e6a21cf4c68f408"
-        metrics "cpu,memory,network,logcat"
-        video "wifi"
-        videoRate "0.5"
-        videoQuality "medium"
-        maxDuration "10m"
-        recordOnBackground false
-        iconWatermark true
-        testersGroups "pickmeup"
-        notify true
-        maxDuration "10m"
-        autoUpdate true
-        uploadProguardMapping true
     }
 
     lintOptions {
