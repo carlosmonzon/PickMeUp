@@ -49,6 +49,8 @@ public class AllRoutesFragment extends Fragment {
 
     }
 
+
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         //la instancia view será la contenedora del fragment_all_routes
