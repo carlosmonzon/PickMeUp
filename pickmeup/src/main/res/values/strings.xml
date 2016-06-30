@@ -52,6 +52,12 @@
     <string name="add_route_contact_empty_error">Ingrese el contacto</string>
     <string name="add_route_streets_empty_error">Ingrese las avenidas o calles</string>
 
+    <!-- Page Detail -->
+    <string name="seat">Asientos</string>
+    <string name="available">Disponibles</string>
+    <string name="passengers">Pasajeros</string>
+    <string name="join">Unirte</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
