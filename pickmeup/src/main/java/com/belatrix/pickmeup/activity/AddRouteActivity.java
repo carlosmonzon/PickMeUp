@@ -16,7 +16,6 @@ import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -24,7 +23,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -33,22 +31,39 @@ import java.util.List;
 public class AddRouteActivity extends AppCompatActivity {
 
     private Spinner paymentMethodSpn;
+
     private Spinner departureSpn;
+
     private Spinner destinationSpn;
+
     private Button addRouteBtn;
+
     private Button favoriteBtn;
+
     private TextView fromTil;
+
     private TextView fromTiet;
+
     private TextView toTil;
+
     private TextView toTiet;
+
     private TextInputLayout costTil;
+
     private TextInputEditText costTiet;
+
     private TextInputLayout departureTimeTil;
+
     private TextInputEditText departureTimeTiet;
+
     private TextInputLayout contactTil;
+
     private TextInputEditText contactTiet;
+
     private TextInputLayout streetsTil;
+
     private TextInputEditText streetsTiet;
+
     private Route route;
 
     @Override
@@ -66,7 +81,7 @@ public class AddRouteActivity extends AppCompatActivity {
         fromTil = (TextView) findViewById(R.id.from_til);
         fromTiet = (TextView) departureSpn.getSelectedView();
         toTil = (TextView) findViewById(R.id.to_til);
-        toTiet = (TextView) destinationSpn.getSelectedView() ;
+        toTiet = (TextView) destinationSpn.getSelectedView();
         costTil = (TextInputLayout) findViewById(R.id.cost_til);
         costTiet = (TextInputEditText) findViewById(R.id.cost_tiet);
         departureTimeTil = (TextInputLayout) findViewById(R.id.departure_time_til);
@@ -79,7 +94,6 @@ public class AddRouteActivity extends AppCompatActivity {
         //set data to Lists
         setLists();
 
-
         favoriteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -91,7 +105,7 @@ public class AddRouteActivity extends AppCompatActivity {
                             new User(1, contactTiet.getText().toString(),
                                     contactTiet.getText().toString() + "@belatrixdf.com", UserType.OWNER),
                             "" + new Date(), streetsTiet.getText().toString());
-                }catch (Exception e){
+                } catch (Exception e) {
 
                 }
                 saveFavoriteRoute(route);
@@ -155,7 +169,7 @@ public class AddRouteActivity extends AppCompatActivity {
         // call to save the new route
     }
 
-    public void setLists(){
+    public void setLists() {
 
         // TODO: Make this dynamically?
         // Populate spinner
@@ -165,14 +179,14 @@ public class AddRouteActivity extends AppCompatActivity {
         // Departure
         List<String> departurePlaces = new ArrayList<>();
         Departure[] departures = Departure.values();
-        for (int i=0;i<departures.length;i++){
+        for (int i = 0; i < departures.length; i++) {
             departurePlaces.add(departures[i].toString());
         }
 
         // Destination
         List<String> destinationPlaces = new ArrayList<>();
         Destination[] destinations = Destination.values();
-        for (int i=0;i<destinations.length;i++){
+        for (int i = 0; i < destinations.length; i++) {
             destinationPlaces.add(destinations[i].toString());
         }
 
@@ -194,7 +208,7 @@ public class AddRouteActivity extends AppCompatActivity {
         destinationSpn.setAdapter(destinationAdapter);
     }
 
-    public void saveFavoriteRoute(Route route){
+    public void saveFavoriteRoute(Route route) {
         RouteFavoriteDBHelper dbHelper = new RouteFavoriteDBHelper(getApplicationContext());
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         ContentValues values = new ContentValues();
@@ -211,7 +225,7 @@ public class AddRouteActivity extends AppCompatActivity {
                 RouteFavoriteContract.FavoriteEntry.COLUMN_NAME_ADDRESS,
                 values);
 
-        Toast.makeText(getApplicationContext(), "Saved id: "+newRowId, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Saved id: " + newRowId, Toast.LENGTH_SHORT).show();
 
     }
 

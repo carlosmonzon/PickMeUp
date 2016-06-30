@@ -40,6 +40,7 @@ public class LoginActivity extends AppCompatActivity {
     private TextInputLayout tilUsername;
 
     private TextInputLayout tilPassword;
+
     private CheckBox chRemember;
 
     private int counter = 3;
@@ -59,7 +60,6 @@ public class LoginActivity extends AppCompatActivity {
         tilPassword = (TextInputLayout) findViewById(R.id.password_til);
         chRemember = (CheckBox) findViewById(R.id.checkBoxRemember);
         readCredentials();
-
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
 
@@ -127,7 +127,7 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 }, 3000);
 
-        if(authenticated){
+        if (authenticated) {
             checkPreferences();
             goToHomeActivity(view);
         }
@@ -154,7 +154,7 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void goToForgotUsernamePassword(View view){
+    public void goToForgotUsernamePassword(View view) {
         Intent intent = new Intent(this, ForgotPasswordActivity.class);
         startActivity(intent);
     }
@@ -191,19 +191,19 @@ public class LoginActivity extends AppCompatActivity {
         return Patterns.EMAIL_ADDRESS.matcher(target).matches();
     }
 
-    public void checkPreferences(){
+    public void checkPreferences() {
         String username = inputUsername.getText().toString();
         String password = inputPassword.getText().toString();
         Boolean remember = chRemember.isChecked();
 
-        if (remember){
+        if (remember) {
             saveCredentials(username, password, remember);
-        }else{
-            saveCredentials(null,null,false);
+        } else {
+            saveCredentials(null, null, false);
         }
     }
 
-    public void saveCredentials(String username,String password, Boolean remember){
+    public void saveCredentials(String username, String password, Boolean remember) {
         SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString("username", username);
@@ -212,7 +212,7 @@ public class LoginActivity extends AppCompatActivity {
         editor.commit();
     }
 
-    public void readCredentials(){
+    public void readCredentials() {
         SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
         String username = sharedPref.getString("username", null);
         String password = sharedPref.getString("password", null);
