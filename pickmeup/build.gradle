@@ -1,0 +1,88 @@
+buildscript {
+    //tesfairy gradle plugin: https://github.com/testfairy/testfairy-gradle-plugin
+    repositories {
+        mavenCentral()
+        maven { url 'https://www.testfairy.com/maven' }
+    }
+
+    dependencies {
+        classpath 'com.testfairy.plugins.gradle:testfairy:1.12'
+    }
+}
+
+apply plugin: 'com.android.application'
+apply plugin: 'testfairy'
+
+android {
+
+    final DEBUG_PACKAGE_SUFFIX = ".debug"
+    final QA_PACKAGE_SUFFIX = ".qa"
+
+    compileSdkVersion 23
+    buildToolsVersion "23.0.3"
+    defaultConfig {
+        applicationId "com.belatrix.pickmeup"
+        minSdkVersion 15
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+        vectorDrawables.useSupportLibrary = true
+    }
+
+    signingConfigs {
+        qa {
+            storeFile file('keystores/keystore.jks')
+            storePassword 'pickmeup'
+            keyAlias 'pickmeup-qa'
+            keyPassword 'pickmeupqa'
+        }
+    }
+
+    buildTypes {
+
+        qa {
+            debuggable true
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            applicationIdSuffix QA_PACKAGE_SUFFIX
+            versionNameSuffix ' QA'
+            signingConfig signingConfigs.qa
+
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    testfairyConfig {
+        apiKey "79411788e7b6a44d768583e91e6a21cf4c68f408"
+        metrics "cpu,memory,network,logcat"
+        video "wifi"
+        videoRate "0.5"
+        videoQuality "medium"
+        maxDuration "10m"
+        recordOnBackground false
+        iconWatermark true
+        testersGroups "pickmeup"
+        notify true
+        maxDuration "10m"
+        autoUpdate true
+        uploadProguardMapping true
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:23.4.0'
+    compile 'com.android.support:cardview-v7:23.4.0'
+    compile 'com.android.support:design:23.4.0'
+    compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.android.support:recyclerview-v7:23.4.0'
+    compile 'com.android.support:support-v4:23.4.0'
+}

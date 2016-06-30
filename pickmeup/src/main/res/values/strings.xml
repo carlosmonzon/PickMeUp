@@ -1,0 +1,64 @@
+<resources>
+    <string name="app_name">PickMeUp</string>
+    <string name="title_activity_add_route">Agregar Ruta</string>
+    <string name="title_activity_login">Login</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="new_route_message">Publica una nueva ruta</string>
+    <string name="page_datail">Registrate en un ruta existente</string>
+    <string name="page_datail_button">Show page detail</string>
+    <string name="title_activity_test_navigation">TestNavigationActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="title_activity_nav_drawer">NavDrawerActivity</string>
+
+    <!-- Login Page -->
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="forgot_login"><u>Forgot password?</u></string>
+    <string name="sign_up"><u>Sign Up</u></string>
+    <string name="username_empty_error">The username should not be empty</string>
+    <string name="password_empty_error">The password should not be empty</string>
+    <string name="username_invalid_error">The username should be an email address</string>
+
+    <!-- Forgot Password Page -->
+    <string name="forgot_password"><u>Forgot Password</u></string>
+    <string name="email">Email</string>
+    <string name="send_email">Send email</string>
+    <string name="forgot_password_message">Enter your email address and we will send you a link to reset your password</string>
+    <string name="email_empty_error">The email should not be empty</string>
+    <string name="email_invalid_error">The email is not valid</string>
+
+    <!-- New Route -->
+    <string name="departure">Salida</string>
+    <string name="destination">Destino</string>
+    <string name="cost">Costo (S/)</string>
+    <string name="payment_method">Forma de pago</string>
+    <string name="departure_time">Partida</string>
+    <string name="contact">Contacto</string>
+    <string name="avenues_streets_comments">Avenidas, Calles, Comentarios</string>
+    <string name="publish">Publicar</string>
+    <string name="favorite">Favorite</string>
+    <string name="credit">Crédito</string>
+    <string name="cash">Contado</string>
+    <string name="add_route_form_error">Por favor, complete correctamente los campos</string>
+    <string name="add_route_from_empty_error">Ingrese el origen</string>
+    <string name="add_route_to_empty_error">Ingrese el destino</string>
+    <string name="add_route_cost_empty_error">Ingrese el costo</string>
+    <string name="add_route_departure_time_empty_error">Ingrese la hora de salida</string>
+    <string name="add_route_contact_empty_error">Ingrese el contacto</string>
+    <string name="add_route_streets_empty_error">Ingrese las avenidas o calles</string>
+
+    <!-- Page Detail -->
+    <string name="seat">Asientos</string>
+    <string name="available">Disponibles</string>
+    <string name="passengers">Pasajeros</string>
+    <string name="join">Unirte</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+</resources>

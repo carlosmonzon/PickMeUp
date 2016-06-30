@@ -1,0 +1,154 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_weight="1"
+    tools:context=".activity.AddRouteActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_vertical_margin">
+
+
+            <TextView
+                android:id="@+id/from_til"
+                android:textSize="12sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:text="@string/departure"/>
+
+            <Spinner
+                android:id="@+id/departure_spn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/from_til"
+                style="@style/Widget.AppCompat.Spinner.Underlined"
+                android:paddingTop="10dp"
+                android:layout_marginBottom="20dp"/>
+
+            <TextView
+                android:id="@+id/to_til"
+                android:textSize="12sp"
+                android:layout_below="@+id/departure_spn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:text="@string/destination"/>
+
+            <Spinner
+                android:id="@+id/destination_spn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/to_til"
+                style="@style/Widget.AppCompat.Spinner.Underlined"
+                android:paddingTop="10dp"
+                android:layout_marginBottom="20dp"/>
+
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/cost_til"
+                android:layout_below="@+id/destination_spn"
+                app:errorEnabled="true"
+                style="@style/addRouteLabel">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/cost_tiet"
+                    style="@style/addRouteEditText"
+                    android:inputType="numberDecimal"
+                    android:hint="@string/cost"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+            <TextView
+                android:id="@+id/payment_method_tv"
+                android:layout_below="@+id/cost_til"
+                android:textSize="12sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:text="@string/payment_method"/>
+
+            <Spinner
+                android:id="@+id/payment_method_spn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/payment_method_tv"
+                style="@style/Widget.AppCompat.Spinner.Underlined"
+                android:paddingTop="10dp"
+                android:layout_marginBottom="20dp"/>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/departure_time_til"
+                android:layout_below="@+id/payment_method_spn"
+                app:errorEnabled="true"
+                style="@style/addRouteLabel">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/departure_time_tiet"
+                    style="@style/addRouteEditText"
+                    android:hint="@string/departure_time"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/contact_til"
+                android:layout_below="@+id/departure_time_til"
+                app:errorEnabled="true"
+                style="@style/addRouteLabel">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/contact_tiet"
+                    style="@style/addRouteEditText"
+                    android:hint="@string/contact"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/streets_til"
+                android:layout_below="@+id/contact_til"
+                app:errorEnabled="true"
+                style="@style/addRouteLabel">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/streets_tiet"
+                    style="@style/addRouteEditText"
+                    android:gravity="top"
+                    android:hint="@string/avenues_streets_comments"
+                    android:lines="5"
+                    android:singleLine="false"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+            <Button
+                android:id="@+id/favorite_btn"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/streets_til"
+                android:text="@string/favorite"
+                android:textColor="@android:color/white"/>
+
+            <Button
+                android:id="@+id/publish_btn"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/favorite_btn"
+                android:text="@string/publish"
+                android:textColor="@android:color/white"/>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</ScrollView>
