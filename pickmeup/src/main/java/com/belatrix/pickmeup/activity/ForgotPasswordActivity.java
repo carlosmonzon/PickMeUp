@@ -18,9 +18,12 @@ import com.belatrix.pickmeup.R;
 public class ForgotPasswordActivity extends AppCompatActivity {
 
     private Button btnSendEmail;
+
     private TextInputEditText textEmail;
+
     private TextInputLayout tilEmail;
-    private boolean sendSuccess=false;
+
+    private boolean sendSuccess = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +38,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     }
 
     public void sendEmail(View view) {
-        if(!validateSendEmail()){
+        if (!validateSendEmail()) {
             onSendFailed();
             return;
         }
@@ -51,22 +54,22 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         String email = textEmail.getText().toString();
 
         //Todo: Call service to send email
-        sendSuccess=true;
+        sendSuccess = true;
 
         new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
                         // On complete call either onLoginSuccess or onLoginFailed
-                        if(sendSuccess){
+                        if (sendSuccess) {
                             onSendSuccess();
-                        }else{
+                        } else {
                             onSendFailed();
                         }
                         progressDialog.dismiss();
                     }
                 }, 3000);
 
-        if(sendSuccess){
+        if (sendSuccess) {
             goToLoginActivity(view);
         }
 
@@ -83,17 +86,17 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     }
 
 
-    public boolean validateSendEmail(){
+    public boolean validateSendEmail() {
         boolean valid = true;
 
         tilEmail.setError(null);
 
-        if(textEmail.getText().toString().trim().equals("")){
+        if (textEmail.getText().toString().trim().equals("")) {
             tilEmail.setError(getResources().getString(R.string.email_empty_error));
             valid = false;
         }
 
-        if(!isValidEmail(textEmail.getText().toString().trim())){
+        if (!isValidEmail(textEmail.getText().toString().trim())) {
             tilEmail.setError(getResources().getString(R.string.email_invalid_error));
             valid = false;
         }
@@ -102,7 +105,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
     }
 
-    public final static boolean isValidEmail(CharSequence target){
+    public final static boolean isValidEmail(CharSequence target) {
         return Patterns.EMAIL_ADDRESS.matcher(target).matches();
     }
 
