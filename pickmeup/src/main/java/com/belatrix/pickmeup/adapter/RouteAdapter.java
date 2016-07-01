@@ -35,7 +35,6 @@ public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.MyViewHolder
         holder.txtUserName.setText(route.getRouteOwner().getName());
         holder.txtDepartureTime.setText(route.getDepartureTime());
         holder.txtPlaceAvailable.setText(String.valueOf(route.getPlaceAvailable()));
-
         if (route.getPlaceAvailable() == 0) {
             holder.txtPlaceAvailable.setTextColor(Color.RED);
         }

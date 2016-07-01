@@ -1,21 +1,17 @@
 package com.belatrix.pickmeup.activity;
 
-import com.belatrix.pickmeup.Persistence.RouteFavoriteContract;
-import com.belatrix.pickmeup.Persistence.RouteFavoriteDBHelper;
 import com.belatrix.pickmeup.R;
 import com.belatrix.pickmeup.enums.Departure;
 import com.belatrix.pickmeup.enums.Destination;
-import com.belatrix.pickmeup.enums.PaymentType;
-import com.belatrix.pickmeup.enums.UserType;
-import com.belatrix.pickmeup.model.Route;
-import com.belatrix.pickmeup.model.User;
 
-import android.content.ContentValues;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
+<<<<<<< HEAD
+=======
+
+>>>>>>> HEAD@{15}
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -25,7 +21,6 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 public class AddRouteActivity extends AppCompatActivity {
@@ -63,8 +58,11 @@ public class AddRouteActivity extends AppCompatActivity {
     private TextInputLayout streetsTil;
 
     private TextInputEditText streetsTiet;
+<<<<<<< HEAD
 
     private Route route;
+=======
+>>>>>>> HEAD@{15}
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +75,6 @@ public class AddRouteActivity extends AppCompatActivity {
         departureSpn = (Spinner) findViewById(R.id.departure_spn);
         destinationSpn = (Spinner) findViewById(R.id.destination_spn);
         addRouteBtn = (Button) findViewById(R.id.publish_btn);
-        favoriteBtn = (Button) findViewById(R.id.favorite_btn);
         fromTil = (TextView) findViewById(R.id.from_til);
         fromTiet = (TextView) departureSpn.getSelectedView();
         toTil = (TextView) findViewById(R.id.to_til);
@@ -94,6 +91,7 @@ public class AddRouteActivity extends AppCompatActivity {
         //set data to Lists
         setLists();
 
+<<<<<<< HEAD
         favoriteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -112,6 +110,8 @@ public class AddRouteActivity extends AppCompatActivity {
             }
         });
 
+=======
+>>>>>>> HEAD@{15}
         addRouteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -208,6 +208,7 @@ public class AddRouteActivity extends AppCompatActivity {
         destinationSpn.setAdapter(destinationAdapter);
     }
 
+<<<<<<< HEAD
     public void saveFavoriteRoute(Route route) {
         RouteFavoriteDBHelper dbHelper = new RouteFavoriteDBHelper(getApplicationContext());
         SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -230,4 +231,6 @@ public class AddRouteActivity extends AppCompatActivity {
     }
 
 
+=======
+>>>>>>> HEAD@{15}
 }
