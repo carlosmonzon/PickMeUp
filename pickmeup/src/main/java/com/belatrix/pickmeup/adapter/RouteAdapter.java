@@ -1,14 +1,18 @@
 package com.belatrix.pickmeup.adapter;
 
 import com.belatrix.pickmeup.R;
+import com.belatrix.pickmeup.activity.DetailPageActivity;
 import com.belatrix.pickmeup.model.Route;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -34,8 +38,9 @@ public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.MyViewHolder
         if (route.getPlaceAvailable() == 0) {
             holder.txtPlaceAvailable.setTextColor(Color.RED);
         }
-
     }
+
+
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -50,20 +55,33 @@ public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.MyViewHolder
         return routeList.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         public TextView txtDepartureName, txtDestinationName, txtUserName, txtDepartureTime,
                 txtPlaceAvailable;
 
 
+        private final Context context;
+
         public MyViewHolder(View view) {
             super(view);
+
+            context = view.getContext();
 
             txtDepartureName = (TextView) view.findViewById(R.id.txtDepartureName);
             txtDestinationName = (TextView) view.findViewById(R.id.txtDestinationName);
             txtUserName = (TextView) view.findViewById(R.id.txtUserName);
             txtDepartureTime = (TextView) view.findViewById(R.id.txtDepartureTime);
             txtPlaceAvailable = (TextView) view.findViewById(R.id.txtPlaceAvailable);
+
+            view.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            final Intent intent;
+            intent =  new Intent(context, DetailPageActivity.class);
+            context.startActivity(intent);
         }
     }
 

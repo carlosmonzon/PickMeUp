@@ -1,0 +1,22 @@
+[
+    {
+        "merged": "/home/amgel/workspace/android/pickmeup1/PickMeUp/app/build/intermediates/res/merged/debug/menu/test_navigation.xml",
+        "source": "/home/amgel/workspace/android/pickmeup1/PickMeUp/app/src/main/res/menu/test_navigation.xml"
+    },
+    {
+        "merged": "/home/amgel/workspace/android/pickmeup1/PickMeUp/app/build/intermediates/res/merged/debug/menu/menu_add_route.xml",
+        "source": "/home/amgel/workspace/android/pickmeup1/PickMeUp/app/src/main/res/menu/menu_add_route.xml"
+    },
+    {
+        "merged": "/home/amgel/workspace/android/pickmeup1/PickMeUp/app/build/intermediates/res/merged/debug/menu/nav_drawer.xml",
+        "source": "/home/amgel/workspace/android/pickmeup1/PickMeUp/app/src/main/res/menu/nav_drawer.xml"
+    },
+    {
+        "merged": "/home/amgel/workspace/android/pickmeup1/PickMeUp/app/build/intermediates/res/merged/debug/menu/activity_test_navigation_drawer.xml",
+        "source": "/home/amgel/workspace/android/pickmeup1/PickMeUp/app/src/main/res/menu/activity_test_navigation_drawer.xml"
+    },
+    {
+        "merged": "/home/amgel/workspace/android/pickmeup1/PickMeUp/app/build/intermediates/res/merged/debug/menu/activity_nav_drawer_drawer.xml",
+        "source": "/home/amgel/workspace/android/pickmeup1/PickMeUp/app/src/main/res/menu/activity_nav_drawer_drawer.xml"
+    }
+]

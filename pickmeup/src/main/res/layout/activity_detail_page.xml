@@ -1,211 +1,156 @@
-<?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:tools="http://schemas.android.com/tools"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_weight="1"
+    tools:context=".activity.DetailPageActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="0dp"
-        android:paddingRight="0dp"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/message_txv"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0"
-            android:background="@color/colorMessage"
-            android:padding="10dp"
-            android:text="@string/page_datail"
-            android:textAlignment="center"
-            android:textColor="@android:color/black"
-            android:textSize="18sp"
-            android:layout_alignParentLeft="true"/>
+            android:layout_height="match_parent"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_vertical_margin">
 
-        <TextView
-            android:id="@+id/from_txvlabel"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:paddingLeft="30dp"
-            android:layout_alignParentLeft="true"
-            android:layout_toLeftOf="@+id/from_txvdata"
-            android:layout_below="@+id/message_txv"
-            style="@style/pageDatailLabel"
-            android:text="Salida: "/>
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/from_til_label"
+                app:errorEnabled="true"
+                style="@style/pageDatailLabel">
 
-        <TextView
-            android:id="@+id/from_txvdata"
-            android:layout_width="230dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/message_txv"
-            style="@style/pageDatailData"
-            android:text="Belatrix - Panama"/>
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/from_tiet_data"
+                    style="@style/pageDatailData"
+                    android:hint="@string/departure" />
 
-        <TextView
-            android:id="@+id/dest_txvlabel"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:paddingLeft="30dp"
-            android:layout_alignParentLeft="true"
-            android:layout_toLeftOf="@+id/from_txvdata"
-            android:layout_below="@+id/from_txvlabel"
-            style="@style/pageDatailLabel"
-            android:text="Destino: "/>
+            </android.support.design.widget.TextInputLayout>
 
-        <TextView
-            android:id="@+id/dest_txvdata"
-            android:layout_width="230dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/from_txvlabel"
-            style="@style/pageDatailData"
-            android:text="La Molina"/>
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/to_til_label"
+                android:layout_below="@+id/from_til_label"
+                app:errorEnabled="true"
+                style="@style/pageDatailLabel">
 
-        <TextView
-            android:id="@+id/cost_txvlabel"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:paddingLeft="30dp"
-            android:layout_alignParentLeft="true"
-            android:layout_toLeftOf="@+id/from_txvdata"
-            android:layout_below="@+id/dest_txvlabel"
-            style="@style/pageDatailLabel"
-            android:text="Costo (S/.): "/>
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/to_tiet_data"
+                    style="@style/pageDatailData"
+                    android:hint="@string/destination"/>
 
-        <TextView
-            android:id="@+id/cost_txvdata"
-            android:layout_width="230dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/dest_txvlabel"
-            style="@style/pageDatailData"
-            android:text="S/. 20.00"/>
+            </android.support.design.widget.TextInputLayout>
 
-        <TextView
-            android:id="@+id/hour_txvlabel"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:paddingLeft="30dp"
-            android:layout_alignParentLeft="true"
-            android:layout_toLeftOf="@+id/from_txvdata"
-            android:layout_below="@+id/cost_txvlabel"
-            style="@style/pageDatailLabel"
-            android:text="Partida: "/>
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/cost_til_label"
+                android:layout_below="@+id/to_til_label"
+                app:errorEnabled="true"
+                style="@style/pageDatailLabel">
 
-        <TextView
-            android:id="@+id/hour_txvdata"
-            android:layout_width="230dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/cost_txvlabel"
-            style="@style/pageDatailData"
-            android:text="5:15 pm"/>
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/cost_tiet_data"
+                    style="@style/pageDatailData"
+                    android:inputType="numberDecimal"
+                    android:hint="@string/cost"/>
 
-        <TextView
-            android:id="@+id/contact_txvlabel"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:paddingLeft="30dp"
-            android:layout_alignParentLeft="true"
-            android:layout_toLeftOf="@+id/from_txvdata"
-            android:layout_below="@+id/hour_txvlabel"
-            style="@style/pageDatailLabel"
-            android:text="Contacto: "/>
+            </android.support.design.widget.TextInputLayout>
 
-        <TextView
-            android:id="@+id/contact_txvdata"
-            android:layout_width="230dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/hour_txvlabel"
-            style="@style/pageDatailData"
-            android:text="Carlos Monzon"/>
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/departure_time_til_label"
+                android:layout_below="@+id/cost_til_label"
+                app:errorEnabled="true"
+                style="@style/pageDatailLabel">
 
-        <TextView
-            android:id="@+id/address_txvlabel"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:paddingLeft="30dp"
-            android:layout_alignParentLeft="true"
-            android:layout_toLeftOf="@+id/from_txvdata"
-            android:layout_below="@+id/contact_txvlabel"
-            style="@style/pageDatailLabel"
-            android:text="Avenidas      Calles      Comentarios: "/>
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/departure_time_tiet_data"
+                    style="@style/pageDatailData"
+                    android:hint="@string/departure_time"/>
 
-        <TextView
-            android:id="@+id/address_txvdata"
-            android:layout_width="230dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/contact_txvlabel"
-            style="@style/pageDatailData"
-            android:text="Republica de Panama               Todo javier prado                       Jockey plaza"/>
+            </android.support.design.widget.TextInputLayout>
 
-        <TextView
-            android:id="@+id/seat_txvlabel"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:paddingLeft="30dp"
-            android:layout_alignParentLeft="true"
-            android:layout_toLeftOf="@+id/from_txvdata"
-            android:layout_below="@+id/address_txvlabel"
-            style="@style/pageDatailLabel"
-            android:text="Asientos: "/>
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/contact_til_label"
+                android:layout_below="@+id/departure_time_til_label"
+                app:errorEnabled="true"
+                style="@style/pageDatailLabel">
 
-        <TextView
-            android:id="@+id/seat_txvdata"
-            android:layout_width="230dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/address_txvlabel"
-            style="@style/pageDatailData"
-            android:text="3"/>
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/contact_tiet_data"
+                    style="@style/pageDatailData"
+                    android:hint="@string/contact"/>
 
-        <TextView
-            android:id="@+id/freeseat_txvlabel"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:paddingLeft="30dp"
-            android:layout_alignParentLeft="true"
-            android:layout_toLeftOf="@+id/from_txvdata"
-            android:layout_below="@+id/seat_txvlabel"
-            style="@style/pageDatailLabel"
-            android:text="Disponibles: "/>
+            </android.support.design.widget.TextInputLayout>
 
-        <TextView
-            android:id="@+id/freeseat_txvdata"
-            android:layout_width="230dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/seat_txvlabel"
-            style="@style/pageDatailData"
-            android:text="1"/>
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/streets_til_label"
+                android:layout_below="@+id/contact_til_label"
+                app:errorEnabled="true"
+                style="@style/pageDatailLabel">
 
-        <TextView
-            android:id="@+id/passenger_txvlabel"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:paddingLeft="30dp"
-            android:layout_alignParentLeft="true"
-            android:layout_toLeftOf="@+id/from_txvdata"
-            android:layout_below="@+id/freeseat_txvlabel"
-            style="@style/pageDatailLabel"
-            android:text="Pasajeros: "/>
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/streets_tiet_data"
+                    style="@style/pageDatailData"
+                    android:gravity="top"
+                    android:hint="@string/avenues_streets_comments"
+                    android:lines="5"
+                    android:singleLine="false"/>
 
-        <TextView
-            android:id="@+id/passenger_txvdata"
-            android:layout_width="230dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/freeseat_txvlabel"
-            style="@style/pageDatailData"
-            android:text="Juan Perez                                Carlos Monzon"/>
+            </android.support.design.widget.TextInputLayout>
 
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/seat_til_label"
+                android:layout_below="@+id/streets_til_label"
+                app:errorEnabled="true"
+                style="@style/pageDatailLabel">
 
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/seat_tiet_data"
+                    style="@style/pageDatailData"
+                    android:hint="@string/seat"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/available_til_label"
+                android:layout_below="@+id/seat_til_label"
+                app:errorEnabled="true"
+                style="@style/pageDatailLabel">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/available_tiet_data"
+                    style="@style/pageDatailData"
+                    android:hint="@string/available"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/passegers_til_label"
+                android:layout_below="@+id/available_til_label"
+                app:errorEnabled="true"
+                style="@style/pageDatailLabel">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/passengers_tiet_data"
+                    style="@style/pageDatailData"
+                    android:gravity="top"
+                    android:hint="@string/passengers"
+                    android:lines="4"
+                    android:singleLine="false"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+            <Button
+                android:id="@+id/join_btn"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/passegers_til_label"
+                android:text="@string/join"
+                android:textColor="@android:color/white"/>
+
+        </RelativeLayout>
     </RelativeLayout>
 
 </ScrollView>
-

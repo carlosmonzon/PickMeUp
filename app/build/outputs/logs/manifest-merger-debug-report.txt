@@ -1,0 +1,121 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /home/amgel/workspace/android/pickmeup1/PickMeUp/app/src/main/AndroidManifest.xml:2:1-38:12
+	package
+		ADDED from /home/amgel/workspace/android/pickmeup1/PickMeUp/app/src/main/AndroidManifest.xml:3:11-42
+		INJECTED from /home/amgel/workspace/android/pickmeup1/PickMeUp/app/src/main/AndroidManifest.xml
+		INJECTED from /home/amgel/workspace/android/pickmeup1/PickMeUp/app/src/main/AndroidManifest.xml
+	android:versionName
+		INJECTED from /home/amgel/workspace/android/pickmeup1/PickMeUp/app/src/main/AndroidManifest.xml
+		INJECTED from /home/amgel/workspace/android/pickmeup1/PickMeUp/app/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /home/amgel/workspace/android/pickmeup1/PickMeUp/app/src/main/AndroidManifest.xml:2:11-69
+	android:versionCode
+		INJECTED from /home/amgel/workspace/android/pickmeup1/PickMeUp/app/src/main/AndroidManifest.xml
+		INJECTED from /home/amgel/workspace/android/pickmeup1/PickMeUp/app/src/main/AndroidManifest.xml
+application
+ADDED from /home/amgel/workspace/android/pickmeup1/PickMeUp/app/src/main/AndroidManifest.xml:5:5-36:19
+MERGED from [com.android.support:appcompat-v7:23.4.0] /home/amgel/workspace/android/pickmeup1/PickMeUp/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.4.0/AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:animated-vector-drawable:23.4.0] /home/amgel/workspace/android/pickmeup1/PickMeUp/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/23.4.0/AndroidManifest.xml:7:5-20
+MERGED from [com.android.support:support-vector-drawable:23.4.0] /home/amgel/workspace/android/pickmeup1/PickMeUp/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.4.0/AndroidManifest.xml:7:5-20
+MERGED from [com.android.support:support-v4:23.4.0] /home/amgel/workspace/android/pickmeup1/PickMeUp/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-v4:23.4.0] /home/amgel/workspace/android/pickmeup1/PickMeUp/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-vector-drawable:23.4.0] /home/amgel/workspace/android/pickmeup1/PickMeUp/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.4.0/AndroidManifest.xml:7:5-20
+MERGED from [com.android.support:support-v4:23.4.0] /home/amgel/workspace/android/pickmeup1/PickMeUp/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:cardview-v7:23.4.0] /home/amgel/workspace/android/pickmeup1/PickMeUp/app/build/intermediates/exploded-aar/com.android.support/cardview-v7/23.4.0/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:design:23.4.0] /home/amgel/workspace/android/pickmeup1/PickMeUp/app/build/intermediates/exploded-aar/com.android.support/design/23.4.0/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-v4:23.4.0] /home/amgel/workspace/android/pickmeup1/PickMeUp/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:appcompat-v7:23.4.0] /home/amgel/workspace/android/pickmeup1/PickMeUp/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.4.0/AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:animated-vector-drawable:23.4.0] /home/amgel/workspace/android/pickmeup1/PickMeUp/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/23.4.0/AndroidManifest.xml:7:5-20
+MERGED from [com.android.support:support-vector-drawable:23.4.0] /home/amgel/workspace/android/pickmeup1/PickMeUp/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.4.0/AndroidManifest.xml:7:5-20
+MERGED from [com.android.support:support-v4:23.4.0] /home/amgel/workspace/android/pickmeup1/PickMeUp/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-v4:23.4.0] /home/amgel/workspace/android/pickmeup1/PickMeUp/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-vector-drawable:23.4.0] /home/amgel/workspace/android/pickmeup1/PickMeUp/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.4.0/AndroidManifest.xml:7:5-20
+MERGED from [com.android.support:support-v4:23.4.0] /home/amgel/workspace/android/pickmeup1/PickMeUp/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-v4:23.4.0] /home/amgel/workspace/android/pickmeup1/PickMeUp/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-v4:23.4.0] /home/amgel/workspace/android/pickmeup1/PickMeUp/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-v4:23.4.0] /home/amgel/workspace/android/pickmeup1/PickMeUp/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/AndroidManifest.xml:22:5-20
+	android:label
+		ADDED from /home/amgel/workspace/android/pickmeup1/PickMeUp/app/src/main/AndroidManifest.xml:8:13-45
+	android:supportsRtl
+		ADDED from /home/amgel/workspace/android/pickmeup1/PickMeUp/app/src/main/AndroidManifest.xml:9:13-39
+	android:allowBackup
+		ADDED from /home/amgel/workspace/android/pickmeup1/PickMeUp/app/src/main/AndroidManifest.xml:6:13-39
+	android:icon
+		ADDED from /home/amgel/workspace/android/pickmeup1/PickMeUp/app/src/main/AndroidManifest.xml:7:13-47
+	android:theme
+		ADDED from /home/amgel/workspace/android/pickmeup1/PickMeUp/app/src/main/AndroidManifest.xml:10:13-44
+activity#com.belatrix.pickmeup.activity.EmptyActivity
+ADDED from /home/amgel/workspace/android/pickmeup1/PickMeUp/app/src/main/AndroidManifest.xml:11:9-17:20
+	android:name
+		ADDED from /home/amgel/workspace/android/pickmeup1/PickMeUp/app/src/main/AndroidManifest.xml:11:19-57
+intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
+ADDED from /home/amgel/workspace/android/pickmeup1/PickMeUp/app/src/main/AndroidManifest.xml:12:13-16:29
+action#android.intent.action.MAIN
+ADDED from /home/amgel/workspace/android/pickmeup1/PickMeUp/app/src/main/AndroidManifest.xml:13:17-68
+	android:name
+		ADDED from /home/amgel/workspace/android/pickmeup1/PickMeUp/app/src/main/AndroidManifest.xml:13:25-66
+category#android.intent.category.LAUNCHER
+ADDED from /home/amgel/workspace/android/pickmeup1/PickMeUp/app/src/main/AndroidManifest.xml:15:17-76
+	android:name
+		ADDED from /home/amgel/workspace/android/pickmeup1/PickMeUp/app/src/main/AndroidManifest.xml:15:27-74
+activity#com.belatrix.pickmeup.activity.HomeActivity
+ADDED from /home/amgel/workspace/android/pickmeup1/PickMeUp/app/src/main/AndroidManifest.xml:21:9-24:62
+	android:label
+		ADDED from /home/amgel/workspace/android/pickmeup1/PickMeUp/app/src/main/AndroidManifest.xml:23:17-49
+	android:theme
+		ADDED from /home/amgel/workspace/android/pickmeup1/PickMeUp/app/src/main/AndroidManifest.xml:24:17-60
+	android:name
+		ADDED from /home/amgel/workspace/android/pickmeup1/PickMeUp/app/src/main/AndroidManifest.xml:22:17-54
+activity#com.belatrix.pickmeup.activity.AddRouteActivity
+ADDED from /home/amgel/workspace/android/pickmeup1/PickMeUp/app/src/main/AndroidManifest.xml:25:9-27:67
+	android:label
+		ADDED from /home/amgel/workspace/android/pickmeup1/PickMeUp/app/src/main/AndroidManifest.xml:27:17-65
+	android:name
+		ADDED from /home/amgel/workspace/android/pickmeup1/PickMeUp/app/src/main/AndroidManifest.xml:26:17-58
+activity#com.belatrix.pickmeup.activity.LoginActivity
+ADDED from /home/amgel/workspace/android/pickmeup1/PickMeUp/app/src/main/AndroidManifest.xml:28:9-31:57
+	android:label
+		ADDED from /home/amgel/workspace/android/pickmeup1/PickMeUp/app/src/main/AndroidManifest.xml:30:13-57
+	android:theme
+		ADDED from /home/amgel/workspace/android/pickmeup1/PickMeUp/app/src/main/AndroidManifest.xml:31:13-55
+	android:name
+		ADDED from /home/amgel/workspace/android/pickmeup1/PickMeUp/app/src/main/AndroidManifest.xml:29:13-51
+activity#com.belatrix.pickmeup.activity.DetailPageActivity
+ADDED from /home/amgel/workspace/android/pickmeup1/PickMeUp/app/src/main/AndroidManifest.xml:33:9-35:57
+	android:label
+		ADDED from /home/amgel/workspace/android/pickmeup1/PickMeUp/app/src/main/AndroidManifest.xml:35:13-45
+	android:name
+		ADDED from /home/amgel/workspace/android/pickmeup1/PickMeUp/app/src/main/AndroidManifest.xml:34:13-56
+uses-sdk
+INJECTED from /home/amgel/workspace/android/pickmeup1/PickMeUp/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
+MERGED from [com.android.support:appcompat-v7:23.4.0] /home/amgel/workspace/android/pickmeup1/PickMeUp/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.4.0/AndroidManifest.xml:21:5-23:78
+MERGED from [com.android.support:animated-vector-drawable:23.4.0] /home/amgel/workspace/android/pickmeup1/PickMeUp/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/23.4.0/AndroidManifest.xml:5:5-44
+MERGED from [com.android.support:support-vector-drawable:23.4.0] /home/amgel/workspace/android/pickmeup1/PickMeUp/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.4.0/AndroidManifest.xml:5:5-43
+MERGED from [com.android.support:support-v4:23.4.0] /home/amgel/workspace/android/pickmeup1/PickMeUp/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:support-v4:23.4.0] /home/amgel/workspace/android/pickmeup1/PickMeUp/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:support-vector-drawable:23.4.0] /home/amgel/workspace/android/pickmeup1/PickMeUp/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.4.0/AndroidManifest.xml:5:5-43
+MERGED from [com.android.support:support-v4:23.4.0] /home/amgel/workspace/android/pickmeup1/PickMeUp/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:cardview-v7:23.4.0] /home/amgel/workspace/android/pickmeup1/PickMeUp/app/build/intermediates/exploded-aar/com.android.support/cardview-v7/23.4.0/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:design:23.4.0] /home/amgel/workspace/android/pickmeup1/PickMeUp/app/build/intermediates/exploded-aar/com.android.support/design/23.4.0/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:recyclerview-v7:23.4.0] /home/amgel/workspace/android/pickmeup1/PickMeUp/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.4.0/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:support-v4:23.4.0] /home/amgel/workspace/android/pickmeup1/PickMeUp/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:appcompat-v7:23.4.0] /home/amgel/workspace/android/pickmeup1/PickMeUp/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.4.0/AndroidManifest.xml:21:5-23:78
+MERGED from [com.android.support:animated-vector-drawable:23.4.0] /home/amgel/workspace/android/pickmeup1/PickMeUp/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/23.4.0/AndroidManifest.xml:5:5-44
+MERGED from [com.android.support:support-vector-drawable:23.4.0] /home/amgel/workspace/android/pickmeup1/PickMeUp/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.4.0/AndroidManifest.xml:5:5-43
+MERGED from [com.android.support:support-v4:23.4.0] /home/amgel/workspace/android/pickmeup1/PickMeUp/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:support-v4:23.4.0] /home/amgel/workspace/android/pickmeup1/PickMeUp/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:support-vector-drawable:23.4.0] /home/amgel/workspace/android/pickmeup1/PickMeUp/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.4.0/AndroidManifest.xml:5:5-43
+MERGED from [com.android.support:support-v4:23.4.0] /home/amgel/workspace/android/pickmeup1/PickMeUp/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:support-v4:23.4.0] /home/amgel/workspace/android/pickmeup1/PickMeUp/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:recyclerview-v7:23.4.0] /home/amgel/workspace/android/pickmeup1/PickMeUp/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.4.0/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:support-v4:23.4.0] /home/amgel/workspace/android/pickmeup1/PickMeUp/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:support-v4:23.4.0] /home/amgel/workspace/android/pickmeup1/PickMeUp/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/AndroidManifest.xml:20:5-43
+	tools:overrideLibrary
+		ADDED from [com.android.support:appcompat-v7:23.4.0] /home/amgel/workspace/android/pickmeup1/PickMeUp/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.4.0/AndroidManifest.xml:23:9-75
+	android:targetSdkVersion
+		INJECTED from /home/amgel/workspace/android/pickmeup1/PickMeUp/app/src/main/AndroidManifest.xml
+		INJECTED from /home/amgel/workspace/android/pickmeup1/PickMeUp/app/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /home/amgel/workspace/android/pickmeup1/PickMeUp/app/src/main/AndroidManifest.xml
+		INJECTED from /home/amgel/workspace/android/pickmeup1/PickMeUp/app/src/main/AndroidManifest.xml
