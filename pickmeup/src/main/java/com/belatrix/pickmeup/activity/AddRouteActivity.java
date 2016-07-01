@@ -1,21 +1,14 @@
 package com.belatrix.pickmeup.activity;
 
-import com.belatrix.pickmeup.Persistence.RouteFavoriteContract;
-import com.belatrix.pickmeup.Persistence.RouteFavoriteDBHelper;
 import com.belatrix.pickmeup.R;
 import com.belatrix.pickmeup.enums.Departure;
 import com.belatrix.pickmeup.enums.Destination;
-import com.belatrix.pickmeup.enums.PaymentType;
-import com.belatrix.pickmeup.enums.UserType;
-import com.belatrix.pickmeup.model.Route;
-import com.belatrix.pickmeup.model.User;
 
-import android.content.ContentValues;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
+
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -25,7 +18,6 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 public class AddRouteActivity extends AppCompatActivity {
@@ -37,8 +29,6 @@ public class AddRouteActivity extends AppCompatActivity {
     private Spinner destinationSpn;
 
     private Button addRouteBtn;
-
-    private Button favoriteBtn;
 
     private TextView fromTil;
 
@@ -64,8 +54,6 @@ public class AddRouteActivity extends AppCompatActivity {
 
     private TextInputEditText streetsTiet;
 
-    private Route route;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,7 +65,6 @@ public class AddRouteActivity extends AppCompatActivity {
         departureSpn = (Spinner) findViewById(R.id.departure_spn);
         destinationSpn = (Spinner) findViewById(R.id.destination_spn);
         addRouteBtn = (Button) findViewById(R.id.publish_btn);
-        favoriteBtn = (Button) findViewById(R.id.favorite_btn);
         fromTil = (TextView) findViewById(R.id.from_til);
         fromTiet = (TextView) departureSpn.getSelectedView();
         toTil = (TextView) findViewById(R.id.to_til);
@@ -93,24 +80,6 @@ public class AddRouteActivity extends AppCompatActivity {
 
         //set data to Lists
         setLists();
-
-        favoriteBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    route = new Route(Departure.valueOf(departureSpn.getSelectedItem().toString()),
-                            Destination.valueOf(destinationSpn.getSelectedItem().toString()),
-                            Double.parseDouble(costTiet.getText().toString()),
-                            PaymentType.valueOf("CASH"),
-                            new User(1, contactTiet.getText().toString(),
-                                    contactTiet.getText().toString() + "@belatrixdf.com", UserType.OWNER),
-                            "" + new Date(), streetsTiet.getText().toString());
-                } catch (Exception e) {
-
-                }
-                saveFavoriteRoute(route);
-            }
-        });
 
         addRouteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -207,27 +176,5 @@ public class AddRouteActivity extends AppCompatActivity {
         departureSpn.setAdapter(departureAdapter);
         destinationSpn.setAdapter(destinationAdapter);
     }
-
-    public void saveFavoriteRoute(Route route) {
-        RouteFavoriteDBHelper dbHelper = new RouteFavoriteDBHelper(getApplicationContext());
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(RouteFavoriteContract.FavoriteEntry.COLUMN_NAME_DEPARTURE, route.getDeparture().toString());
-        values.put(RouteFavoriteContract.FavoriteEntry.COLUMN_NAME_DESTINE, route.getDestination().toString());
-        values.put(RouteFavoriteContract.FavoriteEntry.COLUMN_NAME_COST, route.getCost());
-        values.put(RouteFavoriteContract.FavoriteEntry.COLUMN_NAME_PAYMENT_TYPE, route.getPaymentType().toString());
-        values.put(RouteFavoriteContract.FavoriteEntry.COLUMN_NAME_DEPARTURE_TIME, route.getDepartureTime());
-        values.put(RouteFavoriteContract.FavoriteEntry.COLUMN_NAME_CONTACT, route.getRouteOwner().getName());
-        values.put(RouteFavoriteContract.FavoriteEntry.COLUMN_NAME_ADDRESS, route.getAddressDestination());
-
-        long newRowId = db.insert(
-                RouteFavoriteContract.FavoriteEntry.TABLE_NAME,
-                RouteFavoriteContract.FavoriteEntry.COLUMN_NAME_ADDRESS,
-                values);
-
-        Toast.makeText(getApplicationContext(), "Saved id: " + newRowId, Toast.LENGTH_SHORT).show();
-
-    }
-
 
 }
