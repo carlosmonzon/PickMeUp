@@ -1,10 +1,10 @@
 package com.belatrix.pickmeup.activity;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -17,6 +17,17 @@ import android.support.design.widget.TextInputLayout;
 import android.app.ProgressDialog;
 
 import com.belatrix.pickmeup.R;
+import com.belatrix.pickmeup.model.Passenger;
+import com.belatrix.pickmeup.rest.PickMeUpClient;
+import com.belatrix.pickmeup.rest.ServiceGenerator;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by root on 13/05/16.
@@ -160,6 +171,36 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void goToSignIn(View view) {
+
+        PickMeUpClient client = ServiceGenerator.createService(PickMeUpClient.class);
+
+        Call<List<Passenger>> callPassengers = client.getPassengers();
+        // Synchronous Call in Retrofit 2.0
+        /*List<Passenger> passengers = new ArrayList<>();
+        try {
+            passengers = callPassengers.execute().body();
+        }catch (IOException e){
+            Log.e("Get Passengers",e.toString());
+        }
+        for(Passenger passenger : passengers){
+            Log.d("Passenger", passenger.getUserName());
+        }*/
+        // Asynchronous Call in Retrofit 2.0
+        callPassengers.enqueue(new Callback<List<Passenger>>() {
+            @Override
+            public void onResponse(Call<List<Passenger>> call, Response<List<Passenger>> response) {
+                List<Passenger> passengers = response.body();
+                for(Passenger passenger : passengers){
+                    Log.d("Passenger", passenger.getUserName());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Passenger>> call, Throwable t) {
+                Log.e("Get Passengers",t.toString());
+            }
+        });
+
         //Todo: Go to Sign In
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
