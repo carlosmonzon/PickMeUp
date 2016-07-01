@@ -27,6 +27,9 @@ public class Route {
 
     private String addressDestination;
 
+    public Route(){
+        //empty constructor
+    }
     public Route(int id, Departure departure, Destination destination, User routeOwner, String departureTime,
             int placeAvailable) {
         this.setId(id);

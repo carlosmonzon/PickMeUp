@@ -1,6 +1,5 @@
 package com.belatrix.pickmeup.activity;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -17,11 +16,13 @@ import android.support.design.widget.TextInputLayout;
 import android.app.ProgressDialog;
 
 import com.belatrix.pickmeup.R;
+import com.belatrix.pickmeup.model.Credentials;
+import com.belatrix.pickmeup.util.SharedPreferenceManager;
 
 /**
  * Created by root on 13/05/16.
  */
-public class LoginActivity extends AppCompatActivity {
+public class  LoginActivity extends AppCompatActivity {
 
     private static final String TAG = "LoginActivity";
 
@@ -46,6 +47,10 @@ public class LoginActivity extends AppCompatActivity {
 
     private boolean authenticated = false;
 
+    private  SharedPreferences sharedPref;
+
+    private Credentials credentials;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,8 +63,12 @@ public class LoginActivity extends AppCompatActivity {
         tilUsername = (TextInputLayout) findViewById(R.id.username_til);
         tilPassword = (TextInputLayout) findViewById(R.id.password_til);
         chRemember = (CheckBox) findViewById(R.id.checkBoxRemember);
-        readCredentials();
+        sharedPref = getPreferences(Context.MODE_PRIVATE);
+        credentials = SharedPreferenceManager.readCredentials(sharedPref);
 
+        inputUsername.setText(credentials.getUsername());
+        inputPassword.setText(credentials.getPassword());
+        chRemember.setChecked(credentials.getRemember());
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
 
@@ -98,12 +107,13 @@ public class LoginActivity extends AppCompatActivity {
         progressDialog.setMessage("Authenticating...");
         progressDialog.show();
 
-        String username = inputUsername.getText().toString();
-        String password = inputPassword.getText().toString();
+        credentials.setUsername(inputUsername.getText().toString());
+        credentials.setPassword(inputPassword.getText().toString());
+        credentials.setRemember(chRemember.isChecked());
 
         //Todo: Call service for authentication and Authorization
-        if (username.equals("admin@pickmeup.com") &&
-                password.equals("admin")) {
+        if (credentials.getUsername().equals("admin@pickmeup.com") &&
+                credentials.getPassword().equals("admin")) {
             authenticated = true;
         } else {
             authenticated = false;
@@ -128,7 +138,7 @@ public class LoginActivity extends AppCompatActivity {
                 }, 3000);
 
         if(authenticated){
-            checkPreferences();
+            SharedPreferenceManager.checkPreferences(sharedPref, credentials);
             goToHomeActivity(view);
         }
     }
@@ -191,36 +201,8 @@ public class LoginActivity extends AppCompatActivity {
         return Patterns.EMAIL_ADDRESS.matcher(target).matches();
     }
 
-    public void checkPreferences(){
-        String username = inputUsername.getText().toString();
-        String password = inputPassword.getText().toString();
-        Boolean remember = chRemember.isChecked();
 
-        if (remember){
-            saveCredentials(username, password, remember);
-        }else{
-            saveCredentials(null,null,false);
-        }
-    }
 
-    public void saveCredentials(String username,String password, Boolean remember){
-        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString("username", username);
-        editor.putString("password", password);
-        editor.putBoolean("remember", remember);
-        editor.commit();
-    }
 
-    public void readCredentials(){
-        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
-        String username = sharedPref.getString("username", null);
-        String password = sharedPref.getString("password", null);
-        Boolean remember = sharedPref.getBoolean("remember", false);
-
-        inputUsername.setText(username);
-        inputPassword.setText(password);
-        chRemember.setChecked(remember);
-    }
 
 }
