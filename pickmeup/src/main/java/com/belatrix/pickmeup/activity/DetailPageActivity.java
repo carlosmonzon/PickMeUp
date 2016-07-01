@@ -1,27 +1,25 @@
 package com.belatrix.pickmeup.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.belatrix.pickmeup.R;
 import com.belatrix.pickmeup.model.MyRoute;
-import com.belatrix.pickmeup.service.PickMeUpService;
+import com.belatrix.pickmeup.rest.PickMeUpClient;
+import com.belatrix.pickmeup.rest.ServiceGenerator;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
-public class DetailPageActivity extends AppCompatActivity implements Callback<MyRoute> {
+public class DetailPageActivity extends AppCompatActivity {
 
     private RelativeLayout rlLoading;
     private ScrollView svRoute;
@@ -62,38 +60,34 @@ public class DetailPageActivity extends AppCompatActivity implements Callback<My
         if (routeId > 2)
             routeId = 1;
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://pickmeup-belatrix.firebaseio.com/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+        Call<MyRoute> call = ServiceGenerator.createService(PickMeUpClient.class).getRoute(routeId);
 
-        PickMeUpService pickMeUpService = retrofit.create(PickMeUpService.class);
+        call.enqueue(new Callback<MyRoute>() {
 
-        Call<MyRoute> call = pickMeUpService.getRoute(routeId);
-        call.enqueue(this);
-    }
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onResponse(Call<MyRoute> call, Response<MyRoute> response) {
+                rlLoading.setVisibility(View.GONE);
+                svRoute.setVisibility(View.VISIBLE);
 
-    @Override
-    public void onResponse(Call<MyRoute> call, Response<MyRoute> response) {
-        rlLoading.setVisibility(View.GONE);
-        svRoute.setVisibility(View.VISIBLE);
+                MyRoute route = response.body();
 
-        MyRoute route = response.body();
+                fromInput.setText(route.getDeparture());
+                fromInput.setEnabled(false);
+                toInput.setText(route.getArrival());
+                costInput.setText("");
+                departureTimeInput.setText("");
+                contactInput.setText(route.getContact().getFirstName() + " " + route.getContact().getLastName());
+                streetsInput.setText("");
+                seatInput.setText(String.valueOf(route.getSits()));
+                availableInput.setText("");
+                passengersInput.setText("");
+            }
 
-        fromInput.setText(route.getDeparture());
-        fromInput.setEnabled(false);
-        toInput.setText(route.getArrival());
-        costInput.setText("");
-        departureTimeInput.setText("");
-        contactInput.setText(route.getContact().getFirstName() + " " + route.getContact().getLastName());
-        streetsInput.setText("");
-        seatInput.setText(String.valueOf(route.getSits()));
-        availableInput.setText("");
-        passengersInput.setText("");
-    }
-
-    @Override
-    public void onFailure(Call call, Throwable t) {
-        Toast.makeText(DetailPageActivity.this, t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+            @Override
+            public void onFailure(Call<MyRoute> call, Throwable t) {
+                Toast.makeText(DetailPageActivity.this, t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
