@@ -28,6 +28,7 @@
     <string name="name">Name</string>
     <string name="name_empty_error">Name should not be empty</string>
     <string name="backToLogin">Si ya estas registrado, volver a Login</string>
+    <string name="title_activity_signup">Registrarse</string>
 
     <!-- Forgot Password Page -->
     <string name="forgot_password"><u>Forgot Password</u></string>

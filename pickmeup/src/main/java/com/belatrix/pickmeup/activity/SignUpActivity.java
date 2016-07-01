@@ -47,15 +47,15 @@ public class SignUpActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_signUp);
-        btnSignUp = (Button) findViewById(R.id.signUp_btn);
-        inputName = (TextInputEditText) findViewById(R.id.signUp_name_tiet);
-        inputUsername = (TextInputEditText) findViewById(R.id.signUp_username_tiet);
-        inputPassword = (TextInputEditText) findViewById(R.id.signUp_password_tiet);
-        textGoBackToLogin = (TextView) findViewById(R.id.sign_up_backToLogin_txt);
-        tilName = (TextInputLayout) findViewById(R.id.signUp_name_til);
-        tilUsername = (TextInputLayout) findViewById(R.id.signUp_username_til);
-        tilPassword = (TextInputLayout) findViewById(R.id.signUp_password_til);
+        setContentView(R.layout.activity_signup);
+        btnSignUp = (Button) findViewById(R.id.signup_btn);
+        inputName = (TextInputEditText) findViewById(R.id.signup_name_tiet);
+        inputUsername = (TextInputEditText) findViewById(R.id.signup_username_tiet);
+        inputPassword = (TextInputEditText) findViewById(R.id.signup_password_tiet);
+        textGoBackToLogin = (TextView) findViewById(R.id.signup_backToLogin_txt);
+        tilName = (TextInputLayout) findViewById(R.id.signup_name_til);
+        tilUsername = (TextInputLayout) findViewById(R.id.signup_username_til);
+        tilPassword = (TextInputLayout) findViewById(R.id.signup_password_til);
         readInfo();
 
 
@@ -63,7 +63,7 @@ public class SignUpActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                signUp(v);
+                signup(v);
             }
         });
 
@@ -75,7 +75,7 @@ public class SignUpActivity extends AppCompatActivity {
         });
     }
 
-    public void signUp(View view) {
+    public void signup(View view) {
         if (!validateSignUp()) {
             onSignUpFailed();
             return;
@@ -85,7 +85,7 @@ public class SignUpActivity extends AppCompatActivity {
         final ProgressDialog progressDialog = new ProgressDialog(SignUpActivity.this,
                 R.style.AppTheme_Dark_Dialog);
         progressDialog.setIndeterminate(true);
-        progressDialog.setMessage("Registering...");
+        progressDialog.setMessage("Registrando...");
         progressDialog.show();
 
         String name = inputName.getText().toString();
@@ -106,6 +106,15 @@ public class SignUpActivity extends AppCompatActivity {
         }
 
         new android.os.Handler().postDelayed(
+                    new Runnable() {
+                        public void run() {
+                            if (validData) {
+                            Toast.makeText(getApplicationContext(), "Se ha registrado correctamente!", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }, 5000);
+
+        new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
                         // On complete call either onLoginSuccess or onLoginFailed
@@ -116,9 +125,10 @@ public class SignUpActivity extends AppCompatActivity {
                         }
                         progressDialog.dismiss();
                     }
-                }, 3000);
+                }, 4000);
 
         if(validData){
+            //Toast.makeText(getApplicationContext(), "Se ha registrado correctamente!", Toast.LENGTH_SHORT).show();
             checkPreferences();
             goToLoginActivity(view);
         }
@@ -181,7 +191,7 @@ public class SignUpActivity extends AppCompatActivity {
         String username = inputUsername.getText().toString();
         String password = inputPassword.getText().toString();
 
-        saveInfo(username, password, name);
+        saveInfo(name, username, password);
     }
 
     public void saveInfo(String name, String username,String password){
