@@ -8,10 +8,7 @@ import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
-<<<<<<< HEAD
-=======
 
->>>>>>> HEAD@{15}
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -32,9 +29,7 @@ public class AddRouteActivity extends AppCompatActivity {
     private Spinner destinationSpn;
 
     private Button addRouteBtn;
-
-    private Button favoriteBtn;
-
+    
     private TextView fromTil;
 
     private TextView fromTiet;
@@ -58,11 +53,6 @@ public class AddRouteActivity extends AppCompatActivity {
     private TextInputLayout streetsTil;
 
     private TextInputEditText streetsTiet;
-<<<<<<< HEAD
-
-    private Route route;
-=======
->>>>>>> HEAD@{15}
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,27 +81,6 @@ public class AddRouteActivity extends AppCompatActivity {
         //set data to Lists
         setLists();
 
-<<<<<<< HEAD
-        favoriteBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    route = new Route(Departure.valueOf(departureSpn.getSelectedItem().toString()),
-                            Destination.valueOf(destinationSpn.getSelectedItem().toString()),
-                            Double.parseDouble(costTiet.getText().toString()),
-                            PaymentType.valueOf("CASH"),
-                            new User(1, contactTiet.getText().toString(),
-                                    contactTiet.getText().toString() + "@belatrixdf.com", UserType.OWNER),
-                            "" + new Date(), streetsTiet.getText().toString());
-                } catch (Exception e) {
-
-                }
-                saveFavoriteRoute(route);
-            }
-        });
-
-=======
->>>>>>> HEAD@{15}
         addRouteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -208,29 +177,4 @@ public class AddRouteActivity extends AppCompatActivity {
         destinationSpn.setAdapter(destinationAdapter);
     }
 
-<<<<<<< HEAD
-    public void saveFavoriteRoute(Route route) {
-        RouteFavoriteDBHelper dbHelper = new RouteFavoriteDBHelper(getApplicationContext());
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(RouteFavoriteContract.FavoriteEntry.COLUMN_NAME_DEPARTURE, route.getDeparture().toString());
-        values.put(RouteFavoriteContract.FavoriteEntry.COLUMN_NAME_DESTINE, route.getDestination().toString());
-        values.put(RouteFavoriteContract.FavoriteEntry.COLUMN_NAME_COST, route.getCost());
-        values.put(RouteFavoriteContract.FavoriteEntry.COLUMN_NAME_PAYMENT_TYPE, route.getPaymentType().toString());
-        values.put(RouteFavoriteContract.FavoriteEntry.COLUMN_NAME_DEPARTURE_TIME, route.getDepartureTime());
-        values.put(RouteFavoriteContract.FavoriteEntry.COLUMN_NAME_CONTACT, route.getRouteOwner().getName());
-        values.put(RouteFavoriteContract.FavoriteEntry.COLUMN_NAME_ADDRESS, route.getAddressDestination());
-
-        long newRowId = db.insert(
-                RouteFavoriteContract.FavoriteEntry.TABLE_NAME,
-                RouteFavoriteContract.FavoriteEntry.COLUMN_NAME_ADDRESS,
-                values);
-
-        Toast.makeText(getApplicationContext(), "Saved id: " + newRowId, Toast.LENGTH_SHORT).show();
-
-    }
-
-
-=======
->>>>>>> HEAD@{15}
 }
