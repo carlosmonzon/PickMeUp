@@ -78,8 +78,10 @@ public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.MyViewHolder
 
         @Override
         public void onClick(View v) {
+            Route currentRoute = routeList.get(this.getLayoutPosition());
             final Intent intent;
             intent = new Intent(context, DetailPageActivity.class);
+            intent.putExtra("routeId", currentRoute.getId());
             context.startActivity(intent);
         }
     }
