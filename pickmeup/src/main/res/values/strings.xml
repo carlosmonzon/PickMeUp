@@ -24,6 +24,12 @@
     <string name="password_empty_error">The password should not be empty</string>
     <string name="username_invalid_error">The username should be an email address</string>
 
+    <!-- sign up Page -->
+    <string name="name">Name</string>
+    <string name="name_empty_error">Name should not be empty</string>
+    <string name="backToLogin">Si ya estas registrado, volver a Login</string>
+    <string name="title_activity_signup">Registrarse</string>
+
     <!-- Forgot Password Page -->
     <string name="forgot_password"><u>Forgot Password</u></string>
     <string name="email">Email</string>

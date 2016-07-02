@@ -29,7 +29,7 @@ public class AddRouteActivity extends AppCompatActivity {
     private Spinner destinationSpn;
 
     private Button addRouteBtn;
-    
+
     private TextView fromTil;
 
     private TextView fromTiet;

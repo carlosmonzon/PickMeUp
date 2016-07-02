@@ -82,7 +82,6 @@ public class  LoginActivity extends AppCompatActivity {
         sharedPref = getPreferences(Context.MODE_PRIVATE);
         credentials = SharedPreferenceManager.readCredentials(sharedPref);
 
-
         inputUsername.setText(credentials.getUsername());
         inputPassword.setText(credentials.getPassword());
         chRemember.setChecked(credentials.getRemember());
@@ -218,7 +217,7 @@ public class  LoginActivity extends AppCompatActivity {
         });
 
         //Todo: Go to Sign In
-        Intent intent = new Intent(this, HomeActivity.class);
+        Intent intent = new Intent(this, SignUpActivity.class);
         startActivity(intent);
     }
 
