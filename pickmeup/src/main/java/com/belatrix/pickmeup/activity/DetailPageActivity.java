@@ -69,15 +69,13 @@ public class DetailPageActivity extends AppCompatActivity {
             public void onResponse(Call<MyRoute> call, Response<MyRoute> response) {
                 rlLoading.setVisibility(View.GONE);
                 svRoute.setVisibility(View.VISIBLE);
-
                 MyRoute route = response.body();
-
                 fromInput.setText(route.getDeparture());
                 fromInput.setEnabled(false);
                 toInput.setText(route.getArrival());
                 costInput.setText("");
                 departureTimeInput.setText("");
-                contactInput.setText(route.getContact().getFirstName() + " " + route.getContact().getLastName());
+                contactInput.setText(route.getContact());
                 streetsInput.setText("");
                 seatInput.setText(String.valueOf(route.getSits()));
                 availableInput.setText("");
