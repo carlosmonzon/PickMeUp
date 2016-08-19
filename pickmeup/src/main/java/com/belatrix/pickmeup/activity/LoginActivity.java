@@ -1,10 +1,10 @@
 package com.belatrix.pickmeup.activity;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -18,10 +18,27 @@ import android.app.ProgressDialog;
 
 import com.belatrix.pickmeup.R;
 
+import com.belatrix.pickmeup.model.Passenger;
+import com.belatrix.pickmeup.rest.PickMeUpClient;
+import com.belatrix.pickmeup.rest.ServiceGenerator;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import com.belatrix.pickmeup.model.Credentials;
+import com.belatrix.pickmeup.util.RegularExpressionValidator;
+import com.belatrix.pickmeup.util.SharedPreferenceManager;
+
+
 /**
  * Created by root on 13/05/16.
  */
-public class LoginActivity extends AppCompatActivity {
+public class  LoginActivity extends AppCompatActivity {
 
     private static final String TAG = "LoginActivity";
 
@@ -40,16 +57,23 @@ public class LoginActivity extends AppCompatActivity {
     private TextInputLayout tilUsername;
 
     private TextInputLayout tilPassword;
+
     private CheckBox chRemember;
 
     private int counter = 3;
 
     private boolean authenticated = false;
 
+    private  SharedPreferences sharedPref;
+
+    private Credentials credentials;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+
         btnLogin = (Button) findViewById(R.id.login_btn);
         inputUsername = (TextInputEditText) findViewById(R.id.username_tiet);
         inputPassword = (TextInputEditText) findViewById(R.id.password_tiet);
@@ -58,8 +82,12 @@ public class LoginActivity extends AppCompatActivity {
         tilUsername = (TextInputLayout) findViewById(R.id.username_til);
         tilPassword = (TextInputLayout) findViewById(R.id.password_til);
         chRemember = (CheckBox) findViewById(R.id.checkBoxRemember);
-        readCredentials();
+        sharedPref = getPreferences(Context.MODE_PRIVATE);
+        credentials = SharedPreferenceManager.readCredentials(sharedPref);
 
+        inputUsername.setText(credentials.getUsername());
+        inputPassword.setText(credentials.getPassword());
+        chRemember.setChecked(credentials.getRemember());
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
 
@@ -98,12 +126,13 @@ public class LoginActivity extends AppCompatActivity {
         progressDialog.setMessage("Authenticating...");
         progressDialog.show();
 
-        String username = inputUsername.getText().toString();
-        String password = inputPassword.getText().toString();
+        credentials.setUsername(inputUsername.getText().toString());
+        credentials.setPassword(inputPassword.getText().toString());
+        credentials.setRemember(chRemember.isChecked());
 
         //Todo: Call service for authentication and Authorization
-        if (username.equals("admin@pickmeup.com") &&
-                password.equals("admin")) {
+        if (credentials.getUsername().equals("admin@belatrixsf.com") &&
+                credentials.getPassword().equals("admin")) {
             authenticated = true;
         } else {
             authenticated = false;
@@ -128,7 +157,7 @@ public class LoginActivity extends AppCompatActivity {
                 }, 3000);
 
         if(authenticated){
-            checkPreferences();
+            SharedPreferenceManager.checkPreferences(sharedPref, credentials);
             goToHomeActivity(view);
         }
     }
@@ -154,14 +183,36 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void goToForgotUsernamePassword(View view){
+    public void goToForgotUsernamePassword(View view) {
         Intent intent = new Intent(this, ForgotPasswordActivity.class);
         startActivity(intent);
     }
 
     public void goToSignIn(View view) {
+
+        // Asynchronous Call in Retrofit 2.0
+        /*
+        PickMeUpClient client = ServiceGenerator.createService(PickMeUpClient.class);
+
+        Call<List<Passenger>> callPassengers = client.getPassengers();
+
+        callPassengers.enqueue(new Callback<List<Passenger>>() {
+            @Override
+            public void onResponse(Call<List<Passenger>> call, Response<List<Passenger>> response) {
+                List<Passenger> passengers = response.body();
+                for(Passenger passenger : passengers){
+                    Log.d("Passenger", passenger.getUserName());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Passenger>> call, Throwable t) {
+                Log.e("Get Passengers",t.toString());
+            }
+        });*/
+
         //Todo: Go to Sign In
-        Intent intent = new Intent(this, HomeActivity.class);
+        Intent intent = new Intent(this, SignUpActivity.class);
         startActivity(intent);
     }
 
@@ -178,7 +229,7 @@ public class LoginActivity extends AppCompatActivity {
             valid = false;
         }
 
-        if (!isValidEmail(inputUsername.getText().toString().trim())) {
+        if (!RegularExpressionValidator.isValidEmail(inputUsername.getText().toString().trim())) {
             tilUsername.setError(getResources().getString(R.string.username_invalid_error));
             valid = false;
         }
@@ -187,40 +238,6 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    public final static boolean isValidEmail(CharSequence target) {
-        return Patterns.EMAIL_ADDRESS.matcher(target).matches();
-    }
 
-    public void checkPreferences(){
-        String username = inputUsername.getText().toString();
-        String password = inputPassword.getText().toString();
-        Boolean remember = chRemember.isChecked();
-
-        if (remember){
-            saveCredentials(username, password, remember);
-        }else{
-            saveCredentials(null,null,false);
-        }
-    }
-
-    public void saveCredentials(String username,String password, Boolean remember){
-        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString("username", username);
-        editor.putString("password", password);
-        editor.putBoolean("remember", remember);
-        editor.commit();
-    }
-
-    public void readCredentials(){
-        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
-        String username = sharedPref.getString("username", null);
-        String password = sharedPref.getString("password", null);
-        Boolean remember = sharedPref.getBoolean("remember", false);
-
-        inputUsername.setText(username);
-        inputPassword.setText(password);
-        chRemember.setChecked(remember);
-    }
 
 }

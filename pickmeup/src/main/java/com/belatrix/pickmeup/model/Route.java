@@ -27,6 +27,9 @@ public class Route {
 
     private String addressDestination;
 
+    public Route(){
+        //empty constructor
+    }
     public Route(int id, Departure departure, Destination destination, User routeOwner, String departureTime,
             int placeAvailable) {
         this.setId(id);
@@ -37,8 +40,9 @@ public class Route {
         this.setPlaceAvailable(placeAvailable);
     }
 
-    public Route(Departure departure, Destination destination, Double cost, PaymentType paymentType, User routeOwner, String departureTime,
-                 String addressDestination) {
+    public Route(Departure departure, Destination destination, Double cost, PaymentType paymentType, User routeOwner,
+            String departureTime,
+            String addressDestination) {
         this.setDeparture(departure);
         this.setDestination(destination);
         this.setCost(cost);

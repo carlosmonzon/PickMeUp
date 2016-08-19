@@ -10,6 +10,7 @@ cache:
 branches:
   only:
   - master
+  - develop
 android:
   components:
   - platform-tools
@@ -23,4 +24,5 @@ android:
   - sys-img-armeabi-v7a-android-23
   - sys-img-x86-android-23
 script:
-- ./gradlew testfairyQa
+- ./gradlew assembleDebug
+
