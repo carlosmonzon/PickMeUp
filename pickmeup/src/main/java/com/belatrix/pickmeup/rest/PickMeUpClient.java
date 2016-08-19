@@ -19,14 +19,14 @@ public interface PickMeUpClient {
     @GET("api/passenger")
     Call<List<Passenger>> getPassengers();
 
-    @GET("api/passengers/{id}")
+    @GET("api/passenger/{id}")
     Call<Passenger> getPassengerById(@Path("id") int id);
 
     @POST("/api/passenger")
     Call<Passenger> registerPassenger(@Body Passenger passenger);
 
     @GET("/api/routes")
-    Call<MyRoute> getRoutes();
+    Call<List<MyRoute>> getRoutes();
 
     @GET("/api/routes/{id}")
     Call<MyRoute> getRoute(@Path("id") int id);

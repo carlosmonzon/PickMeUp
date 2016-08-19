@@ -19,6 +19,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import android.util.Log;
+
 public class DetailPageActivity extends AppCompatActivity {
 
     private RelativeLayout rlLoading;
@@ -60,6 +62,7 @@ public class DetailPageActivity extends AppCompatActivity {
         if (routeId > 2)
             routeId = 1;
 
+        Log.e("routeID", String.valueOf(routeId));
         Call<MyRoute> call = ServiceGenerator.createService(PickMeUpClient.class).getRoute(routeId);
 
         call.enqueue(new Callback<MyRoute>() {
@@ -69,23 +72,34 @@ public class DetailPageActivity extends AppCompatActivity {
             public void onResponse(Call<MyRoute> call, Response<MyRoute> response) {
                 rlLoading.setVisibility(View.GONE);
                 svRoute.setVisibility(View.VISIBLE);
-
+                Log.d("[1]", "--->");
                 MyRoute route = response.body();
-
+                Log.d("[2]", "--->");
                 fromInput.setText(route.getDeparture());
+                Log.d("[3]", "--->");
                 fromInput.setEnabled(false);
+                Log.d("[4]", "--->");
                 toInput.setText(route.getArrival());
+                Log.d("[5]", "--->");
                 costInput.setText("");
+                Log.d("[6]", "--->");
                 departureTimeInput.setText("");
-                contactInput.setText(route.getContact().getFirstName() + " " + route.getContact().getLastName());
+                Log.d("[7]", "--->");
+                contactInput.setText(route.getContact());
+                Log.d("[8]", "--->");
                 streetsInput.setText("");
+                Log.d("[9]", "--->");
                 seatInput.setText(String.valueOf(route.getSits()));
+                Log.d("[10]", "--->");
                 availableInput.setText("");
+                Log.d("[11]", "--->");
                 passengersInput.setText("");
+                Log.d("[12]", "--->");
             }
 
             @Override
             public void onFailure(Call<MyRoute> call, Throwable t) {
+                Log.e("[error]", t.toString());
                 Toast.makeText(DetailPageActivity.this, t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
         });

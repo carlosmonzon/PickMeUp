@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName;
  */
 public class Passenger {
 
-    @SerializedName("pk")
+    @SerializedName("id")
     private int id;
 
     @SerializedName("username")

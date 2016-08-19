@@ -7,13 +7,16 @@ import com.google.gson.annotations.SerializedName;
  */
 public class MyRoute {
 
+    @SerializedName("arrival")
     private String arrival;
 
-    private MyContact contact;
+    @SerializedName("contact")
+    private String contact;
 
+    @SerializedName("departure")
     private String departure;
 
-    @SerializedName("pk")
+    @SerializedName("id")
     private int id;
 
     private int sits;
@@ -26,11 +29,11 @@ public class MyRoute {
         this.arrival = arrival;
     }
 
-    public MyContact getContact() {
+    public String getContact() {
         return contact;
     }
 
-    public void setContact(MyContact contact) {
+    public void setContact(String contact) {
         this.contact = contact;
     }
 
