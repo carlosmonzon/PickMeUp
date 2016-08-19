@@ -16,7 +16,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class ServiceGenerator {
 
-    //public static final String API_BASE_URL = "https://pickmeup-belatrix.firebaseio.com/";
     public static final String API_BASE_URL = "http://pickmeup-api-v2.herokuapp.com/";
     private static OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
 
