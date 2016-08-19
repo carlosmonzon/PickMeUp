@@ -31,6 +31,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import com.belatrix.pickmeup.model.Credentials;
+import com.belatrix.pickmeup.util.RegularExpressionValidator;
 import com.belatrix.pickmeup.util.SharedPreferenceManager;
 
 
@@ -71,6 +72,8 @@ public class  LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+
         btnLogin = (Button) findViewById(R.id.login_btn);
         inputUsername = (TextInputEditText) findViewById(R.id.username_tiet);
         inputPassword = (TextInputEditText) findViewById(R.id.password_tiet);
@@ -128,7 +131,7 @@ public class  LoginActivity extends AppCompatActivity {
         credentials.setRemember(chRemember.isChecked());
 
         //Todo: Call service for authentication and Authorization
-        if (credentials.getUsername().equals("admin@pickmeup.com") &&
+        if (credentials.getUsername().equals("admin@belatrixsf.com") &&
                 credentials.getPassword().equals("admin")) {
             authenticated = true;
         } else {
@@ -187,20 +190,12 @@ public class  LoginActivity extends AppCompatActivity {
 
     public void goToSignIn(View view) {
 
+        // Asynchronous Call in Retrofit 2.0
+        /*
         PickMeUpClient client = ServiceGenerator.createService(PickMeUpClient.class);
 
         Call<List<Passenger>> callPassengers = client.getPassengers();
-        // Synchronous Call in Retrofit 2.0
-        /*List<Passenger> passengers = new ArrayList<>();
-        try {
-            passengers = callPassengers.execute().body();
-        }catch (IOException e){
-            Log.e("Get Passengers",e.toString());
-        }
-        for(Passenger passenger : passengers){
-            Log.d("Passenger", passenger.getUserName());
-        }*/
-        // Asynchronous Call in Retrofit 2.0
+
         callPassengers.enqueue(new Callback<List<Passenger>>() {
             @Override
             public void onResponse(Call<List<Passenger>> call, Response<List<Passenger>> response) {
@@ -214,7 +209,7 @@ public class  LoginActivity extends AppCompatActivity {
             public void onFailure(Call<List<Passenger>> call, Throwable t) {
                 Log.e("Get Passengers",t.toString());
             }
-        });
+        });*/
 
         //Todo: Go to Sign In
         Intent intent = new Intent(this, SignUpActivity.class);
@@ -234,7 +229,7 @@ public class  LoginActivity extends AppCompatActivity {
             valid = false;
         }
 
-        if (!isValidEmail(inputUsername.getText().toString().trim())) {
+        if (!RegularExpressionValidator.isValidEmail(inputUsername.getText().toString().trim())) {
             tilUsername.setError(getResources().getString(R.string.username_invalid_error));
             valid = false;
         }
@@ -243,8 +238,6 @@ public class  LoginActivity extends AppCompatActivity {
 
     }
 
-    public final static boolean isValidEmail(CharSequence target) {
-        return Patterns.EMAIL_ADDRESS.matcher(target).matches();
-    }
+
 
 }
