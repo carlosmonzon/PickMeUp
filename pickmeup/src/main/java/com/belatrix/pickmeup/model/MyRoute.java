@@ -13,6 +13,10 @@ public class MyRoute {
 
     private String departure;
 
+    private String streets;
+
+    private double cost;
+
     @SerializedName("pk")
     private int id;
 
@@ -56,5 +60,21 @@ public class MyRoute {
 
     public void setSits(int sits) {
         this.sits = sits;
+    }
+
+    public double getCost() {
+        return cost;
+    }
+
+    public void setCost(double sits) {
+        this.cost = cost;
+    }
+
+    public String getStreets() {
+        return streets;
+    }
+
+    public void setStreets(String streets) {
+        this.streets = streets;
     }
 }

@@ -3,6 +3,13 @@ package com.belatrix.pickmeup.activity;
 import com.belatrix.pickmeup.R;
 import com.belatrix.pickmeup.enums.Departure;
 import com.belatrix.pickmeup.enums.Destination;
+import com.belatrix.pickmeup.enums.UserType;
+import com.belatrix.pickmeup.model.MyContact;
+import com.belatrix.pickmeup.model.MyRoute;
+import com.belatrix.pickmeup.model.Route;
+import com.belatrix.pickmeup.model.User;
+import com.belatrix.pickmeup.rest.PickMeUpClient;
+import com.belatrix.pickmeup.rest.ServiceGenerator;
 
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
@@ -19,6 +26,10 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class AddRouteActivity extends AppCompatActivity {
 
@@ -92,6 +103,8 @@ public class AddRouteActivity extends AppCompatActivity {
 
     private void validateRoute() {
         boolean hasError = false;
+        //Route newRoute = new Route();
+        MyRoute newRoute = new MyRoute();
 
         fromTil.setError(null);
         toTil.setError(null);
@@ -100,34 +113,53 @@ public class AddRouteActivity extends AppCompatActivity {
         contactTil.setError(null);
         streetsTil.setError(null);
 
+        fromTiet = (TextView) departureSpn.getSelectedView();
         if (fromTiet.getText().toString().trim().equals("")) {
             fromTil.setError(getResources().getString(R.string.add_route_from_empty_error));
             hasError = true;
+        } else {
+            //newRoute.setDeparture(Departure.getValue(fromTiet.getText().toString()));
+            newRoute.setDeparture(fromTiet.getText().toString());
         }
 
+        toTiet = (TextView) destinationSpn.getSelectedView();
         if (toTiet.getText().toString().trim().equals("")) {
             toTil.setError(getResources().getString(R.string.add_route_to_empty_error));
             hasError = true;
+        } else {
+            //newRoute.setDestination(Destination.getValue(toTiet.getText().toString()));
+            newRoute.setArrival(toTiet.getText().toString());
         }
 
         if (costTiet.getText().toString().trim().equals("")) {
             costTil.setError(getResources().getString(R.string.add_route_cost_empty_error));
             hasError = true;
+        } else {
+            newRoute.setCost(Double.parseDouble(costTiet.getText().toString()));
         }
 
         if (departureTimeTiet.getText().toString().trim().equals("")) {
             departureTimeTil.setError(getResources().getString(R.string.add_route_departure_time_empty_error));
             hasError = true;
+        } else {
+            //newRoute.setDepartureTime(departureTimeTiet.getText().toString());
         }
 
         if (contactTiet.getText().toString().trim().equals("")) {
             contactTil.setError(getResources().getString(R.string.add_route_contact_empty_error));
             hasError = true;
+        } else {
+            //TODO: we need to set the logged in user as default
+            //newRoute.setRouteOwner(new User(0,"Example", "example@example.com", UserType.OWNER));
+            newRoute.setContact(new MyContact());
         }
 
         if (streetsTiet.getText().toString().trim().equals("")) {
             streetsTil.setError(getResources().getString(R.string.add_route_streets_empty_error));
             hasError = true;
+        } else {
+            //newRoute.setAddressDestination(streetsTiet.getText().toString());
+            newRoute.setStreets(streetsTiet.getText().toString());
         }
 
         if (hasError) {
@@ -136,6 +168,7 @@ public class AddRouteActivity extends AppCompatActivity {
         }
 
         // call to save the new route
+        saveRoute(newRoute);
     }
 
     public void setLists() {
@@ -175,6 +208,23 @@ public class AddRouteActivity extends AppCompatActivity {
         paymentMethodSpn.setAdapter(adapter);
         departureSpn.setAdapter(departureAdapter);
         destinationSpn.setAdapter(destinationAdapter);
+    }
+
+    public void saveRoute(MyRoute route)
+    {
+        Call<MyRoute> call = ServiceGenerator.createService(PickMeUpClient.class).registerRoute(route);
+
+        call.enqueue(new Callback<MyRoute>() {
+            @Override
+            public void onResponse(Call<MyRoute> call, Response<MyRoute> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<MyRoute> call, Throwable t) {
+
+            }
+        });
     }
 
 }
