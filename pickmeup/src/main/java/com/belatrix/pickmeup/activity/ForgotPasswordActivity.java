@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.belatrix.pickmeup.R;
+import com.belatrix.pickmeup.util.RegularExpressionValidator;
 
 public class ForgotPasswordActivity extends AppCompatActivity {
 
@@ -96,17 +97,13 @@ public class ForgotPasswordActivity extends AppCompatActivity {
             valid = false;
         }
 
-        if (!isValidEmail(textEmail.getText().toString().trim())) {
+        if (!RegularExpressionValidator.isValidEmail(textEmail.getText().toString().trim())) {
             tilEmail.setError(getResources().getString(R.string.email_invalid_error));
             valid = false;
         }
 
         return valid;
 
-    }
-
-    public final static boolean isValidEmail(CharSequence target) {
-        return Patterns.EMAIL_ADDRESS.matcher(target).matches();
     }
 
     public void goToLoginActivity(View view) {

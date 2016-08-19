@@ -16,17 +16,22 @@ import retrofit2.http.Path;
  */
 public interface PickMeUpClient {
 
-    //@GET("api/passenger/list")
-    @GET("passenger.json?print=pretty")
+    @GET("api/passenger")
     Call<List<Passenger>> getPassengers();
 
-    //@GET("api/passenger/{passenger_id}")
-    @GET("passenger/{passenger_id}.json?print=pretty")
-    Call<Passenger> getPassengerById(@Path("passenger_id") int id);
+    @GET("api/passengers/{id}")
+    Call<Passenger> getPassengerById(@Path("id") int id);
 
-    //@POST("/api/passenger/register")
+    @POST("/api/passenger")
     Call<Passenger> registerPassenger(@Body Passenger passenger);
 
-    @GET("routes/{id}.json")
+    @GET("/api/routes")
+    Call<MyRoute> getRoutes();
+
+    @GET("/api/routes/{id}")
     Call<MyRoute> getRoute(@Path("id") int id);
+
+    @POST("/api/routes")
+    Call<MyRoute> registerRoute(@Body MyRoute route);
+
 }
