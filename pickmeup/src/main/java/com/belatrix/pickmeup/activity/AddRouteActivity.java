@@ -151,7 +151,7 @@ public class AddRouteActivity extends AppCompatActivity {
         } else {
             //TODO: we need to set the logged in user as default
             //newRoute.setRouteOwner(new User(0,"Example", "example@example.com", UserType.OWNER));
-            newRoute.setContact(new MyContact());
+            newRoute.setContact("");
         }
 
         if (streetsTiet.getText().toString().trim().equals("")) {
