@@ -34,6 +34,8 @@ import com.belatrix.pickmeup.model.Credentials;
 import com.belatrix.pickmeup.util.RegularExpressionValidator;
 import com.belatrix.pickmeup.util.SharedPreferenceManager;
 
+import org.json.JSONObject;
+
 
 /**
  * Created by root on 13/05/16.
@@ -64,9 +66,13 @@ public class  LoginActivity extends AppCompatActivity {
 
     private boolean authenticated = false;
 
+    private String failedMessage = "Login Failed";
+
     private  SharedPreferences sharedPref;
 
     private Credentials credentials;
+
+    private View nextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,6 +119,7 @@ public class  LoginActivity extends AppCompatActivity {
     }
 
     public void login(View view) {
+        nextView = view;
         //Log.d(TAG, "Login");
         if (!validateLogin()) {
             onLoginFailed();
@@ -131,35 +138,60 @@ public class  LoginActivity extends AppCompatActivity {
         credentials.setRemember(chRemember.isChecked());
 
         //Todo: Call service for authentication and Authorization
-        if (credentials.getUsername().equals("admin@belatrixsf.com") &&
-                credentials.getPassword().equals("admin")) {
-            authenticated = true;
-        } else {
-            authenticated = false;
-            counter--;
+        PickMeUpClient client = ServiceGenerator.createService(PickMeUpClient.class);
 
-            if (counter == 0) {
-                btnLogin.setEnabled(false);
-            }
-        }
+        Call<Passenger> callPassengers = client.login(credentials);
 
-        new android.os.Handler().postDelayed(
-                new Runnable() {
-                    public void run() {
-                        // On complete call either onLoginSuccess or onLoginFailed
-                        if (authenticated) {
-                            onLoginSuccess();
-                        } else {
-                            onLoginFailed();
+        callPassengers.enqueue(new Callback<Passenger>() {
+            @Override
+            public void onResponse(Call<Passenger> call, Response<Passenger> response) {
+                if(response.isSuccessful()) {
+                    if (response.code() == 202){
+                        Passenger passenger = response.body();
+                        authenticated = true;
+                        SharedPreferenceManager.checkPreferences(sharedPref, credentials);
+                        SharedPreferenceManager.savePassenger(sharedPref, passenger);
+                        Log.d("Passenger", passenger.getUserName());
+                    }else{
+                        authenticated = false;
+                        counter--;
+
+                        if (counter == 0) {
+                            btnLogin.setEnabled(false);
                         }
-                        progressDialog.dismiss();
                     }
-                }, 3000);
+                }else{
+                    failedMessage = response.errorBody().source().toString();
+                    Log.e("Login",failedMessage);
+                    failedMessage = failedMessage.substring(1,failedMessage.length()-1).split("=")[1];
+                    authenticated = false;
+                }
 
-        if(authenticated){
-            SharedPreferenceManager.checkPreferences(sharedPref, credentials);
-            goToHomeActivity(view);
-        }
+                new android.os.Handler().postDelayed(
+                        new Runnable() {
+                            public void run() {
+                                // On complete call either onLoginSuccess or onLoginFailed
+                                if (authenticated) {
+                                    onLoginSuccess();
+                                } else {
+                                    onLoginFailed();
+                                }
+                                progressDialog.dismiss();
+                            }
+                        }, 3000);
+
+                if(authenticated){
+                    goToHomeActivity(nextView);
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<Passenger> call, Throwable t) {
+                Log.e("Login",t.toString());
+            }
+        });
+
     }
 
     @Override
@@ -174,7 +206,7 @@ public class  LoginActivity extends AppCompatActivity {
     }
 
     public void onLoginFailed() {
-        Toast.makeText(getApplicationContext(), "Login failed", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), failedMessage, Toast.LENGTH_SHORT).show();
         btnLogin.setEnabled(true);
     }
 

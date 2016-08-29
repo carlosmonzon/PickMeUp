@@ -1,5 +1,6 @@
 package com.belatrix.pickmeup.rest;
 
+import com.belatrix.pickmeup.model.Credentials;
 import com.belatrix.pickmeup.model.MyRoute;
 import com.belatrix.pickmeup.model.Passenger;
 
@@ -24,6 +25,9 @@ public interface PickMeUpClient {
 
     @POST("/api/passenger")
     Call<Passenger> registerPassenger(@Body Passenger passenger);
+
+    @POST("/api/passenger/login")
+    Call<Passenger> login(@Body Credentials credentials);
 
     @GET("/api/routes")
     Call<List<MyRoute>> getRoutes();

@@ -1,11 +1,18 @@
 package com.belatrix.pickmeup.model;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by gzavaleta on 01/07/16.
  */
 public class Credentials {
+
+    @SerializedName("email")
     private String username;
+
+    @SerializedName("password")
     private String password;
+
     private Boolean remember;
 
     public Credentials(){
