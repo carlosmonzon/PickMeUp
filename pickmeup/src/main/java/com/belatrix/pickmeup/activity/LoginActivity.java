@@ -140,9 +140,8 @@ public class  LoginActivity extends AppCompatActivity {
         //Todo: Call service for authentication and Authorization
         PickMeUpClient client = ServiceGenerator.createService(PickMeUpClient.class);
 
-       // Call<Passenger> callPassengers = client.login(credentials);
-        goToHomeActivity(nextView);
-        /*callPassengers.enqueue(new Callback<Passenger>() {
+        Call<Passenger> callPassengers = client.login(credentials);
+        callPassengers.enqueue(new Callback<Passenger>() {
             @Override
             public void onResponse(Call<Passenger> call, Response<Passenger> response) {
                 if(response.isSuccessful()) {
@@ -190,7 +189,7 @@ public class  LoginActivity extends AppCompatActivity {
             public void onFailure(Call<Passenger> call, Throwable t) {
                 Log.e("Login",t.toString());
             }
-        });*/
+        });
 
     }
 
@@ -223,7 +222,7 @@ public class  LoginActivity extends AppCompatActivity {
     public void goToSignIn(View view) {
 
         // Asynchronous Call in Retrofit 2.0
-        /*
+
         PickMeUpClient client = ServiceGenerator.createService(PickMeUpClient.class);
 
         Call<List<Passenger>> callPassengers = client.getPassengers();
@@ -241,7 +240,7 @@ public class  LoginActivity extends AppCompatActivity {
             public void onFailure(Call<List<Passenger>> call, Throwable t) {
                 Log.e("Get Passengers",t.toString());
             }
-        });*/
+        });
 
         //Todo: Go to Sign In
         Intent intent = new Intent(this, SignUpActivity.class);
