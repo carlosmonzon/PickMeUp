@@ -1,6 +1,7 @@
 package com.belatrix.pickmeup.adapter;
 
 import com.belatrix.pickmeup.R;
+import com.belatrix.pickmeup.activity.AddRouteActivity;
 import com.belatrix.pickmeup.activity.DetailPageActivity;
 import com.belatrix.pickmeup.model.Route;
 
@@ -80,7 +81,7 @@ public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.MyViewHolder
         public void onClick(View v) {
             Route currentRoute = routeList.get(this.getLayoutPosition());
             final Intent intent;
-            intent = new Intent(context, DetailPageActivity.class);
+            intent = new Intent(context, AddRouteActivity.class);
             intent.putExtra("routeId", currentRoute.getId());
             context.startActivity(intent);
         }

@@ -1,11 +1,14 @@
 package com.belatrix.pickmeup.enums;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by gzavaleta on 09/05/16.
  */
 public enum Destination {
-    SAN_ISIDRO("san_isidro"), LINCE("lince"), CALLAO("callao"), CHORRILLOS("chorrillos"), SAN_BORJA(
-            "san_borja"), CERCADO_DE_LIMA("cercado_de_lima");
+    SAN_ISIDRO("San Isidro"), LINCE("Lince"), CALLAO("Callao"), CHORRILLOS("Chorrillos"), SAN_BORJA(
+            "San Borja"), CERCADO_DE_LIMA("Cercado de Lima");
 
     private String stringValue;
     Destination(String toString) {
@@ -19,21 +22,30 @@ public enum Destination {
 
     public static Destination getValue(String value) {
         switch (value) {
-            case "san_isidro":
+            case "San Isidro":
                 return SAN_ISIDRO;
-            case "lince":
+            case "Lince":
                 return LINCE;
-            case "callao":
+            case "Callao":
                 return CALLAO;
-            case "chorrillos":
+            case "Chorrillos":
                 return CHORRILLOS;
-            case "san_borja":
+            case "San Borja":
                 return SAN_BORJA;
-            case "cercado_de_lima":
+            case "Cercado de Lima":
                 return CERCADO_DE_LIMA;
             default:
                 throw new IllegalArgumentException();
         }
+    }
+
+    public static List<String> getList(){
+        List<String> listEnum = new ArrayList<>();
+        Destination[] values = Destination.values();
+        for (int i = 0; i < values.length; i++) {
+            listEnum.add(values[i].toString());
+        }
+        return listEnum;
     }
 
 }

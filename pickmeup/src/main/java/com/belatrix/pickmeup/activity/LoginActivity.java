@@ -140,9 +140,9 @@ public class  LoginActivity extends AppCompatActivity {
         //Todo: Call service for authentication and Authorization
         PickMeUpClient client = ServiceGenerator.createService(PickMeUpClient.class);
 
-        Call<Passenger> callPassengers = client.login(credentials);
-
-        callPassengers.enqueue(new Callback<Passenger>() {
+       // Call<Passenger> callPassengers = client.login(credentials);
+        goToHomeActivity(nextView);
+        /*callPassengers.enqueue(new Callback<Passenger>() {
             @Override
             public void onResponse(Call<Passenger> call, Response<Passenger> response) {
                 if(response.isSuccessful()) {
@@ -190,7 +190,7 @@ public class  LoginActivity extends AppCompatActivity {
             public void onFailure(Call<Passenger> call, Throwable t) {
                 Log.e("Login",t.toString());
             }
-        });
+        });*/
 
     }
 

@@ -1,5 +1,8 @@
 package com.belatrix.pickmeup.model;
 
+import com.belatrix.pickmeup.enums.Departure;
+import com.belatrix.pickmeup.enums.Destination;
+import com.belatrix.pickmeup.enums.PaymentType;
 import com.google.gson.annotations.SerializedName;
 
 /**
@@ -7,49 +10,33 @@ import com.google.gson.annotations.SerializedName;
  */
 public class MyRoute {
 
-    @SerializedName("arrival")
-    private String arrival;
-
-    @SerializedName("contact")
-    private String contact;
-
-    @SerializedName("departure")
-    private String departure;
-
-
-    private String streets;
-
-    private double cost;
-
     @SerializedName("id")
-
     private int id;
 
-    private int sits;
+    @SerializedName("departure")
+    private Departure departure;
 
-    public String getArrival() {
-        return arrival;
-    }
+    @SerializedName("destination")
+    private Destination destination;
 
-    public void setArrival(String arrival) {
-        this.arrival = arrival;
-    }
+    @SerializedName("cost")
+    private Double cost;
 
-    public String getContact() {
-        return contact;
-    }
+    @SerializedName("paymentType")
+    private PaymentType paymentType;
 
-    public void setContact(String contact) {
-        this.contact = contact;
-    }
+    @SerializedName("routeOwner")
+    private int routeOwner;
 
-    public String getDeparture() {
-        return departure;
-    }
+    @SerializedName("departureTime")
+    private String departureTime;
 
-    public void setDeparture(String departure) {
-        this.departure = departure;
-    }
+    @SerializedName("placeAvailable")
+    private int placeAvailable;
+
+    @SerializedName("addressDestination")
+    private String addressDestination;
+
 
     public int getId() {
         return id;
@@ -59,27 +46,67 @@ public class MyRoute {
         this.id = id;
     }
 
-    public int getSits() {
-        return sits;
+    public Departure getDeparture() {
+        return departure;
     }
 
-    public void setSits(int sits) {
-        this.sits = sits;
+    public void setDeparture(Departure departure) {
+        this.departure = departure;
     }
 
-    public double getCost() {
+    public Destination getDestination() {
+        return destination;
+    }
+
+    public void setDestination(Destination destination) {
+        this.destination = destination;
+    }
+
+    public Double getCost() {
         return cost;
     }
 
-    public void setCost(double sits) {
+    public void setCost(Double cost) {
         this.cost = cost;
     }
 
-    public String getStreets() {
-        return streets;
+    public PaymentType getPaymentType() {
+        return paymentType;
     }
 
-    public void setStreets(String streets) {
-        this.streets = streets;
+    public void setPaymentType(PaymentType paymentType) {
+        this.paymentType = paymentType;
+    }
+
+    public int getRouteOwner() {
+        return routeOwner;
+    }
+
+    public void setRouteOwner(int routeOwner) {
+        this.routeOwner = routeOwner;
+    }
+
+    public String getDepartureTime() {
+        return departureTime;
+    }
+
+    public void setDepartureTime(String departureTime) {
+        this.departureTime = departureTime;
+    }
+
+    public int getPlaceAvailable() {
+        return placeAvailable;
+    }
+
+    public void setPlaceAvailable(int placeAvailable) {
+        this.placeAvailable = placeAvailable;
+    }
+
+    public String getAddressDestination() {
+        return addressDestination;
+    }
+
+    public void setAddressDestination(String addressDestination) {
+        this.addressDestination = addressDestination;
     }
 }

@@ -3,6 +3,7 @@ package com.belatrix.pickmeup.rest;
 import com.belatrix.pickmeup.model.Credentials;
 import com.belatrix.pickmeup.model.MyRoute;
 import com.belatrix.pickmeup.model.Passenger;
+import com.belatrix.pickmeup.model.Route;
 
 import java.util.List;
 

@@ -40,21 +40,26 @@
                 android:paddingRight="@dimen/activity_horizontal_margin"
                 android:paddingTop="@dimen/activity_vertical_margin">
 
-                <android.support.design.widget.TextInputLayout
-                    android:id="@+id/from_til_label"
-                    app:errorEnabled="true"
-                    style="@style/pageDatailLabel">
+                <TextView
+                    android:id="@+id/from_til"
+                    android:textSize="12sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="5dp"
+                    android:text="@string/departure"/>
 
-                    <android.support.design.widget.TextInputEditText
-                        android:id="@+id/from_tiet_data"
-                        style="@style/pageDatailData"
-                        android:hint="@string/departure"/>
-
-                </android.support.design.widget.TextInputLayout>
+                <Spinner
+                    android:id="@+id/departure_spn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/from_til"
+                    style="@style/Widget.AppCompat.Spinner.Underlined"
+                    android:paddingTop="10dp"
+                    android:layout_marginBottom="20dp"/>
 
                 <android.support.design.widget.TextInputLayout
                     android:id="@+id/to_til_label"
-                    android:layout_below="@+id/from_til_label"
+                    android:layout_below="@+id/departure_spn"
                     app:errorEnabled="true"
                     style="@style/pageDatailLabel">
 

@@ -3,28 +3,38 @@ package com.belatrix.pickmeup.model;
 import com.belatrix.pickmeup.enums.Departure;
 import com.belatrix.pickmeup.enums.Destination;
 import com.belatrix.pickmeup.enums.PaymentType;
+import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by gzavaleta on 09/05/16.
  */
 public class Route {
 
+    @SerializedName("id")
     private int id;
 
+    @SerializedName("departure")
     private Departure departure;
 
+    @SerializedName("destination")
     private Destination destination;
 
+    @SerializedName("cost")
     private Double cost;
 
+    @SerializedName("paymentType")
     private PaymentType paymentType;
 
+    @SerializedName("routeOwner")
     private User routeOwner;
 
+    @SerializedName("departureTime")
     private String departureTime;
 
+    @SerializedName("placeAvailable")
     private int placeAvailable;
 
+    @SerializedName("addressDestination")
     private String addressDestination;
 
     public Route(){

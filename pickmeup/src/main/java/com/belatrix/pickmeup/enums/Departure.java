@@ -1,5 +1,8 @@
 package com.belatrix.pickmeup.enums;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by gzavaleta on 09/05/16.
  */
@@ -25,5 +28,15 @@ public enum Departure {
             default:
                 throw new IllegalArgumentException();
         }
+    }
+
+
+    public static List<String> getList(){
+        List<String> listEnum = new ArrayList<>();
+        Departure[] values = Departure.values();
+        for (int i = 0; i < values.length; i++) {
+            listEnum.add(values[i].toString());
+        }
+        return listEnum;
     }
 }
