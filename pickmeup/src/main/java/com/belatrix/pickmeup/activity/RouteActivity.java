@@ -88,7 +88,7 @@ public class RouteActivity extends AppCompatActivity implements TimePickerFragme
         int routeId = intent.getIntExtra("routeId", 0);
 
         if(routeId!=0){
-            getRoute(22);
+            getRoute(routeId);
         }else{
             setLists();
         }
@@ -253,7 +253,6 @@ public class RouteActivity extends AppCompatActivity implements TimePickerFragme
             }
         });
     }
-
 
     @Override
     public void getTime(int hourOfDay, int minute) {

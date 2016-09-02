@@ -5,9 +5,13 @@ import com.belatrix.pickmeup.adapter.RouteAdapter;
 import com.belatrix.pickmeup.enums.Departure;
 import com.belatrix.pickmeup.enums.Destination;
 import com.belatrix.pickmeup.enums.UserType;
+import com.belatrix.pickmeup.model.MyRoute;
 import com.belatrix.pickmeup.model.Route;
 import com.belatrix.pickmeup.model.User;
+import com.belatrix.pickmeup.rest.PickMeUpClient;
+import com.belatrix.pickmeup.rest.ServiceGenerator;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -16,29 +20,33 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
+@SuppressLint("ValidFragment")
 public class AllRoutesFragment extends Fragment {
 
 
-    private ArrayList<Route> listRoutes;
-
+    private ArrayList<MyRoute> listRoutes;
     private RecyclerView recyclerView;
-
     private RouteAdapter routeAdapter;
 
-
-    public AllRoutesFragment() {
-
+    @SuppressLint("ValidFragment")
+    public AllRoutesFragment(List<MyRoute> routes) {
+        this.listRoutes = new ArrayList<>(routes);
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //Inicializando las variables que se necesitan en el fragment
-        listRoutes = listOfRoutes();
         routeAdapter = new RouteAdapter(listRoutes);
     }
 
@@ -46,9 +54,7 @@ public class AllRoutesFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
     }
-
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
@@ -63,29 +69,4 @@ public class AllRoutesFragment extends Fragment {
         routeAdapter.notifyDataSetChanged();
         return view;
     }
-
-    public ArrayList<Route> listOfRoutes() {
-        //creacion de mock data
-        User user = new User(1, "Gustavo", "mzavaleta@gmail.com", UserType.OWNER);
-        ArrayList<Route> routes = new ArrayList<>();
-        routes.add(new Route(0, Departure.BELATRIX_LA_MOLINA, Destination.CALLAO, user, "05:30pm", 2));
-        routes.add(new Route(1, Departure.BELATRIX_LA_MOLINA, Destination.LINCE, user, "04:30pm", 3));
-        routes.add(new Route(2, Departure.BELATRIX_SAN_ISIDRO, Destination.CHORRILLOS, user, "05:30pm", 0));
-        routes.add(new Route(3, Departure.BELATRIX_SAN_ISIDRO, Destination.LINCE, user, "08:00pm", 1));
-        routes.add(new Route(4, Departure.BELATRIX_SAN_ISIDRO, Destination.CALLAO, user, "03:30pm", 2));
-        routes.add(new Route(5, Departure.BELATRIX_LA_MOLINA, Destination.SAN_BORJA, user, "05:30pm", 2));
-        routes.add(new Route(6, Departure.BELATRIX_LA_MOLINA, Destination.LINCE, user, "04:30pm", 3));
-        routes.add(new Route(7, Departure.BELATRIX_SAN_ISIDRO, Destination.CERCADO_DE_LIMA, user, "05:30pm", 0));
-        routes.add(new Route(8, Departure.BELATRIX_SAN_ISIDRO, Destination.LINCE, user, "08:00pm", 1));
-        routes.add(new Route(9, Departure.BELATRIX_SAN_ISIDRO, Destination.CALLAO, user, "03:30pm", 2));
-        routes.add(new Route(10, Departure.BELATRIX_SAN_ISIDRO, Destination.CALLAO, user, "05:30pm", 2));
-        routes.add(new Route(11, Departure.BELATRIX_LA_MOLINA, Destination.CHORRILLOS, user, "04:30pm", 3));
-        routes.add(new Route(12, Departure.BELATRIX_SAN_ISIDRO, Destination.SAN_ISIDRO, user, "05:30pm", 0));
-        routes.add(new Route(13, Departure.BELATRIX_LA_MOLINA, Destination.LINCE, user, "08:00pm", 1));
-        routes.add(new Route(14, Departure.BELATRIX_SAN_ISIDRO, Destination.CALLAO, user, "03:30pm", 2));
-
-        return routes;
-    }
-
-
 }
