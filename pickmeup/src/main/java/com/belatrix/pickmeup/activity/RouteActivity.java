@@ -4,7 +4,10 @@ import com.belatrix.pickmeup.R;
 import com.belatrix.pickmeup.enums.Departure;
 import com.belatrix.pickmeup.enums.Destination;
 import com.belatrix.pickmeup.enums.PaymentType;
+import com.belatrix.pickmeup.fragment.DatePickerFragment;
+import com.belatrix.pickmeup.fragment.TimePickerFragment;
 import com.belatrix.pickmeup.model.MyRoute;
+import com.belatrix.pickmeup.model.TimePicked;
 import com.belatrix.pickmeup.rest.PickMeUpClient;
 import com.belatrix.pickmeup.rest.ServiceGenerator;
 
@@ -13,6 +16,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 
 import android.util.Log;
@@ -23,6 +27,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -30,7 +35,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AddRouteActivity extends AppCompatActivity {
+public class RouteActivity extends AppCompatActivity implements TimePickerFragment.TimeSelected, DatePickerFragment.DateSelected {
 
     private Spinner paymentMethodSpn;
     private Spinner departureSpn;
@@ -51,10 +56,12 @@ public class AddRouteActivity extends AppCompatActivity {
     private TextInputLayout streetsTil;
     private TextInputEditText streetsTiet;
 
+    private TimePicked timePicked = new TimePicked();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_route);
+        setContentView(R.layout.activity_route);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -69,6 +76,7 @@ public class AddRouteActivity extends AppCompatActivity {
         costTiet = (TextInputEditText) findViewById(R.id.cost_tiet);
         departureTimeTil = (TextInputLayout) findViewById(R.id.departure_time_til);
         departureTimeTiet = (TextInputEditText) findViewById(R.id.departure_time_tiet);
+
         contactTil = (TextInputLayout) findViewById(R.id.contact_til);
         contactTiet = (TextInputEditText) findViewById(R.id.contact_tiet);
         streetsTil = (TextInputLayout) findViewById(R.id.streets_til);
@@ -92,6 +100,11 @@ public class AddRouteActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    public void showTimePickerDialog(View v) {
+        DialogFragment newFragment = new TimePickerFragment();
+        newFragment.show(getSupportFragmentManager(), "timePicker");
     }
 
     private void validateRoute() {
@@ -131,6 +144,13 @@ public class AddRouteActivity extends AppCompatActivity {
             newRoute.setRouteOwner(1);
         }
 
+        if(departureTimeTiet.getText().equals("")){
+            streetsTil.setError(getResources().getString(R.string.add_route_departure_time_empty_error));
+            hasError = true;
+        } else {
+            newRoute.setDepartureTime(Long.toString(timePicked.timePickedToMiliseconds()));
+        }
+
         if (streetsTiet.getText().toString().trim().equals("")) {
             streetsTil.setError(getResources().getString(R.string.add_route_streets_empty_error));
             hasError = true;
@@ -140,7 +160,7 @@ public class AddRouteActivity extends AppCompatActivity {
         }
 
         if (hasError) {
-            Toast.makeText(AddRouteActivity.this, getResources().getString(R.string.add_route_form_error),
+            Toast.makeText(RouteActivity.this, getResources().getString(R.string.add_route_form_error),
                     Toast.LENGTH_SHORT).show();
         }else{
             saveRoute(newRoute);
@@ -170,14 +190,13 @@ public class AddRouteActivity extends AppCompatActivity {
 
 
     public void setLists() {
-        populateSpinner(paymentMethodSpn,PaymentType.getList());
+        populateSpinner(paymentMethodSpn, PaymentType.getList());
         populateSpinner(departureSpn, Departure.getList());
         populateSpinner(destinationSpn, Destination.getList());
         joinRouteBtn.setVisibility(View.GONE);
     }
 
     public void setListsData(MyRoute route) {
-
         populateSpinner(paymentMethodSpn,PaymentType.getList(),route.getPaymentType().toString());
         populateSpinner(departureSpn, Departure.getList(),route.getDeparture().toString());
         populateSpinner(destinationSpn, Destination.getList(),route.getDestination().toString());
@@ -187,9 +206,15 @@ public class AddRouteActivity extends AppCompatActivity {
         streetsTiet.setText(route.getAddressDestination());
         addRouteBtn.setVisibility(View.GONE);
 
+        paymentMethodSpn.setFocusable(false);
+        departureSpn.setFocusable(false);
+        destinationSpn.setFocusable(false);
+        costTiet.setFocusable(false);
+        departureTimeTiet.setFocusable(false);
+        contactTiet.setFocusable(false);
+        streetsTiet.setFocusable(false);
+        addRouteBtn.setFocusable(false);
     }
-
-
 
     public void saveRoute(MyRoute route)
     {
@@ -198,7 +223,7 @@ public class AddRouteActivity extends AppCompatActivity {
         call.enqueue(new Callback<MyRoute>() {
             @Override
             public void onResponse(Call<MyRoute> call, Response<MyRoute> response) {
-                Toast.makeText(AddRouteActivity.this, "ok",
+                Toast.makeText(RouteActivity.this, "ok",
                         Toast.LENGTH_SHORT).show();
             }
 
@@ -224,9 +249,32 @@ public class AddRouteActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<MyRoute> call, Throwable t) {
-                Toast.makeText(AddRouteActivity.this, t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(RouteActivity.this, t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+
+    @Override
+    public void getTime(int hourOfDay, int minute) {
+        //set hour and minute
+        timePicked.setHourOfDay(hourOfDay);
+        timePicked.setMinute(minute);
+        //call date fragment
+        DialogFragment newFragment = new DatePickerFragment();
+        newFragment.show(getSupportFragmentManager(), "datePicker");
+    }
+
+    @Override
+    public void getDate(int year, int month, int day) {
+        //set year, month and day
+        timePicked.setYear(year);
+        timePicked.setMonth(month);
+        timePicked.setDay(day);
+        //assign to text
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.MILLISECOND,(int)timePicked.timePickedToMiliseconds());
+        departureTimeTiet.setText(cal.getTime().toString());
     }
 
 }

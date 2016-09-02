@@ -43,7 +43,7 @@
     <string name="destination">Destino</string>
     <string name="cost">Costo (S/)</string>
     <string name="payment_method">Forma de pago</string>
-    <string name="departure_time">Partida</string>
+    <string name="departure_time">Fecha de Partida</string>
     <string name="contact">Contacto</string>
     <string name="avenues_streets_comments">Avenidas, Calles, Comentarios</string>
     <string name="publish">Publicar</string>

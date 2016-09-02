@@ -61,7 +61,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         /*        Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null ).show();
                 */
-                    Intent act = new Intent(getApplicationContext(), AddRouteActivity.class);
+                    Intent act = new Intent(getApplicationContext(), RouteActivity.class);
                     startActivity(act);
 
                 }

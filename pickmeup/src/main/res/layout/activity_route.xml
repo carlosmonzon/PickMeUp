@@ -4,7 +4,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            tools:context=".activity.AddRouteActivity">
+            tools:context=".activity.RouteActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -91,12 +91,31 @@
                 android:id="@+id/departure_time_til"
                 android:layout_below="@+id/payment_method_spn"
                 app:errorEnabled="true"
-                style="@style/addRouteLabel">
+                style="@style/addRouteLabel"
+               >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
-                <android.support.design.widget.TextInputEditText
-                    android:id="@+id/departure_time_tiet"
-                    style="@style/addRouteEditText"
-                    android:hint="@string/departure_time"/>
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/departure_time_tiet"
+                        style="@style/addRouteEditText"
+                        android:layout_width="0dp"
+                        android:hint="@string/departure_time"
+                        android:onClick="showTimePickerDialog"
+                        android:layout_weight=".6"
+                       />
+                    <Button
+                        android:id="@+id/pick_date_btn"
+                        android:layout_width="0dp"
+                        android:layout_weight=".1"
+                        android:background="@drawable/ic_date_range"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/departure_time_tiet"
+                        android:onClick="showTimePickerDialog"
+                        android:textColor="@android:color/holo_red_light"/>
+                </LinearLayout>
 
             </android.support.design.widget.TextInputLayout>
 
@@ -146,6 +165,8 @@
                 android:layout_below="@+id/streets_til"
                 android:text="@string/join"
                 android:textColor="@android:color/white"/>
+
+
 
         </RelativeLayout>
 

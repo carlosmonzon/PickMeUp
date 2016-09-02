@@ -2,6 +2,9 @@ package com.belatrix.pickmeup.rest;
 
 import android.util.Base64;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.io.IOException;
 
 import okhttp3.Interceptor;
@@ -18,11 +21,15 @@ public class ServiceGenerator {
 
     public static final String API_BASE_URL = "http://192.168.1.40:8001/";
     private static OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+    private static Gson gson = new GsonBuilder()
+            .setLenient()
+            .create();
 
     private static Retrofit.Builder builder =
             new Retrofit.Builder()
                     .baseUrl(API_BASE_URL)
-                    .addConverterFactory(GsonConverterFactory.create());
+                    .addConverterFactory(GsonConverterFactory.create(gson)
+                    );
 
     public static <S> S createService(Class<S> serviceClass) {
         Retrofit retrofit = builder.client(httpClient.build()).build();

@@ -5,3 +5,5 @@
 /build
 /captures
 *.iml
+/app/build/
+app/*

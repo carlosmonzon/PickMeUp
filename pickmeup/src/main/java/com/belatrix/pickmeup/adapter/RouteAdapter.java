@@ -1,8 +1,7 @@
 package com.belatrix.pickmeup.adapter;
 
 import com.belatrix.pickmeup.R;
-import com.belatrix.pickmeup.activity.AddRouteActivity;
-import com.belatrix.pickmeup.activity.DetailPageActivity;
+import com.belatrix.pickmeup.activity.RouteActivity;
 import com.belatrix.pickmeup.model.Route;
 
 import android.content.Context;
@@ -13,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -81,7 +79,7 @@ public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.MyViewHolder
         public void onClick(View v) {
             Route currentRoute = routeList.get(this.getLayoutPosition());
             final Intent intent;
-            intent = new Intent(context, AddRouteActivity.class);
+            intent = new Intent(context, RouteActivity.class);
             intent.putExtra("routeId", currentRoute.getId());
             context.startActivity(intent);
         }
