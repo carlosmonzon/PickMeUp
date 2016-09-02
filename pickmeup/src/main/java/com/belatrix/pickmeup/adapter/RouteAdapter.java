@@ -2,6 +2,7 @@ package com.belatrix.pickmeup.adapter;
 
 import com.belatrix.pickmeup.R;
 import com.belatrix.pickmeup.activity.RouteActivity;
+import com.belatrix.pickmeup.model.MyRoute;
 import com.belatrix.pickmeup.model.Route;
 
 import android.content.Context;
@@ -20,18 +21,18 @@ import java.util.List;
  */
 public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.MyViewHolder> {
 
-    private List<Route> routeList;
+    private List<MyRoute> routeList;
 
-    public RouteAdapter(List<Route> routeList) {
+    public RouteAdapter(List<MyRoute> routeList) {
         this.routeList = routeList;
     }
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        Route route = routeList.get(position);
+        MyRoute route = routeList.get(position);
         holder.txtDepartureName.setText(route.getDeparture().toString());
         holder.txtDestinationName.setText(route.getDestination().toString());
-        holder.txtUserName.setText(route.getRouteOwner().getName());
+        holder.txtUserName.setText(Integer.toString(route.getRouteOwner()));
         holder.txtDepartureTime.setText(route.getDepartureTime());
         holder.txtPlaceAvailable.setText(String.valueOf(route.getPlaceAvailable()));
         if (route.getPlaceAvailable() == 0) {
@@ -77,7 +78,7 @@ public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.MyViewHolder
 
         @Override
         public void onClick(View v) {
-            Route currentRoute = routeList.get(this.getLayoutPosition());
+            MyRoute currentRoute = routeList.get(this.getLayoutPosition());
             final Intent intent;
             intent = new Intent(context, RouteActivity.class);
             intent.putExtra("routeId", currentRoute.getId());
