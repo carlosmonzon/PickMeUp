@@ -1,11 +1,8 @@
 package com.belatrix.pickmeup.activity;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.Patterns;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.view.View;
@@ -22,8 +19,6 @@ import com.belatrix.pickmeup.model.Passenger;
 import com.belatrix.pickmeup.rest.PickMeUpClient;
 import com.belatrix.pickmeup.rest.ServiceGenerator;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -34,13 +29,11 @@ import com.belatrix.pickmeup.model.Credentials;
 import com.belatrix.pickmeup.util.RegularExpressionValidator;
 import com.belatrix.pickmeup.util.SharedPreferenceManager;
 
-import org.json.JSONObject;
-
 
 /**
  * Created by root on 13/05/16.
  */
-public class  LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = "LoginActivity";
 
@@ -68,8 +61,6 @@ public class  LoginActivity extends AppCompatActivity {
 
     private String failedMessage = "Login Failed";
 
-    private  SharedPreferences sharedPref;
-
     private Credentials credentials;
 
     private View nextView;
@@ -79,7 +70,6 @@ public class  LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-
         btnLogin = (Button) findViewById(R.id.login_btn);
         inputUsername = (TextInputEditText) findViewById(R.id.username_tiet);
         inputPassword = (TextInputEditText) findViewById(R.id.password_tiet);
@@ -88,8 +78,7 @@ public class  LoginActivity extends AppCompatActivity {
         tilUsername = (TextInputLayout) findViewById(R.id.username_til);
         tilPassword = (TextInputLayout) findViewById(R.id.password_til);
         chRemember = (CheckBox) findViewById(R.id.checkBoxRemember);
-        sharedPref = getPreferences(Context.MODE_PRIVATE);
-        credentials = SharedPreferenceManager.readCredentials(sharedPref);
+        credentials = SharedPreferenceManager.readCredentials(this);
 
         inputUsername.setText(credentials.getUsername());
         inputPassword.setText(credentials.getPassword());
@@ -144,14 +133,14 @@ public class  LoginActivity extends AppCompatActivity {
         callPassengers.enqueue(new Callback<Passenger>() {
             @Override
             public void onResponse(Call<Passenger> call, Response<Passenger> response) {
-                if(response.isSuccessful()) {
-                    if (response.code() == 202){
+                if (response.isSuccessful()) {
+                    if (response.code() == 202) {
                         Passenger passenger = response.body();
                         authenticated = true;
-                        SharedPreferenceManager.checkPreferences(sharedPref, credentials);
-                        SharedPreferenceManager.savePassenger(sharedPref, passenger);
+                        SharedPreferenceManager.checkPreferences(LoginActivity.this, credentials);
+                        SharedPreferenceManager.savePassenger(LoginActivity.this, passenger);
                         Log.d("Passenger", passenger.getUserName());
-                    }else{
+                    } else {
                         authenticated = false;
                         counter--;
 
@@ -159,10 +148,10 @@ public class  LoginActivity extends AppCompatActivity {
                             btnLogin.setEnabled(false);
                         }
                     }
-                }else{
+                } else {
                     failedMessage = response.errorBody().source().toString();
-                    Log.e("Login",failedMessage);
-                    failedMessage = failedMessage.substring(1,failedMessage.length()-1).split("=")[1];
+                    Log.e("Login", failedMessage);
+                    failedMessage = failedMessage.substring(1, failedMessage.length() - 1).split("=")[1];
                     authenticated = false;
                 }
 
@@ -179,7 +168,7 @@ public class  LoginActivity extends AppCompatActivity {
                             }
                         }, 3000);
 
-                if(authenticated){
+                if (authenticated) {
                     goToHomeActivity(nextView);
                 }
 
@@ -187,7 +176,7 @@ public class  LoginActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Passenger> call, Throwable t) {
-                Log.e("Login",t.toString());
+                Log.e("Login", t.toString());
             }
         });
 
@@ -231,14 +220,14 @@ public class  LoginActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<Passenger>> call, Response<List<Passenger>> response) {
                 List<Passenger> passengers = response.body();
-                for(Passenger passenger : passengers){
+                for (Passenger passenger : passengers) {
                     Log.d("Passenger", passenger.getUserName());
                 }
             }
 
             @Override
             public void onFailure(Call<List<Passenger>> call, Throwable t) {
-                Log.e("Get Passengers",t.toString());
+                Log.e("Get Passengers", t.toString());
             }
         });
 
@@ -268,7 +257,6 @@ public class  LoginActivity extends AppCompatActivity {
         return valid;
 
     }
-
 
 
 }

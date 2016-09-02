@@ -2,30 +2,30 @@ package com.belatrix.pickmeup.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 
 import com.belatrix.pickmeup.model.Credentials;
 import com.belatrix.pickmeup.model.Passenger;
+
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 
 /**
  * Created by gzavaleta on 01/07/16.
  */
 public class SharedPreferenceManager {
 
-    public static void storePreferences(){
+    public static void checkPreferences(@NonNull Context context, @NonNull Credentials credentials) {
 
-    }
-    public static void checkPreferences(SharedPreferences sharedPref, Credentials credentials){
-
-        if (credentials.getRemember()){
-            saveCredentials(sharedPref, credentials);
-        }else{
-            saveCredentials(sharedPref, new Credentials(null,null,false));
+        if (credentials.getRemember()) {
+            saveCredentials(context, credentials);
+        } else {
+            saveCredentials(context, new Credentials(null, null, false));
         }
     }
 
-    public static Credentials readCredentials(SharedPreferences sharedPref){
+    public static Credentials readCredentials(@NonNull Context context) {
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
         Credentials credentials = new Credentials();
         String username = sharedPref.getString("username", null);
         String password = sharedPref.getString("password", null);
@@ -35,27 +35,28 @@ public class SharedPreferenceManager {
         credentials.setPassword(password);
         credentials.setRemember(remember);
 
-       return credentials;
+        return credentials;
     }
 
 
-    public static void saveCredentials(SharedPreferences sharedPref, Credentials credentials){
-        SharedPreferences.Editor editor = sharedPref.edit();
+    public static void saveCredentials(@NonNull Context context, @NonNull Credentials credentials) {
+        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
         editor.putString("username", credentials.getUsername());
         editor.putString("password", credentials.getPassword());
         editor.putBoolean("remember", credentials.getRemember());
-        editor.commit();
+        editor.apply();
     }
 
-    public static Passenger readPassenger(SharedPreferences sharedPref){
+    public static Passenger readPassenger(@NonNull Context context) {
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
         Gson gson = new Gson();
-        return gson.fromJson(sharedPref.getString("passenger",""),Passenger.class);
+        return gson.fromJson(sharedPref.getString("passenger", ""), Passenger.class);
     }
 
-    public static void savePassenger(SharedPreferences sharedPref, Passenger passenger){
-        SharedPreferences.Editor editor = sharedPref.edit();
+    public static void savePassenger(@NonNull Context context, @NonNull Passenger passenger) {
+        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
         Gson gson = new Gson();
         editor.putString("passenger", gson.toJson(passenger));
-        editor.commit();
+        editor.apply();
     }
 }
