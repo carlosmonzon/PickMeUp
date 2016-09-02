@@ -7,9 +7,11 @@ import com.belatrix.pickmeup.enums.PaymentType;
 import com.belatrix.pickmeup.fragment.DatePickerFragment;
 import com.belatrix.pickmeup.fragment.TimePickerFragment;
 import com.belatrix.pickmeup.model.MyRoute;
+import com.belatrix.pickmeup.model.Passenger;
 import com.belatrix.pickmeup.model.TimePicked;
 import com.belatrix.pickmeup.rest.PickMeUpClient;
 import com.belatrix.pickmeup.rest.ServiceGenerator;
+import com.belatrix.pickmeup.util.SharedPreferenceManager;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -68,12 +70,16 @@ public class RouteActivity extends AppCompatActivity
 
     private TextInputEditText streetsTiet;
 
+    private Passenger mPassenger;
+
     private TimePicked timePicked = new TimePicked();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_route);
+
+        mPassenger = SharedPreferenceManager.readPassenger(this);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -93,6 +99,9 @@ public class RouteActivity extends AppCompatActivity
         contactTiet = (TextInputEditText) findViewById(R.id.contact_tiet);
         streetsTil = (TextInputLayout) findViewById(R.id.streets_til);
         streetsTiet = (TextInputEditText) findViewById(R.id.streets_tiet);
+
+        contactTiet.setText(mPassenger.getFirstName() +" "+ mPassenger.getLastName());
+        contactTiet.setEnabled(false);
 
         //set data to Lists
         Intent intent = getIntent();
@@ -150,9 +159,7 @@ public class RouteActivity extends AppCompatActivity
             contactTil.setError(getResources().getString(R.string.add_route_contact_empty_error));
             hasError = true;
         } else {
-            //TODO: we need to set the logged in user as default
-            //newRoute.setRouteOwner(new User(0,"Example", "example@example.com", UserType.OWNER));
-            newRoute.setRouteOwner(1);
+            newRoute.setRouteOwner(mPassenger.getId());
         }
 
         if (departureTimeTiet.getText().equals("")) {
@@ -233,8 +240,15 @@ public class RouteActivity extends AppCompatActivity
         call.enqueue(new Callback<MyRoute>() {
             @Override
             public void onResponse(Call<MyRoute> call, Response<MyRoute> response) {
-                Toast.makeText(RouteActivity.this, "ok",
-                        Toast.LENGTH_SHORT).show();
+                try
+                {
+                    Toast.makeText(RouteActivity.this, "ok",
+                            Toast.LENGTH_SHORT).show();
+                    Intent k = new Intent(RouteActivity.this, HomeActivity.class);
+                    startActivity(k);
+                }catch(Exception e){
+
+                }
             }
 
             @Override
@@ -242,6 +256,8 @@ public class RouteActivity extends AppCompatActivity
                 Log.e("Failure saveRoute", t.toString());
             }
         });
+        Intent k = new Intent(RouteActivity.this, HomeActivity.class);
+        startActivity(k);
     }
 
     public void getRoute(int routeId) {
