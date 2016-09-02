@@ -6,19 +6,24 @@ import java.util.Calendar;
  * Created by gzavaleta on 02/09/16.
  */
 public class TimePicked {
+
     private int hourOfDay;
+
     private int minute;
+
     private int year;
+
     private int month;
+
     private int day;
 
-    public long timePickedToMiliseconds(){
+    public long timePickedToMiliseconds() {
         Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.HOUR,this.getHourOfDay());
-        cal.set(Calendar.MINUTE,this.getMinute());
-        cal.set(Calendar.YEAR,this.getYear());
-        cal.set(Calendar.MONTH,this.getMonth());
-        cal.set(Calendar.DAY_OF_MONTH,this.getDay());
+        cal.set(Calendar.HOUR, this.getHourOfDay());
+        cal.set(Calendar.MINUTE, this.getMinute());
+        cal.set(Calendar.YEAR, this.getYear());
+        cal.set(Calendar.MONTH, this.getMonth());
+        cal.set(Calendar.DAY_OF_MONTH, this.getDay());
         return cal.getTimeInMillis();
     }
 

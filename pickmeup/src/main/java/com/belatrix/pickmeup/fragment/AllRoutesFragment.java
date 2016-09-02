@@ -35,7 +35,9 @@ public class AllRoutesFragment extends Fragment {
 
 
     private ArrayList<MyRoute> listRoutes;
+
     private RecyclerView recyclerView;
+
     private RouteAdapter routeAdapter;
 
     @SuppressLint("ValidFragment")

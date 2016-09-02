@@ -18,6 +18,7 @@ public class DatePickerFragment extends DialogFragment
     DateSelected dateSelected;
 
     public interface DateSelected {
+
         void getDate(int year, int month, int day);
     }
 

@@ -3,6 +3,7 @@ package com.belatrix.pickmeup.model;
 import com.belatrix.pickmeup.enums.Departure;
 import com.belatrix.pickmeup.enums.Destination;
 import com.belatrix.pickmeup.enums.PaymentType;
+
 import com.google.gson.annotations.SerializedName;
 
 /**
@@ -37,9 +38,10 @@ public class Route {
     @SerializedName("addressDestination")
     private String addressDestination;
 
-    public Route(){
+    public Route() {
         //empty constructor
     }
+
     public Route(int id, Departure departure, Destination destination, User routeOwner, String departureTime,
             int placeAvailable) {
         this.setId(id);

@@ -28,11 +28,12 @@ public class Passenger {
     @SerializedName("cellphone")
     private String cellphone;
 
-    public Passenger(){
+    public Passenger() {
         //empty constructor
     }
 
-    public Passenger(int id, String userName, String firstName, String lastName, String email, String skypeId, String cellphone) {
+    public Passenger(int id, String userName, String firstName, String lastName, String email, String skypeId,
+            String cellphone) {
         this.id = id;
         this.userName = userName;
         this.firstName = firstName;
@@ -100,21 +101,33 @@ public class Passenger {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         Passenger passenger = (Passenger) o;
 
-        if (id != passenger.id) return false;
-        if (userName != null ? !userName.equals(passenger.userName) : passenger.userName != null)
+        if (id != passenger.id) {
             return false;
-        if (firstName != null ? !firstName.equals(passenger.firstName) : passenger.firstName != null)
+        }
+        if (userName != null ? !userName.equals(passenger.userName) : passenger.userName != null) {
             return false;
-        if (lastName != null ? !lastName.equals(passenger.lastName) : passenger.lastName != null)
+        }
+        if (firstName != null ? !firstName.equals(passenger.firstName) : passenger.firstName != null) {
             return false;
-        if (email != null ? !email.equals(passenger.email) : passenger.email != null) return false;
-        if (skypeId != null ? !skypeId.equals(passenger.skypeId) : passenger.skypeId != null)
+        }
+        if (lastName != null ? !lastName.equals(passenger.lastName) : passenger.lastName != null) {
             return false;
+        }
+        if (email != null ? !email.equals(passenger.email) : passenger.email != null) {
+            return false;
+        }
+        if (skypeId != null ? !skypeId.equals(passenger.skypeId) : passenger.skypeId != null) {
+            return false;
+        }
         return cellphone != null ? cellphone.equals(passenger.cellphone) : passenger.cellphone == null;
 
     }

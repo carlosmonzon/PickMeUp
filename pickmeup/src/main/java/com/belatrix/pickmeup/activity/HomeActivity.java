@@ -24,7 +24,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,8 +53,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         getRoute();
         //Esta linea es para dar soporte al Back Button (<-) | False = inactivo | True = activo
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-
-
 
         //tabLayout tendrá el control de los tabs
         tabLayout = (TabLayout) findViewById(R.id.tabs);
@@ -161,7 +158,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
-    public void getRoute(){
+    public void getRoute() {
         Call<List<MyRoute>> call = ServiceGenerator.createService(PickMeUpClient.class).getRoutes();
 
         call.enqueue(new Callback<List<MyRoute>>() {

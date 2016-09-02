@@ -15,10 +15,11 @@ public class Credentials {
 
     private Boolean remember;
 
-    public Credentials(){
+    public Credentials() {
         // empty constructor
     }
-    public Credentials(String username, String password, Boolean remember){
+
+    public Credentials(String username, String password, Boolean remember) {
         this.username = username;
         this.password = password;
         this.setRemember(remember);

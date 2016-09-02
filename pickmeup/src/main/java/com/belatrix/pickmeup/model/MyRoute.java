@@ -3,6 +3,7 @@ package com.belatrix.pickmeup.model;
 import com.belatrix.pickmeup.enums.Departure;
 import com.belatrix.pickmeup.enums.Destination;
 import com.belatrix.pickmeup.enums.PaymentType;
+
 import com.google.gson.annotations.SerializedName;
 
 /**

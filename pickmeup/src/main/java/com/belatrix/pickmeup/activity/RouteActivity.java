@@ -35,25 +35,37 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class RouteActivity extends AppCompatActivity implements TimePickerFragment.TimeSelected, DatePickerFragment.DateSelected {
+public class RouteActivity extends AppCompatActivity
+        implements TimePickerFragment.TimeSelected, DatePickerFragment.DateSelected {
 
     private Spinner paymentMethodSpn;
+
     private Spinner departureSpn;
+
     private Spinner destinationSpn;
 
     private Button addRouteBtn;
+
     private Button joinRouteBtn;
 
     private TextView fromTil;
+
     private TextView toTil;
 
     private TextInputLayout costTil;
+
     private TextInputEditText costTiet;
+
     private TextInputLayout departureTimeTil;
+
     private TextInputEditText departureTimeTiet;
+
     private TextInputLayout contactTil;
+
     private TextInputEditText contactTiet;
+
     private TextInputLayout streetsTil;
+
     private TextInputEditText streetsTiet;
 
     private TimePicked timePicked = new TimePicked();
@@ -69,7 +81,7 @@ public class RouteActivity extends AppCompatActivity implements TimePickerFragme
         departureSpn = (Spinner) findViewById(R.id.departure_spn);
         destinationSpn = (Spinner) findViewById(R.id.destination_spn);
         addRouteBtn = (Button) findViewById(R.id.publish_btn);
-        joinRouteBtn =  (Button) findViewById(R.id.join_btn);
+        joinRouteBtn = (Button) findViewById(R.id.join_btn);
         fromTil = (TextView) findViewById(R.id.from_til);
         toTil = (TextView) findViewById(R.id.to_til);
         costTil = (TextInputLayout) findViewById(R.id.cost_til);
@@ -87,9 +99,9 @@ public class RouteActivity extends AppCompatActivity implements TimePickerFragme
 
         int routeId = intent.getIntExtra("routeId", 0);
 
-        if(routeId!=0){
+        if (routeId != 0) {
             getRoute(routeId);
-        }else{
+        } else {
             setLists();
         }
 
@@ -119,7 +131,6 @@ public class RouteActivity extends AppCompatActivity implements TimePickerFragme
         contactTil.setError(null);
         streetsTil.setError(null);
 
-
         newRoute.setDeparture(Departure.getValue(departureSpn.getSelectedItem().toString()));
 
         newRoute.setDestination(Destination.getValue(destinationSpn.getSelectedItem().toString()));
@@ -129,11 +140,11 @@ public class RouteActivity extends AppCompatActivity implements TimePickerFragme
         try {
             Double cost = Double.parseDouble(costTiet.getText().toString());
             newRoute.setCost(cost);
-        }catch (Exception e){
+        } catch (Exception e) {
             costTil.setError(getResources().getString(R.string.add_route_cost_empty_error));
             hasError = true;
         }
-            newRoute.setDepartureTime(String.valueOf(new Date().getTime()));
+        newRoute.setDepartureTime(String.valueOf(new Date().getTime()));
 
         if (contactTiet.getText().toString().trim().equals("")) {
             contactTil.setError(getResources().getString(R.string.add_route_contact_empty_error));
@@ -144,7 +155,7 @@ public class RouteActivity extends AppCompatActivity implements TimePickerFragme
             newRoute.setRouteOwner(1);
         }
 
-        if(departureTimeTiet.getText().equals("")){
+        if (departureTimeTiet.getText().equals("")) {
             streetsTil.setError(getResources().getString(R.string.add_route_departure_time_empty_error));
             hasError = true;
         } else {
@@ -162,7 +173,7 @@ public class RouteActivity extends AppCompatActivity implements TimePickerFragme
         if (hasError) {
             Toast.makeText(RouteActivity.this, getResources().getString(R.string.add_route_form_error),
                     Toast.LENGTH_SHORT).show();
-        }else{
+        } else {
             saveRoute(newRoute);
         }
 
@@ -170,14 +181,14 @@ public class RouteActivity extends AppCompatActivity implements TimePickerFragme
 
     }
 
-    public void populateSpinner(Spinner spinner, List<String> list){
+    public void populateSpinner(Spinner spinner, List<String> list) {
         ArrayAdapter<String> adapter =
                 new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, list);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
     }
 
-    public void populateSpinner(Spinner spinner, List<String> list,String valueString){
+    public void populateSpinner(Spinner spinner, List<String> list, String valueString) {
         ArrayAdapter<String> adapter =
                 new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, list);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -197,12 +208,12 @@ public class RouteActivity extends AppCompatActivity implements TimePickerFragme
     }
 
     public void setListsData(MyRoute route) {
-        populateSpinner(paymentMethodSpn,PaymentType.getList(),route.getPaymentType().toString());
-        populateSpinner(departureSpn, Departure.getList(),route.getDeparture().toString());
-        populateSpinner(destinationSpn, Destination.getList(),route.getDestination().toString());
+        populateSpinner(paymentMethodSpn, PaymentType.getList(), route.getPaymentType().toString());
+        populateSpinner(departureSpn, Departure.getList(), route.getDeparture().toString());
+        populateSpinner(destinationSpn, Destination.getList(), route.getDestination().toString());
         costTiet.setText(route.getCost().toString());
         departureTimeTiet.setText(route.getDepartureTime().toString());
-        contactTiet.setText(route.getRouteOwner()+"");
+        contactTiet.setText(route.getRouteOwner() + "");
         streetsTiet.setText(route.getAddressDestination());
         addRouteBtn.setVisibility(View.GONE);
 
@@ -216,8 +227,7 @@ public class RouteActivity extends AppCompatActivity implements TimePickerFragme
         addRouteBtn.setFocusable(false);
     }
 
-    public void saveRoute(MyRoute route)
-    {
+    public void saveRoute(MyRoute route) {
         Call<MyRoute> call = ServiceGenerator.createService(PickMeUpClient.class).registerRoute(route);
 
         call.enqueue(new Callback<MyRoute>() {
@@ -234,7 +244,7 @@ public class RouteActivity extends AppCompatActivity implements TimePickerFragme
         });
     }
 
-    public void getRoute(int routeId){
+    public void getRoute(int routeId) {
         Call<MyRoute> call = ServiceGenerator.createService(PickMeUpClient.class).getRoute(routeId);
 
         call.enqueue(new Callback<MyRoute>() {
@@ -272,7 +282,7 @@ public class RouteActivity extends AppCompatActivity implements TimePickerFragme
         timePicked.setDay(day);
         //assign to text
         Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.MILLISECOND,(int)timePicked.timePickedToMiliseconds());
+        cal.set(Calendar.MILLISECOND, (int) timePicked.timePickedToMiliseconds());
         departureTimeTiet.setText(cal.getTime().toString());
     }
 
