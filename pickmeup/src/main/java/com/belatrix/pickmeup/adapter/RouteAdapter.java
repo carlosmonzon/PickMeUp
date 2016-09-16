@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.sql.Date;
 import java.util.List;
 
 /**
@@ -33,7 +34,13 @@ public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.MyViewHolder
         holder.txtDepartureName.setText(route.getDeparture().toString());
         holder.txtDestinationName.setText(route.getDestination().toString());
         holder.txtUserName.setText(Integer.toString(route.getRouteOwner()));
-        holder.txtDepartureTime.setText(route.getDepartureTime());
+
+        Long dateMilliseconds = Long.parseLong(route.getDepartureTime());
+
+        Date newDate = new Date(dateMilliseconds);
+
+        holder.txtDepartureTime.setText(newDate.toString());
+        holder.txtPrice.setText("S/ "+(route.getCost()==null?"0.00":route.getCost()));
         holder.txtPlaceAvailable.setText(String.valueOf(route.getPlaceAvailable()));
         if (route.getPlaceAvailable() == 0) {
             holder.txtPlaceAvailable.setTextColor(Color.RED);
@@ -57,7 +64,7 @@ public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.MyViewHolder
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public TextView txtDepartureName, txtDestinationName, txtUserName, txtDepartureTime,
-                txtPlaceAvailable;
+                txtPlaceAvailable, txtPrice;
 
 
         private final Context context;
@@ -72,6 +79,7 @@ public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.MyViewHolder
             txtUserName = (TextView) view.findViewById(R.id.txtUserName);
             txtDepartureTime = (TextView) view.findViewById(R.id.txtDepartureTime);
             txtPlaceAvailable = (TextView) view.findViewById(R.id.txtPlaceAvailable);
+            txtPrice = (TextView) view.findViewById(R.id.txtPrice);
 
             view.setOnClickListener(this);
         }

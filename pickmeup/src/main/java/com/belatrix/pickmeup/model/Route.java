@@ -9,6 +9,7 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by gzavaleta on 09/05/16.
  */
+@Deprecated
 public class Route {
 
     @SerializedName("id")
