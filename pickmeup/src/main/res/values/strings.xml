@@ -41,7 +41,8 @@
     <!-- New Route -->
     <string name="departure">Salida</string>
     <string name="destination">Destino</string>
-    <string name="cost">Costo (S/)</string>
+    <string name="cost">Costo por Pasajero(S/)</string>
+    <string name="passenger_quantity">Cantidad de Pasajeros</string>
     <string name="payment_method">Forma de pago</string>
     <string name="departure_time">Fecha de Partida</string>
     <string name="contact">Contacto</string>
@@ -57,6 +58,7 @@
     <string name="add_route_departure_time_empty_error">Ingrese la hora de salida</string>
     <string name="add_route_contact_empty_error">Ingrese el contacto</string>
     <string name="add_route_streets_empty_error">Ingrese las avenidas o calles</string>
+    <string name="add_route_passengers_max_capacity_empty_error">Ingrese la capacidad maxima de pasajeros para la ruta</string>
 
     <!-- Page Detail -->
     <string name="seat">Asientos</string>

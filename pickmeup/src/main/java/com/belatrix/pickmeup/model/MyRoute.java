@@ -38,6 +38,9 @@ public class MyRoute {
     @SerializedName("addressDestination")
     private String addressDestination;
 
+    @SerializedName("passengers")
+    private int[] passengers;
+
 
     public int getId() {
         return id;
@@ -63,9 +66,7 @@ public class MyRoute {
         this.destination = destination;
     }
 
-    public Double getCost() {
-        return cost;
-    }
+    public Double getCost() {  return cost; }
 
     public void setCost(Double cost) {
         this.cost = cost;
@@ -95,19 +96,17 @@ public class MyRoute {
         this.departureTime = departureTime;
     }
 
-    public int getPlaceAvailable() {
-        return placeAvailable;
-    }
+    public int getPlaceAvailable() { return placeAvailable; }
 
-    public void setPlaceAvailable(int placeAvailable) {
-        this.placeAvailable = placeAvailable;
-    }
+    public void setPlaceAvailable(int placeAvailable) { this.placeAvailable = placeAvailable;  }
 
-    public String getAddressDestination() {
-        return addressDestination;
-    }
+    public String getAddressDestination() { return addressDestination; }
 
     public void setAddressDestination(String addressDestination) {
         this.addressDestination = addressDestination;
     }
+
+    public int[] getPassengers() { return passengers; }
+
+    public void setPassengers(int[] passengers) { this.passengers = passengers; }
 }

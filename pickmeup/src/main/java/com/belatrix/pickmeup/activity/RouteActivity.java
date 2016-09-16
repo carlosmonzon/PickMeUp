@@ -70,6 +70,10 @@ public class RouteActivity extends AppCompatActivity
 
     private TextInputEditText streetsTiet;
 
+    private TextInputLayout passengerMaxCapacityTil;
+
+    private TextInputEditText passengerMaxCapacityTiet;
+
     private Passenger mPassenger;
 
     private TimePicked timePicked = new TimePicked();
@@ -99,6 +103,9 @@ public class RouteActivity extends AppCompatActivity
         contactTiet = (TextInputEditText) findViewById(R.id.contact_tiet);
         streetsTil = (TextInputLayout) findViewById(R.id.streets_til);
         streetsTiet = (TextInputEditText) findViewById(R.id.streets_tiet);
+
+        passengerMaxCapacityTil = (TextInputLayout) findViewById(R.id.passenger_max_capacity_til);
+        passengerMaxCapacityTiet = (TextInputEditText) findViewById(R.id.passenger_max_capacity_tiet);
 
         contactTiet.setText(mPassenger.getFirstName() +" "+ mPassenger.getLastName());
         contactTiet.setEnabled(false);
@@ -133,6 +140,8 @@ public class RouteActivity extends AppCompatActivity
         //Route newRoute = new Route();
         MyRoute newRoute = new MyRoute();
 
+        int[] passengers = {1,2};
+
         fromTil.setError(null);
         toTil.setError(null);
         costTil.setError(null);
@@ -145,6 +154,8 @@ public class RouteActivity extends AppCompatActivity
         newRoute.setDestination(Destination.getValue(destinationSpn.getSelectedItem().toString()));
 
         newRoute.setPaymentType(PaymentType.getValue(paymentMethodSpn.getSelectedItem().toString()));
+
+        newRoute.setPassengers(passengers);
 
         try {
             Double cost = Double.parseDouble(costTiet.getText().toString());
@@ -169,13 +180,16 @@ public class RouteActivity extends AppCompatActivity
             newRoute.setDepartureTime(Long.toString(timePicked.timePickedToMiliseconds()));
         }
 
-        if (streetsTiet.getText().toString().trim().equals("")) {
-            streetsTil.setError(getResources().getString(R.string.add_route_streets_empty_error));
+        if (passengerMaxCapacityTiet.getText().equals("")) {
+            passengerMaxCapacityTil.setError(getResources().getString(R.string.add_route_passengers_max_capacity_empty_error));
             hasError = true;
         } else {
-            //newRoute.setAddressDestination(streetsTiet.getText().toString());
-            newRoute.setAddressDestination(streetsTiet.getText().toString());
+            newRoute.setPlaceAvailable(Integer.parseInt(passengerMaxCapacityTiet.getText().toString()));
         }
+
+        newRoute.setAddressDestination(streetsTiet.getText().toString());
+
+
 
         if (hasError) {
             Toast.makeText(RouteActivity.this, getResources().getString(R.string.add_route_form_error),
@@ -222,6 +236,7 @@ public class RouteActivity extends AppCompatActivity
         departureTimeTiet.setText(route.getDepartureTime().toString());
         contactTiet.setText(route.getRouteOwner() + "");
         streetsTiet.setText(route.getAddressDestination());
+        passengerMaxCapacityTiet.setText(route.getPlaceAvailable()+"");
         addRouteBtn.setVisibility(View.GONE);
 
         paymentMethodSpn.setFocusable(false);
@@ -231,6 +246,7 @@ public class RouteActivity extends AppCompatActivity
         departureTimeTiet.setFocusable(false);
         contactTiet.setFocusable(false);
         streetsTiet.setFocusable(false);
+        passengerMaxCapacityTiet.setFocusable(false);
         addRouteBtn.setFocusable(false);
     }
 
@@ -242,7 +258,7 @@ public class RouteActivity extends AppCompatActivity
             public void onResponse(Call<MyRoute> call, Response<MyRoute> response) {
                 try
                 {
-                    Toast.makeText(RouteActivity.this, "ok",
+                    Toast.makeText(RouteActivity.this, "Route has been successfully created",
                             Toast.LENGTH_SHORT).show();
                     Intent k = new Intent(RouteActivity.this, HomeActivity.class);
                     startActivity(k);
@@ -278,6 +294,7 @@ public class RouteActivity extends AppCompatActivity
                 Toast.makeText(RouteActivity.this, t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+
     }
 
     @Override
