@@ -26,3 +26,5 @@ android:
 script:
 - ./gradlew assembleDebug
 
+notifications:
+  slack: pickmeup-bsf:NQfFpQo96qClEKvbjvy0lGly
