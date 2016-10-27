@@ -4,8 +4,12 @@ import com.belatrix.pickmeup.R;
 import com.belatrix.pickmeup.fragment.AllRoutesFragment;
 import com.belatrix.pickmeup.fragment.MyRoutesFragment;
 import com.belatrix.pickmeup.model.MyRoute;
+import com.belatrix.pickmeup.model.MyUser;
+import com.belatrix.pickmeup.model.RouteDto;
 import com.belatrix.pickmeup.rest.PickMeUpClient;
+import com.belatrix.pickmeup.rest.PickMeUpFirebaseClient;
 import com.belatrix.pickmeup.rest.ServiceGenerator;
+import com.belatrix.pickmeup.util.DataConverter;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -27,6 +31,7 @@ import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -159,23 +164,53 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void getRoute() {
-        Call<List<MyRoute>> call = ServiceGenerator.createService(PickMeUpClient.class).getRoutes();
 
-        call.enqueue(new Callback<List<MyRoute>>() {
+        Call<Map<String,RouteDto>> call = ServiceGenerator.createService(PickMeUpFirebaseClient.class).getRoutes();
 
-            @SuppressLint("SetTextI18n")
+        call.enqueue(new Callback<Map<String,RouteDto>>() {
+
             @Override
-            public void onResponse(Call<List<MyRoute>> call, Response<List<MyRoute>> response) {
+            public void onResponse(Call<Map<String,RouteDto>> call, Response<Map<String,RouteDto>> response) {
+                Map<String, RouteDto> mapRoutes = response.body();
+                List<MyRoute> routes = new ArrayList<>();
+                for (Map.Entry<String, RouteDto> entryRoute : mapRoutes.entrySet())
+                {
+                    MyRoute route = DataConverter.convertRouteData(entryRoute.getKey(), entryRoute.getValue());
+                    routes.add(route);
+                }
 
-                List<MyRoute> routes = response.body();
                 viewPager = (ViewPager) findViewById(R.id.viewpager);
                 setupViewPager(viewPager, routes);
-
             }
 
             @Override
-            public void onFailure(Call<List<MyRoute>> call, Throwable t) {
+            public void onFailure(Call<Map<String,RouteDto>> call, Throwable t) {
                 // Toast.makeText(HomeActivity.this, t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    public void getUsers() {
+        Call<Map<String,MyUser>> call = ServiceGenerator.createService(PickMeUpFirebaseClient.class).getUsers();
+
+        Integer size = 0;
+        call.enqueue(new Callback<Map<String,MyUser>>() {
+            @Override
+            public void onResponse(Call<Map<String,MyUser>> call, Response<Map<String,MyUser>> response) {
+                Map<String, MyUser> map = response.body();
+                List<MyUser> users = new ArrayList<>();
+                for (Map.Entry<String, MyUser> entry : map.entrySet())
+                {
+                    MyUser user = entry.getValue();
+                    user.setId(entry.getKey());
+                    users.add(user);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Map<String,MyUser>> call, Throwable t) {
+                //System.out.println("FAIL " + t.getMessage());
             }
         });
     }

@@ -127,7 +127,7 @@ public class LoginActivity extends AppCompatActivity {
         credentials.setRemember(chRemember.isChecked());
 
         //Todo: Call service for authentication and Authorization
-        PickMeUpClient client = ServiceGenerator.createService(PickMeUpClient.class);
+        PickMeUpClient client = ServiceGenerator.oldCreateService(PickMeUpClient.class);
 
         Call<Passenger> callPassengers = client.login(credentials);
         callPassengers.enqueue(new Callback<Passenger>() {
@@ -212,7 +212,7 @@ public class LoginActivity extends AppCompatActivity {
 
         // Asynchronous Call in Retrofit 2.0
 
-        PickMeUpClient client = ServiceGenerator.createService(PickMeUpClient.class);
+        PickMeUpClient client = ServiceGenerator.oldCreateService(PickMeUpClient.class);
 
         Call<List<Passenger>> callPassengers = client.getPassengers();
 

@@ -5,6 +5,7 @@ import com.belatrix.pickmeup.enums.UserType;
 /**
  * Created by gzavaleta on 09/05/16.
  */
+@Deprecated
 public class User {
 
     private int id;

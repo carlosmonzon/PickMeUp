@@ -33,7 +33,7 @@ public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.MyViewHolder
         MyRoute route = routeList.get(position);
         holder.txtDepartureName.setText(route.getDeparture().toString());
         holder.txtDestinationName.setText(route.getDestination().toString());
-        holder.txtUserName.setText(Integer.toString(route.getRouteOwner()));
+        holder.txtUserName.setText(route.getOwner());//needs work
 
         Long dateMilliseconds = Long.parseLong(route.getDepartureTime());
 

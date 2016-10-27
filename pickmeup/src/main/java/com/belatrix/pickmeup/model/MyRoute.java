@@ -6,107 +6,58 @@ import com.belatrix.pickmeup.enums.PaymentType;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 /**
  * Created by moogriento on 6/30/16.
  */
-public class MyRoute {
+public class MyRoute extends RouteDto{
 
     @SerializedName("id")
-    private int id;
-
-    @SerializedName("departure")
-    private Departure departure;
-
-    @SerializedName("destination")
-    private Destination destination;
-
-    @SerializedName("cost")
-    private Double cost;
-
-    @SerializedName("paymentType")
-    private PaymentType paymentType;
-
-    @SerializedName("routeOwner")
-    private int routeOwner;
-
-    @SerializedName("departureTime")
-    private String departureTime;
-
-    @SerializedName("placeAvailable")
-    private int placeAvailable;
-
-    @SerializedName("addressDestination")
-    private String addressDestination;
+    private String id;
 
     @SerializedName("passengers")
-    private int[] passengers;
+    private List<MyUser> passengers;
 
+    public MyRoute() {
+        //Empty constructor
+    }
 
-    public int getId() {
+    public MyRoute(RouteDto routeDto) {
+        if (null != routeDto.getAddressDestination()) {
+            setAddressDestination(routeDto.getAddressDestination());
+        }
+        if (null != routeDto.getCost()) {
+            setCost(routeDto.getCost());
+        }
+        if (null != routeDto.getDeparture()) {
+            setDeparture(routeDto.getDeparture());
+        }
+        if (null != routeDto.getDepartureTime()) {
+            setDepartureTime(routeDto.getDepartureTime());
+        }
+        if (null != routeDto.getDestination()) {
+            setDestination(routeDto.getDestination());
+        }
+        if (null != routeDto.getOwner()) {
+            setOwner(routeDto.getOwner());
+        }
+        if (null != routeDto.getPaymentType()) {
+            setPaymentType(routeDto.getPaymentType());
+        }
+        setPlaceAvailable(routeDto.getPlaceAvailable());
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public Departure getDeparture() {
-        return departure;
-    }
+    public List<MyUser> getPassengers() { return passengers; }
 
-    public void setDeparture(Departure departure) {
-        this.departure = departure;
-    }
+    public void setPassengers(List<MyUser> passengers) { this.passengers = passengers; }
 
-    public Destination getDestination() {
-        return destination;
-    }
-
-    public void setDestination(Destination destination) {
-        this.destination = destination;
-    }
-
-    public Double getCost() {  return cost; }
-
-    public void setCost(Double cost) {
-        this.cost = cost;
-    }
-
-    public PaymentType getPaymentType() {
-        return paymentType;
-    }
-
-    public void setPaymentType(PaymentType paymentType) {
-        this.paymentType = paymentType;
-    }
-
-    public int getRouteOwner() {
-        return routeOwner;
-    }
-
-    public void setRouteOwner(int routeOwner) {
-        this.routeOwner = routeOwner;
-    }
-
-    public String getDepartureTime() {
-        return departureTime;
-    }
-
-    public void setDepartureTime(String departureTime) {
-        this.departureTime = departureTime;
-    }
-
-    public int getPlaceAvailable() { return placeAvailable; }
-
-    public void setPlaceAvailable(int placeAvailable) { this.placeAvailable = placeAvailable;  }
-
-    public String getAddressDestination() { return addressDestination; }
-
-    public void setAddressDestination(String addressDestination) {
-        this.addressDestination = addressDestination;
-    }
-
-    public int[] getPassengers() { return passengers; }
-
-    public void setPassengers(int[] passengers) { this.passengers = passengers; }
 }

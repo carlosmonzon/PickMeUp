@@ -20,12 +20,27 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ServiceGenerator {
 
     public static final String API_BASE_URL = "http://pickmeup-api-v2.herokuapp.com/";
+    public static final String FIREBASE_BASE_URL = "https://pickmeup-belatrix-dev.firebaseio.com/";
 
     private static OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
 
     private static Gson gson = new GsonBuilder().setLenient().create();
 
-    private static Retrofit.Builder builder = new Retrofit.Builder().baseUrl(API_BASE_URL)
+    //Should be deleted
+    private static OkHttpClient.Builder httpClient1 = new OkHttpClient.Builder();
+
+    private static Gson gson1 = new GsonBuilder().setLenient().create();
+
+    private static Retrofit.Builder oldBuilder = new Retrofit.Builder().baseUrl(API_BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create(gson1));
+
+    public static <S> S oldCreateService(Class<S> serviceClass) {
+        Retrofit retrofit = oldBuilder.client(httpClient1.build()).build();
+        return retrofit.create(serviceClass);
+    }
+    //End: Should be deleted
+
+    private static Retrofit.Builder builder = new Retrofit.Builder().baseUrl(FIREBASE_BASE_URL)
             .addConverterFactory(GsonConverterFactory.create(gson));
 
     public static <S> S createService(Class<S> serviceClass) {

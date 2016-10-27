@@ -8,9 +8,12 @@ import com.belatrix.pickmeup.fragment.DatePickerFragment;
 import com.belatrix.pickmeup.fragment.TimePickerFragment;
 import com.belatrix.pickmeup.model.MyRoute;
 import com.belatrix.pickmeup.model.Passenger;
+import com.belatrix.pickmeup.model.RouteDto;
 import com.belatrix.pickmeup.model.TimePicked;
 import com.belatrix.pickmeup.rest.PickMeUpClient;
+import com.belatrix.pickmeup.rest.PickMeUpFirebaseClient;
 import com.belatrix.pickmeup.rest.ServiceGenerator;
+import com.belatrix.pickmeup.util.DataConverter;
 import com.belatrix.pickmeup.util.SharedPreferenceManager;
 
 import android.annotation.SuppressLint;
@@ -113,9 +116,9 @@ public class RouteActivity extends AppCompatActivity
         //set data to Lists
         Intent intent = getIntent();
 
-        int routeId = intent.getIntExtra("routeId", 0);
+        String routeId = intent.getStringExtra("routeId");
 
-        if (routeId != 0) {
+        if (null != routeId && !routeId.isEmpty()) {
             getRoute(routeId);
         } else {
             setLists();
@@ -155,7 +158,7 @@ public class RouteActivity extends AppCompatActivity
 
         newRoute.setPaymentType(PaymentType.getValue(paymentMethodSpn.getSelectedItem().toString()));
 
-        newRoute.setPassengers(passengers);
+        newRoute.setPassengers(null); //needs work
 
         try {
             Double cost = Double.parseDouble(costTiet.getText().toString());
@@ -170,7 +173,7 @@ public class RouteActivity extends AppCompatActivity
             contactTil.setError(getResources().getString(R.string.add_route_contact_empty_error));
             hasError = true;
         } else {
-            newRoute.setRouteOwner(mPassenger.getId());
+            newRoute.setOwner(mPassenger.getId() + ""); //needs work
         }
 
         if (departureTimeTiet.getText().equals("")) {
@@ -234,7 +237,7 @@ public class RouteActivity extends AppCompatActivity
         populateSpinner(destinationSpn, Destination.getList(), route.getDestination().toString());
         costTiet.setText(route.getCost().toString());
         departureTimeTiet.setText(route.getDepartureTime().toString());
-        contactTiet.setText(route.getRouteOwner() + "");
+        contactTiet.setText(route.getOwner());//needs work
         streetsTiet.setText(route.getAddressDestination());
         passengerMaxCapacityTiet.setText(route.getPlaceAvailable()+"");
         addRouteBtn.setVisibility(View.GONE);
@@ -251,11 +254,11 @@ public class RouteActivity extends AppCompatActivity
     }
 
     public void saveRoute(MyRoute route) {
-        Call<MyRoute> call = ServiceGenerator.createService(PickMeUpClient.class).registerRoute(route);
+        Call<RouteDto> call = ServiceGenerator.createService(PickMeUpFirebaseClient.class).registerRoute(route);
 
-        call.enqueue(new Callback<MyRoute>() {
+        call.enqueue(new Callback<RouteDto>() {
             @Override
-            public void onResponse(Call<MyRoute> call, Response<MyRoute> response) {
+            public void onResponse(Call<RouteDto> call, Response<RouteDto> response) {
                 try
                 {
                     Toast.makeText(RouteActivity.this, "Route has been successfully created",
@@ -268,7 +271,7 @@ public class RouteActivity extends AppCompatActivity
             }
 
             @Override
-            public void onFailure(Call<MyRoute> call, Throwable t) {
+            public void onFailure(Call<RouteDto> call, Throwable t) {
                 Log.e("Failure saveRoute", t.toString());
             }
         });
@@ -276,21 +279,21 @@ public class RouteActivity extends AppCompatActivity
         startActivity(k);
     }
 
-    public void getRoute(int routeId) {
-        Call<MyRoute> call = ServiceGenerator.createService(PickMeUpClient.class).getRoute(routeId);
+    public void getRoute(final String routeId) {
+        Call<RouteDto> call = ServiceGenerator.createService(PickMeUpFirebaseClient.class).getRoute(routeId);
 
-        call.enqueue(new Callback<MyRoute>() {
+        call.enqueue(new Callback<RouteDto>() {
 
             @SuppressLint("SetTextI18n")
             @Override
-            public void onResponse(Call<MyRoute> call, Response<MyRoute> response) {
-
-                MyRoute route = response.body();
+            public void onResponse(Call<RouteDto> call, Response<RouteDto> response) {
+                RouteDto routeDto = response.body();
+                MyRoute route = DataConverter.convertRouteData(routeId, routeDto);
                 setListsData(route);
             }
 
             @Override
-            public void onFailure(Call<MyRoute> call, Throwable t) {
+            public void onFailure(Call<RouteDto> call, Throwable t) {
                 Toast.makeText(RouteActivity.this, t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
         });
