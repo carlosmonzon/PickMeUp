@@ -10,7 +10,6 @@ import com.belatrix.pickmeup.model.MyRoute;
 import com.belatrix.pickmeup.model.Passenger;
 import com.belatrix.pickmeup.model.RouteDto;
 import com.belatrix.pickmeup.model.TimePicked;
-import com.belatrix.pickmeup.rest.PickMeUpClient;
 import com.belatrix.pickmeup.rest.PickMeUpFirebaseClient;
 import com.belatrix.pickmeup.rest.ServiceGenerator;
 import com.belatrix.pickmeup.util.DataConverter;
