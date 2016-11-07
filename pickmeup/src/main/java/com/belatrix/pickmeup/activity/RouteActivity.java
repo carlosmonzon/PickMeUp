@@ -321,4 +321,11 @@ public class RouteActivity extends AppCompatActivity
         departureTimeTiet.setText(cal.getTime().toString());
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, HomeActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
 }

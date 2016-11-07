@@ -1,7 +1,9 @@
 package com.belatrix.pickmeup.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -185,8 +187,19 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         // disable going back to the MainActivity
-        moveTaskToBack(true);
-    }
+        new AlertDialog.Builder(this)
+                .setTitle("Logout")
+                .setMessage("Would you like to logout?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // user doesn't want to logout
+                    }
+                })
+                .show();    }
 
     public void onLoginSuccess() {
         btnLogin.setEnabled(true);
@@ -257,6 +270,5 @@ public class LoginActivity extends AppCompatActivity {
         return valid;
 
     }
-
 
 }
