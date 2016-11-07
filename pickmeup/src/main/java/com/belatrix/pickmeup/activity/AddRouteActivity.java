@@ -23,21 +23,35 @@ import java.util.List;
 public class AddRouteActivity extends AppCompatActivity {
 
     private Spinner paymentMethodSpn;
+
     private Spinner departureSpn;
+
     private Spinner destinationSpn;
+
     private Button addRouteBtn;
-    private Button favoriteBtn;
+
     private TextView fromTil;
+
     private TextView fromTiet;
+
     private TextView toTil;
+
     private TextView toTiet;
+
     private TextInputLayout costTil;
+
     private TextInputEditText costTiet;
+
     private TextInputLayout departureTimeTil;
+
     private TextInputEditText departureTimeTiet;
+
     private TextInputLayout contactTil;
+
     private TextInputEditText contactTiet;
+
     private TextInputLayout streetsTil;
+
     private TextInputEditText streetsTiet;
 
     @Override
@@ -54,7 +68,7 @@ public class AddRouteActivity extends AppCompatActivity {
         fromTil = (TextView) findViewById(R.id.from_til);
         fromTiet = (TextView) departureSpn.getSelectedView();
         toTil = (TextView) findViewById(R.id.to_til);
-        toTiet = (TextView) destinationSpn.getSelectedView() ;
+        toTiet = (TextView) destinationSpn.getSelectedView();
         costTil = (TextInputLayout) findViewById(R.id.cost_til);
         costTiet = (TextInputEditText) findViewById(R.id.cost_tiet);
         departureTimeTil = (TextInputLayout) findViewById(R.id.departure_time_til);
@@ -124,7 +138,7 @@ public class AddRouteActivity extends AppCompatActivity {
         // call to save the new route
     }
 
-    public void setLists(){
+    public void setLists() {
 
         // TODO: Make this dynamically?
         // Populate spinner
@@ -134,14 +148,14 @@ public class AddRouteActivity extends AppCompatActivity {
         // Departure
         List<String> departurePlaces = new ArrayList<>();
         Departure[] departures = Departure.values();
-        for (int i=0;i<departures.length;i++){
+        for (int i = 0; i < departures.length; i++) {
             departurePlaces.add(departures[i].toString());
         }
 
         // Destination
         List<String> destinationPlaces = new ArrayList<>();
         Destination[] destinations = Destination.values();
-        for (int i=0;i<destinations.length;i++){
+        for (int i = 0; i < destinations.length; i++) {
             destinationPlaces.add(destinations[i].toString());
         }
 

@@ -41,7 +41,6 @@ public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.MyViewHolder
     }
 
 
-
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
@@ -55,7 +54,7 @@ public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.MyViewHolder
         return routeList.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public TextView txtDepartureName, txtDestinationName, txtUserName, txtDepartureTime,
                 txtPlaceAvailable;
@@ -79,8 +78,10 @@ public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.MyViewHolder
 
         @Override
         public void onClick(View v) {
+            Route currentRoute = routeList.get(this.getLayoutPosition());
             final Intent intent;
-            intent =  new Intent(context, DetailPageActivity.class);
+            intent = new Intent(context, DetailPageActivity.class);
+            intent.putExtra("routeId", currentRoute.getId());
             context.startActivity(intent);
         }
     }

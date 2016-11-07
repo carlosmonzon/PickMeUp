@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -16,8 +17,23 @@ import android.support.design.widget.TextInputLayout;
 import android.app.ProgressDialog;
 
 import com.belatrix.pickmeup.R;
+
+import com.belatrix.pickmeup.model.Passenger;
+import com.belatrix.pickmeup.rest.PickMeUpClient;
+import com.belatrix.pickmeup.rest.ServiceGenerator;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 import com.belatrix.pickmeup.model.Credentials;
+import com.belatrix.pickmeup.util.RegularExpressionValidator;
 import com.belatrix.pickmeup.util.SharedPreferenceManager;
+
 
 /**
  * Created by root on 13/05/16.
@@ -41,6 +57,7 @@ public class  LoginActivity extends AppCompatActivity {
     private TextInputLayout tilUsername;
 
     private TextInputLayout tilPassword;
+
     private CheckBox chRemember;
 
     private int counter = 3;
@@ -55,6 +72,8 @@ public class  LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+
         btnLogin = (Button) findViewById(R.id.login_btn);
         inputUsername = (TextInputEditText) findViewById(R.id.username_tiet);
         inputPassword = (TextInputEditText) findViewById(R.id.password_tiet);
@@ -112,7 +131,7 @@ public class  LoginActivity extends AppCompatActivity {
         credentials.setRemember(chRemember.isChecked());
 
         //Todo: Call service for authentication and Authorization
-        if (credentials.getUsername().equals("admin@pickmeup.com") &&
+        if (credentials.getUsername().equals("admin@belatrixsf.com") &&
                 credentials.getPassword().equals("admin")) {
             authenticated = true;
         } else {
@@ -164,14 +183,36 @@ public class  LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void goToForgotUsernamePassword(View view){
+    public void goToForgotUsernamePassword(View view) {
         Intent intent = new Intent(this, ForgotPasswordActivity.class);
         startActivity(intent);
     }
 
     public void goToSignIn(View view) {
+
+        // Asynchronous Call in Retrofit 2.0
+        /*
+        PickMeUpClient client = ServiceGenerator.createService(PickMeUpClient.class);
+
+        Call<List<Passenger>> callPassengers = client.getPassengers();
+
+        callPassengers.enqueue(new Callback<List<Passenger>>() {
+            @Override
+            public void onResponse(Call<List<Passenger>> call, Response<List<Passenger>> response) {
+                List<Passenger> passengers = response.body();
+                for(Passenger passenger : passengers){
+                    Log.d("Passenger", passenger.getUserName());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Passenger>> call, Throwable t) {
+                Log.e("Get Passengers",t.toString());
+            }
+        });*/
+
         //Todo: Go to Sign In
-        Intent intent = new Intent(this, HomeActivity.class);
+        Intent intent = new Intent(this, SignUpActivity.class);
         startActivity(intent);
     }
 
@@ -188,7 +229,7 @@ public class  LoginActivity extends AppCompatActivity {
             valid = false;
         }
 
-        if (!isValidEmail(inputUsername.getText().toString().trim())) {
+        if (!RegularExpressionValidator.isValidEmail(inputUsername.getText().toString().trim())) {
             tilUsername.setError(getResources().getString(R.string.username_invalid_error));
             valid = false;
         }
@@ -196,12 +237,6 @@ public class  LoginActivity extends AppCompatActivity {
         return valid;
 
     }
-
-    public final static boolean isValidEmail(CharSequence target) {
-        return Patterns.EMAIL_ADDRESS.matcher(target).matches();
-    }
-
-
 
 
 
