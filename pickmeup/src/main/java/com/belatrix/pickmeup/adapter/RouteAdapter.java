@@ -41,7 +41,15 @@ public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.MyViewHolder
 
         holder.txtDepartureTime.setText(newDate.toString());
         holder.txtPrice.setText("S/ "+(route.getCost()==null?"0.00":route.getCost()));
-        holder.txtPlaceAvailable.setText(String.valueOf(route.getPlaceAvailable()));
+
+        int takenPlaces = route.getPassengers() != null ? route.getPassengers().size() : 0;
+        int totalPlaces = route.getPlaceAvailable() - takenPlaces;
+
+        if (totalPlaces < 0)
+            totalPlaces = 0;
+
+        holder.txtPlaceAvailable.setText(String.valueOf(totalPlaces));
+
         if (route.getPlaceAvailable() == 0) {
             holder.txtPlaceAvailable.setTextColor(Color.RED);
         }
