@@ -21,6 +21,10 @@ public class MyUser {
 
     private UserType userType;
 
+    public MyUser() {
+
+    }
+
     public MyUser(Integer cellphone, String email, String first_name, String last_name, String skype_id, UserType userType) {
         this.cellphone = cellphone;
         this.email = email;

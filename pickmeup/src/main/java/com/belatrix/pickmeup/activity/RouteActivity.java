@@ -7,6 +7,7 @@ import com.belatrix.pickmeup.enums.PaymentType;
 import com.belatrix.pickmeup.fragment.DatePickerFragment;
 import com.belatrix.pickmeup.fragment.TimePickerFragment;
 import com.belatrix.pickmeup.model.MyRoute;
+import com.belatrix.pickmeup.model.MyUser;
 import com.belatrix.pickmeup.model.Passenger;
 import com.belatrix.pickmeup.model.RouteDto;
 import com.belatrix.pickmeup.model.TimePicked;
@@ -16,6 +17,7 @@ import com.belatrix.pickmeup.util.DataConverter;
 import com.belatrix.pickmeup.util.SharedPreferenceManager;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
@@ -27,6 +29,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -80,6 +83,8 @@ public class RouteActivity extends AppCompatActivity
 
     private TimePicked timePicked = new TimePicked();
 
+    String routeId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -115,7 +120,7 @@ public class RouteActivity extends AppCompatActivity
         //set data to Lists
         Intent intent = getIntent();
 
-        String routeId = intent.getStringExtra("routeId");
+        routeId = intent.getStringExtra("routeId");
 
         if (null != routeId && !routeId.isEmpty()) {
             getRoute(routeId);
@@ -128,6 +133,12 @@ public class RouteActivity extends AppCompatActivity
             public void onClick(View v) {
                 validateRoute();
 
+            }
+        });
+        joinRouteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                joinToRoute();
             }
         });
     }
@@ -326,6 +337,37 @@ public class RouteActivity extends AppCompatActivity
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    public void joinToRoute() {
+        Passenger currentPassenger = SharedPreferenceManager.readPassenger(RouteActivity.this);
+        String userId = "NTr5PoaLoPajV9RrC2trpFGqWiF3"; // TODO: currentPassenger.getId()
+
+        MyUser currentUser = new MyUser();
+        currentUser.setFirst_name(currentPassenger.getFirstName());
+        currentUser.setLast_name(currentPassenger.getLastName());
+
+        final ProgressDialog progressDialog = ProgressDialog.show(RouteActivity.this, "", getResources().getString(R.string.saving_message));
+
+        Call<MyUser> call = ServiceGenerator.createService(PickMeUpFirebaseClient.class).joinToRoute(routeId, userId, currentUser);
+
+        call.enqueue(new Callback<MyUser>() {
+
+            @Override
+            public void onResponse(Call<MyUser> call, Response<MyUser> response) {
+                MyUser myUser = response.body();
+                Toast.makeText(RouteActivity.this, getResources().getString(R.string.join_route_message), Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
+                onBackPressed();
+            }
+
+            @Override
+            public void onFailure(Call<MyUser> call, Throwable t) {
+                Toast.makeText(RouteActivity.this, t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
+            }
+        });
+
     }
 
 }
