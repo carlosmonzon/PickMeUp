@@ -1,8 +1,16 @@
 package com.belatrix.pickmeup.activity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.widget.Button;
@@ -67,10 +75,34 @@ public class LoginActivity extends AppCompatActivity {
 
     private View nextView;
 
+    private FirebaseAuth.AuthStateListener mAuthListener;
+
+    private FirebaseAuth mAuth;
+
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mAuth.addAuthStateListener(mAuthListener);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mAuthListener != null) {
+            mAuth.removeAuthStateListener(mAuthListener);
+        }
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        mAuth = FirebaseAuth.getInstance();
 
         btnLogin = (Button) findViewById(R.id.login_btn);
         inputUsername = (TextInputEditText) findViewById(R.id.username_tiet);
@@ -107,9 +139,25 @@ public class LoginActivity extends AppCompatActivity {
                 goToSignIn(v);
             }
         });
+
+        FirebaseApp.initializeApp(this);
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    // User is signed in
+                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+                } else {
+                    // User is signed out
+                    Log.d(TAG, "onAuthStateChanged:signed_out");
+                }
+                // ...
+            }
+        };
     }
 
-    public void login(View view) {
+    public void login(final View view) {
         nextView = view;
         //Log.d(TAG, "Login");
         if (!validateLogin()) {
@@ -124,63 +172,87 @@ public class LoginActivity extends AppCompatActivity {
         progressDialog.setMessage("Authenticating...");
         progressDialog.show();
 
-        credentials.setUsername(inputUsername.getText().toString());
-        credentials.setPassword(inputPassword.getText().toString());
-        credentials.setRemember(chRemember.isChecked());
 
-        //Todo: Call service for authentication and Authorization
-        PickMeUpClient client = ServiceGenerator.oldCreateService(PickMeUpClient.class);
+        mAuth.signInWithEmailAndPassword(inputUsername.getText().toString(), inputPassword.getText().toString())
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
 
-        Call<Passenger> callPassengers = client.login(credentials);
-        callPassengers.enqueue(new Callback<Passenger>() {
-            @Override
-            public void onResponse(Call<Passenger> call, Response<Passenger> response) {
-                if (response.isSuccessful()) {
-                    if (response.code() == 202) {
-                        Passenger passenger = response.body();
-                        authenticated = true;
-                        SharedPreferenceManager.checkPreferences(LoginActivity.this, credentials);
-                        SharedPreferenceManager.savePassenger(LoginActivity.this, passenger);
-                        Log.d("Passenger", passenger.getUserName());
-                    } else {
-                        authenticated = false;
-                        counter--;
-
-                        if (counter == 0) {
-                            btnLogin.setEnabled(false);
+                        // If sign in fails, display a message to the user. If sign in succeeds
+                        // the auth state listener will be notified and logic to handle the
+                        // signed in user can be handled in the listener.
+                        if (!task.isSuccessful()) {
+                            Log.w(TAG, "signInWithEmail:failed", task.getException());
+                            Toast.makeText(LoginActivity.this, "FAIL",
+                                    Toast.LENGTH_SHORT).show();
                         }
+
+
+                        // ...
+                        goToHomeActivity(nextView);
                     }
-                } else {
-                    failedMessage = response.errorBody().source().toString();
-                    Log.e("Login", failedMessage);
-                    failedMessage = failedMessage.substring(1, failedMessage.length() - 1).split("=")[1];
-                    authenticated = false;
-                }
+                });
 
-                new android.os.Handler().postDelayed(
-                        new Runnable() {
-                            public void run() {
-                                // On complete call either onLoginSuccess or onLoginFailed
-                                if (authenticated) {
-                                    onLoginSuccess();
-                                } else {
-                                    onLoginFailed();
-                                }
-                                progressDialog.dismiss();
-                            }
-                        }, 3000);
 
-                if (authenticated) {
-                    goToHomeActivity(nextView);
-                }
 
-            }
-
-            @Override
-            public void onFailure(Call<Passenger> call, Throwable t) {
-                Log.e("Login", t.toString());
-            }
-        });
+//        credentials.setUsername(inputUsername.getText().toString());
+//        credentials.setPassword(inputPassword.getText().toString());
+//        credentials.setRemember(chRemember.isChecked());
+//
+//        //Todo: Call service for authentication and Authorization
+//        PickMeUpClient client = ServiceGenerator.oldCreateService(PickMeUpClient.class);
+//
+//        Call<Passenger> callPassengers = client.login(credentials);
+//        callPassengers.enqueue(new Callback<Passenger>() {
+//            @Override
+//            public void onResponse(Call<Passenger> call, Response<Passenger> response) {
+//                if (response.isSuccessful()) {
+//                    if (response.code() == 202) {
+//                        Passenger passenger = response.body();
+//                        authenticated = true;
+//                        SharedPreferenceManager.checkPreferences(LoginActivity.this, credentials);
+//                        SharedPreferenceManager.savePassenger(LoginActivity.this, passenger);
+//                        Log.d("Passenger", passenger.getUserName());
+//                    } else {
+//                        authenticated = false;
+//                        counter--;
+//
+//                        if (counter == 0) {
+//                            btnLogin.setEnabled(false);
+//                        }
+//                    }
+//                } else {
+//                    failedMessage = response.errorBody().source().toString();
+//                    Log.e("Login", failedMessage);
+//                    failedMessage = failedMessage.substring(1, failedMessage.length() - 1).split("=")[1];
+//                    authenticated = false;
+//                }
+//
+//                new android.os.Handler().postDelayed(
+//                        new Runnable() {
+//                            public void run() {
+//                                // On complete call either onLoginSuccess or onLoginFailed
+//                                if (authenticated) {
+//                                    onLoginSuccess();
+//                                } else {
+//                                    onLoginFailed();
+//                                }
+//                                progressDialog.dismiss();
+//                            }
+//                        }, 3000);
+//
+//                if (authenticated) {
+//                    goToHomeActivity(nextView);
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Call<Passenger> call, Throwable t) {
+//                Log.e("Login", t.toString());
+//            }
+//        });
 
     }
 
