@@ -186,11 +186,13 @@ public class LoginActivity extends AppCompatActivity {
                             Log.w(TAG, "signInWithEmail:failed", task.getException());
                             Toast.makeText(LoginActivity.this, "FAIL",
                                     Toast.LENGTH_SHORT).show();
+                        } else {
+                            goToHomeActivity(nextView);
                         }
 
 
                         // ...
-                        goToHomeActivity(nextView);
+
                     }
                 });
 
