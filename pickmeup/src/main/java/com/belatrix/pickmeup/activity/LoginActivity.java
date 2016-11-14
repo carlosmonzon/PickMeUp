@@ -25,8 +25,10 @@ import android.app.ProgressDialog;
 
 import com.belatrix.pickmeup.R;
 
+import com.belatrix.pickmeup.model.MyUser;
 import com.belatrix.pickmeup.model.Passenger;
 import com.belatrix.pickmeup.rest.PickMeUpClient;
+import com.belatrix.pickmeup.rest.PickMeUpFirebaseClient;
 import com.belatrix.pickmeup.rest.ServiceGenerator;
 
 import java.util.List;
@@ -187,11 +189,61 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.makeText(LoginActivity.this, "FAIL",
                                     Toast.LENGTH_SHORT).show();
                         } else {
-                            goToHomeActivity(nextView);
+                            PickMeUpFirebaseClient client = ServiceGenerator.createService(PickMeUpFirebaseClient.class);
+
+                            Call<MyUser> callPassengers = client.getUser(task.getResult().getUser().getUid().toString());
+
+                            callPassengers.enqueue(new Callback<MyUser>() {
+                                @Override
+                                public void onResponse(Call<MyUser> call, Response<MyUser> response) {
+                                    if (response.isSuccessful()) {
+                                        if (response.code() == 200) {
+                                            authenticated = true;
+                                            MyUser user = response.body();
+                                            SharedPreferenceManager.saveMyUser(LoginActivity.this, user);
+                                        } else {
+                                            authenticated = false;
+                                            counter--;
+
+                                            if (counter == 0) {
+                                                btnLogin.setEnabled(false);
+                                            }
+                                        }
+                                    } else {
+                                        failedMessage = response.errorBody().source().toString();
+                                        Log.e("Login", failedMessage);
+                                        failedMessage = failedMessage.substring(1, failedMessage.length() - 1).split("=")[1];
+                                        authenticated = false;
+                                    }
+
+                                    new android.os.Handler().postDelayed(
+                                            new Runnable() {
+                                                public void run() {
+                                                    // On complete call either onLoginSuccess or onLoginFailed
+                                                    if (authenticated) {
+                                                        onLoginSuccess();
+                                                    } else {
+                                                        onLoginFailed();
+                                                    }
+                                                    progressDialog.dismiss();
+                                                }
+                                            }, 3000);
+
+                                    if (authenticated) {
+                                        goToHomeActivity(nextView);
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<MyUser> call, Throwable t) {
+                                    Log.e("SPManager.failure:", t.toString());
+                                }
+                            });
+
+
+
                         }
 
-
-                        // ...
 
                     }
                 });

@@ -6,6 +6,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 
 import com.belatrix.pickmeup.model.Credentials;
+import com.belatrix.pickmeup.model.MyUser;
 import com.belatrix.pickmeup.model.Passenger;
 
 import com.google.gson.Gson;
@@ -57,6 +58,19 @@ public class SharedPreferenceManager {
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
         Gson gson = new Gson();
         editor.putString("passenger", gson.toJson(passenger));
+        editor.apply();
+    }
+
+    public static MyUser readMyUser(@NonNull Context context) {
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+        Gson gson = new Gson();
+        return gson.fromJson(sharedPref.getString("myUser", ""), MyUser.class);
+    }
+
+    public static void saveMyUser(@NonNull Context context, @NonNull MyUser myUser) {
+        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        Gson gson = new Gson();
+        editor.putString("myUser", gson.toJson(myUser));
         editor.apply();
     }
 }
