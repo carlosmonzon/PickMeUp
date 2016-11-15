@@ -46,58 +46,43 @@ public class RouteActivity extends AppCompatActivity
         implements TimePickerFragment.TimeSelected, DatePickerFragment.DateSelected {
 
     private Spinner paymentMethodSpn;
-
     private Spinner departureSpn;
-
     private Spinner destinationSpn;
-
     private Button addRouteBtn;
-
     private Button joinRouteBtn;
-
     private TextView fromTil;
-
     private TextView toTil;
-
     private TextInputLayout costTil;
-
     private TextInputEditText costTiet;
-
     private TextInputLayout departureTimeTil;
-
     private TextInputEditText departureTimeTiet;
-
     private TextInputLayout contactTil;
-
     private TextInputEditText contactTiet;
-
     private TextInputLayout streetsTil;
-
     private TextInputEditText streetsTiet;
-
     private TextInputLayout passengerMaxCapacityTil;
-
     private TextInputEditText passengerMaxCapacityTiet;
-
-    private Passenger mPassenger;
-
+    private MyUser mUser;
     private TimePicked timePicked = new TimePicked();
-
     String routeId;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_route);
 
-        mPassenger = SharedPreferenceManager.readPassenger(this);
+
+        mUser = SharedPreferenceManager.readMyUser(this);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        paymentMethodSpn = (Spinner) findViewById(R.id.payment_method_spn);
         departureSpn = (Spinner) findViewById(R.id.departure_spn);
         destinationSpn = (Spinner) findViewById(R.id.destination_spn);
+        paymentMethodSpn = (Spinner) findViewById(R.id.payment_method_spn);
         addRouteBtn = (Button) findViewById(R.id.publish_btn);
+
         joinRouteBtn = (Button) findViewById(R.id.join_btn);
         fromTil = (TextView) findViewById(R.id.from_til);
         toTil = (TextView) findViewById(R.id.to_til);
@@ -114,12 +99,11 @@ public class RouteActivity extends AppCompatActivity
         passengerMaxCapacityTil = (TextInputLayout) findViewById(R.id.passenger_max_capacity_til);
         passengerMaxCapacityTiet = (TextInputEditText) findViewById(R.id.passenger_max_capacity_tiet);
 
-        contactTiet.setText(mPassenger.getFirstName() +" "+ mPassenger.getLastName());
+        contactTiet.setText(mUser.getFirst_name() +" "+ mUser.getLast_name());
         contactTiet.setEnabled(false);
 
         //set data to Lists
         Intent intent = getIntent();
-
         routeId = intent.getStringExtra("routeId");
 
         if (null != routeId && !routeId.isEmpty()) {
@@ -150,9 +134,9 @@ public class RouteActivity extends AppCompatActivity
 
     private void validateRoute() {
         boolean hasError = false;
-        //Route newRoute = new Route();
         MyRoute newRoute = new MyRoute();
 
+        //TODO
         int[] passengers = {1,2};
 
         fromTil.setError(null);
@@ -168,7 +152,8 @@ public class RouteActivity extends AppCompatActivity
 
         newRoute.setPaymentType(PaymentType.getValue(paymentMethodSpn.getSelectedItem().toString()));
 
-        newRoute.setPassengers(null); //needs work
+        //TODO
+        newRoute.setPassengers(null);
 
         try {
             Double cost = Double.parseDouble(costTiet.getText().toString());
@@ -183,7 +168,7 @@ public class RouteActivity extends AppCompatActivity
             contactTil.setError(getResources().getString(R.string.add_route_contact_empty_error));
             hasError = true;
         } else {
-            newRoute.setOwner(mPassenger.getId() + ""); //needs work
+            newRoute.setOwner(mUser.getId() + "");
         }
 
         if (departureTimeTiet.getText().equals("")) {
@@ -210,9 +195,6 @@ public class RouteActivity extends AppCompatActivity
         } else {
             saveRoute(newRoute);
         }
-
-        // call to save the new route
-
     }
 
     public void populateSpinner(Spinner spinner, List<String> list) {
@@ -340,12 +322,13 @@ public class RouteActivity extends AppCompatActivity
     }
 
     public void joinToRoute() {
-        Passenger currentPassenger = SharedPreferenceManager.readPassenger(RouteActivity.this);
+        //Passenger currentPassenger = SharedPreferenceManager.readPassenger(RouteActivity.this);
         String userId = "NTr5PoaLoPajV9RrC2trpFGqWiF3"; // TODO: currentPassenger.getId()
 
         MyUser currentUser = new MyUser();
-        currentUser.setFirst_name(currentPassenger.getFirstName());
-        currentUser.setLast_name(currentPassenger.getLastName());
+
+        currentUser.setFirst_name("PrimerNombreTest");
+        currentUser.setLast_name("ApellidoTest");
 
         final ProgressDialog progressDialog = ProgressDialog.show(RouteActivity.this, "", getResources().getString(R.string.saving_message));
 

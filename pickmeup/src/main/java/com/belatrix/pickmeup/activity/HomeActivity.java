@@ -65,17 +65,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
         //Codigo para la opcion del floatingActionButton. + la funcionalidad despues que se hace click.
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        if (fab != null) {
-            fab.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton fabNewRoute = (FloatingActionButton) findViewById(R.id.fab);
+        if (fabNewRoute != null) {
+            fabNewRoute.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-        /*        Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null ).show();
-                */
                     Intent act = new Intent(getApplicationContext(), RouteActivity.class);
                     startActivity(act);
-
                 }
             });
         }
