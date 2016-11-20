@@ -3,6 +3,7 @@ package com.belatrix.pickmeup.rest;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -36,4 +37,10 @@ public interface PickMeUpFirebaseClient {
 
     @PUT("/routes/{routeId}/members/{userId}.json")
     Call<MyUser> joinToRoute(@Path("routeId") String routeId, @Path("userId") String id, @Body MyUser user);
+
+    @DELETE("/routes/{id}.json")
+    Call<RouteDto> deleteRoute(@Path("id") String id);
+
+    @DELETE("/routes/{routeId}/members/{userId}.json")
+    Call<MyUser> disjointFromRoute(@Path("routeId") String routeId, @Path("userId") String userId);
 }

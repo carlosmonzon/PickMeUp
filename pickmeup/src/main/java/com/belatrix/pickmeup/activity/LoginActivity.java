@@ -200,13 +200,14 @@ public class LoginActivity extends AppCompatActivity {
                                         if (response.code() == 200) {
                                             authenticated = true;
                                             MyUser user = response.body();
+                                            user.setId(mAuth.getCurrentUser().getUid());
                                             SharedPreferenceManager.saveMyUser(LoginActivity.this, user);
                                         } else {
                                             authenticated = false;
                                             counter--;
 
                                             if (counter == 0) {
-                                                btnLogin.setEnabled(false);
+                                                //btnLogin.setEnabled(false);
                                             }
                                         }
                                     } else {

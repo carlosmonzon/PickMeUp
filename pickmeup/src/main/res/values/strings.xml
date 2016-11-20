@@ -15,6 +15,8 @@
     <string name="title_activity_nav_drawer">NavDrawerActivity</string>
 
     <string name="saving_message">Grabando...</string>
+    <string name="delete_route_message">Borrando ruta...</string>
+    <string name="disjoint_from_route_message">Abandonando ruta...</string>
 
     <!-- Login Page -->
     <string name="username">Username</string>
@@ -67,7 +69,11 @@
     <string name="available">Disponibles</string>
     <string name="passengers">Pasajeros</string>
     <string name="join">Unirte</string>
+    <string name="disjoint">Salir de la Ruta</string>
+    <string name="delete_route">Borrar Ruta</string>
     <string name="join_route_message">Te has unido a la ruta satisfactoriamente</string>
+    <string name="delete_route_success">La ruta ha sido borrada satisfactoriamente</string>
+    <string name="disjoint_route_success">Has abandonado la ruta satisfactoriamente</string>
 
 
     <!-- Confirmation Dialog-->

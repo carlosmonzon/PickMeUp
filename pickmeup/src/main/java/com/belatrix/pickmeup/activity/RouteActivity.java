@@ -50,6 +50,8 @@ public class RouteActivity extends AppCompatActivity
     private Spinner destinationSpn;
     private Button addRouteBtn;
     private Button joinRouteBtn;
+    private Button deleteRouteBtn;
+    private Button disjointRouteBtn;
     private TextView fromTil;
     private TextView toTil;
     private TextInputLayout costTil;
@@ -73,7 +75,6 @@ public class RouteActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_route);
 
-
         mUser = SharedPreferenceManager.readMyUser(this);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -84,6 +85,9 @@ public class RouteActivity extends AppCompatActivity
         addRouteBtn = (Button) findViewById(R.id.publish_btn);
 
         joinRouteBtn = (Button) findViewById(R.id.join_btn);
+        deleteRouteBtn = (Button) findViewById(R.id.delete_route_btn);
+        disjointRouteBtn = (Button) findViewById(R.id.disjoint_btn);
+
         fromTil = (TextView) findViewById(R.id.from_til);
         toTil = (TextView) findViewById(R.id.to_til);
         costTil = (TextInputLayout) findViewById(R.id.cost_til);
@@ -123,6 +127,18 @@ public class RouteActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 joinToRoute();
+            }
+        });
+        deleteRouteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteRoute();
+            }
+        });
+        disjointRouteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                disjointFromRoute();
             }
         });
     }
@@ -243,6 +259,24 @@ public class RouteActivity extends AppCompatActivity
         streetsTiet.setFocusable(false);
         passengerMaxCapacityTiet.setFocusable(false);
         addRouteBtn.setFocusable(false);
+
+        if (mUser == null)
+            return;
+
+        if (route.getOwner().equals(mUser.getId())) {
+            deleteRouteBtn.setVisibility(View.VISIBLE);
+            disjointRouteBtn.setVisibility(View.GONE);
+        } else {
+
+            for (MyUser user : route.getPassengers()) {
+                if (user.getId().equals(mUser.getId())) {
+                    disjointRouteBtn.setVisibility(View.VISIBLE);
+                    joinRouteBtn.setVisibility(View.GONE);
+                    break;
+                }
+            }
+
+        }
     }
 
     public void saveRoute(MyRoute route) {
@@ -322,17 +356,11 @@ public class RouteActivity extends AppCompatActivity
     }
 
     public void joinToRoute() {
-        //Passenger currentPassenger = SharedPreferenceManager.readPassenger(RouteActivity.this);
-        String userId = "NTr5PoaLoPajV9RrC2trpFGqWiF3"; // TODO: currentPassenger.getId()
-
-        MyUser currentUser = new MyUser();
-
-        currentUser.setFirst_name("PrimerNombreTest");
-        currentUser.setLast_name("ApellidoTest");
+        String userId = mUser.getId();
 
         final ProgressDialog progressDialog = ProgressDialog.show(RouteActivity.this, "", getResources().getString(R.string.saving_message));
 
-        Call<MyUser> call = ServiceGenerator.createService(PickMeUpFirebaseClient.class).joinToRoute(routeId, userId, currentUser);
+        Call<MyUser> call = ServiceGenerator.createService(PickMeUpFirebaseClient.class).joinToRoute(routeId, userId, mUser);
 
         call.enqueue(new Callback<MyUser>() {
 
@@ -351,6 +379,52 @@ public class RouteActivity extends AppCompatActivity
             }
         });
 
+    }
+
+    public void deleteRoute() {
+        final ProgressDialog progressDialog = ProgressDialog.show(RouteActivity.this, "", getResources().getString(R.string.delete_route_message));
+
+        Call<RouteDto> call = ServiceGenerator.createService(PickMeUpFirebaseClient.class).deleteRoute(routeId);
+
+        call.enqueue(new Callback<RouteDto>() {
+
+            @Override
+            public void onResponse(Call<RouteDto> call, Response<RouteDto> response) {
+                Toast.makeText(RouteActivity.this, getResources().getString(R.string.delete_route_success), Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
+                onBackPressed();
+            }
+
+            @Override
+            public void onFailure(Call<RouteDto> call, Throwable t) {
+                Toast.makeText(RouteActivity.this, t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
+            }
+        });
+    }
+
+    public void disjointFromRoute() {
+        String userId = mUser.getId();
+
+        final ProgressDialog progressDialog = ProgressDialog.show(RouteActivity.this, "", getResources().getString(R.string.disjoint_from_route_message));
+
+        Call<MyUser> call = ServiceGenerator.createService(PickMeUpFirebaseClient.class).disjointFromRoute(routeId, userId);
+
+        call.enqueue(new Callback<MyUser>() {
+
+            @Override
+            public void onResponse(Call<MyUser> call, Response<MyUser> response) {
+                Toast.makeText(RouteActivity.this, getResources().getString(R.string.disjoint_route_success), Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
+                onBackPressed();
+            }
+
+            @Override
+            public void onFailure(Call<MyUser> call, Throwable t) {
+                Toast.makeText(RouteActivity.this, t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
+            }
+        });
     }
 
 }
