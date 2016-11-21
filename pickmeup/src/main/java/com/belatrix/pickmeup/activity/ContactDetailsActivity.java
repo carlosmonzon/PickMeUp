@@ -4,10 +4,12 @@ import com.belatrix.pickmeup.R;
 import com.belatrix.pickmeup.model.MyUser;
 import com.belatrix.pickmeup.rest.PickMeUpFirebaseClient;
 import com.belatrix.pickmeup.rest.ServiceGenerator;
+import com.belatrix.pickmeup.util.SharedPreferenceManager;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.TextView;
 
@@ -19,39 +21,27 @@ public class ContactDetailsActivity extends AppCompatActivity {
     private TextView fullnameTil;
     private TextView cellphoneTil;
     private TextView skypeTil;
+    private TextView mailTil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_details);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.tUserName);
 
-        fullnameTil = (TextView) findViewById(R.id.user2_text);
-        cellphoneTil = (TextView) findViewById(R.id.mobile2_text);
-        skypeTil = (TextView) findViewById(R.id.skype2_text);
+        cellphoneTil = (TextView) findViewById(R.id.tvNumber1);
+        mailTil = (TextView) findViewById(R.id.tvNumber2);
+        skypeTil = (TextView) findViewById(R.id.tvNumber3);
 
-        PickMeUpFirebaseClient client = ServiceGenerator.createService(PickMeUpFirebaseClient.class);
+        MyUser mUser = SharedPreferenceManager.readMyUser(this);
+        cellphoneTil.setText(mUser.getCellphone().toString());
+        mailTil.setText(mUser.getEmail());
+        skypeTil.setText(mUser.getSkype_id());
+        System.out.print("");
+        toolbar.setTitle(mUser.getFirst_name() + " " + mUser.getLast_name()
+        );
+        setSupportActionBar(toolbar);
 
-        // TODO: Use real user key
-        Call<MyUser> callPassengers = client.getUser("aJsmGzs9AzbrOThxc7xCHoJmhhX2");
-
-        callPassengers.enqueue(new Callback<MyUser>() {
-            @Override
-            public void onResponse(Call<MyUser> call, Response<MyUser> response) {
-                if (response.isSuccessful()) {
-                    if (response.code() == 200) {
-                        MyUser user = response.body();
-                        fullnameTil.setText(user.getFirst_name() + " " + user.getLast_name());
-                        cellphoneTil.setText(user.getCellphone().toString());
-                        skypeTil.setText(user.getSkype_id().toString());
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<MyUser> call, Throwable t) {
-                Log.e("ContactDetails.failure:", t.toString());
-            }
-        });
     }
 
     @Override

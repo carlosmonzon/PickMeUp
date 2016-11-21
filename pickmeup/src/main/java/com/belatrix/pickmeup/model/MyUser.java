@@ -2,6 +2,7 @@ package com.belatrix.pickmeup.model;
 
 import com.belatrix.pickmeup.enums.UserType;
 
+
 /**
  * Created by angel on 23/10/16.
  */
@@ -20,6 +21,10 @@ public class MyUser {
     private String skype_id;
 
     private UserType userType;
+
+    private String password;
+
+    private boolean isChecked;
 
     public MyUser() {
 
@@ -85,4 +90,20 @@ public class MyUser {
     public UserType getUserType() { return userType; }
 
     public void setUserType(UserType userType) { this.userType = userType; }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public boolean getIsChecked() {
+        return isChecked;
+    }
+
+    public void setIsChecked(boolean isChecked) {
+        this.isChecked = isChecked;
+    }
 }

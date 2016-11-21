@@ -65,7 +65,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private TextInputLayout tilPassword;
 
-    private CheckBox chRemember;
+    private CheckBox chIsChecked;
 
     private int counter = 3;
 
@@ -113,12 +113,18 @@ public class LoginActivity extends AppCompatActivity {
         textSingIn = (TextView) findViewById(R.id.sign_up_link);
         tilUsername = (TextInputLayout) findViewById(R.id.username_til);
         tilPassword = (TextInputLayout) findViewById(R.id.password_til);
-        chRemember = (CheckBox) findViewById(R.id.checkBoxRemember);
-        credentials = SharedPreferenceManager.readCredentials(this);
+        chIsChecked = (CheckBox) findViewById(R.id.checkBoxRemember);
+        MyUser user = SharedPreferenceManager.readMyUser(this);
 
-        inputUsername.setText(credentials.getUsername());
-        inputPassword.setText(credentials.getPassword());
-        chRemember.setChecked(credentials.getRemember());
+        try{
+            inputUsername.setText(user.getEmail());
+            inputPassword.setText(user.getPassword());
+            chIsChecked.setChecked(user.getIsChecked());
+        }catch (Exception e){
+
+        }
+     //   inputPassword.setText(user.get());
+        //chRemember.setChecked(user.getRemember());
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
 
@@ -127,7 +133,7 @@ public class LoginActivity extends AppCompatActivity {
                 login(v);
             }
         });
-
+      //  SharedPreferenceManager.readMyUser(this);
         textForgotUserPass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -201,6 +207,8 @@ public class LoginActivity extends AppCompatActivity {
                                             authenticated = true;
                                             MyUser user = response.body();
                                             user.setId(mAuth.getCurrentUser().getUid());
+                                            user.setPassword(tilPassword.getEditText().getText().toString());
+                                            user.setIsChecked(chIsChecked.isChecked());
                                             SharedPreferenceManager.saveMyUser(LoginActivity.this, user);
                                         } else {
                                             authenticated = false;
@@ -240,74 +248,9 @@ public class LoginActivity extends AppCompatActivity {
                                     Log.e("SPManager.failure:", t.toString());
                                 }
                             });
-
-
-
                         }
-
-
                     }
                 });
-
-
-
-//        credentials.setUsername(inputUsername.getText().toString());
-//        credentials.setPassword(inputPassword.getText().toString());
-//        credentials.setRemember(chRemember.isChecked());
-//
-//        //Todo: Call service for authentication and Authorization
-//        PickMeUpClient client = ServiceGenerator.oldCreateService(PickMeUpClient.class);
-//
-//        Call<Passenger> callPassengers = client.login(credentials);
-//        callPassengers.enqueue(new Callback<Passenger>() {
-//            @Override
-//            public void onResponse(Call<Passenger> call, Response<Passenger> response) {
-//                if (response.isSuccessful()) {
-//                    if (response.code() == 202) {
-//                        Passenger passenger = response.body();
-//                        authenticated = true;
-//                        SharedPreferenceManager.checkPreferences(LoginActivity.this, credentials);
-//                        SharedPreferenceManager.savePassenger(LoginActivity.this, passenger);
-//                        Log.d("Passenger", passenger.getUserName());
-//                    } else {
-//                        authenticated = false;
-//                        counter--;
-//
-//                        if (counter == 0) {
-//                            btnLogin.setEnabled(false);
-//                        }
-//                    }
-//                } else {
-//                    failedMessage = response.errorBody().source().toString();
-//                    Log.e("Login", failedMessage);
-//                    failedMessage = failedMessage.substring(1, failedMessage.length() - 1).split("=")[1];
-//                    authenticated = false;
-//                }
-//
-//                new android.os.Handler().postDelayed(
-//                        new Runnable() {
-//                            public void run() {
-//                                // On complete call either onLoginSuccess or onLoginFailed
-//                                if (authenticated) {
-//                                    onLoginSuccess();
-//                                } else {
-//                                    onLoginFailed();
-//                                }
-//                                progressDialog.dismiss();
-//                            }
-//                        }, 3000);
-//
-//                if (authenticated) {
-//                    goToHomeActivity(nextView);
-//                }
-//
-//            }
-//
-//            @Override
-//            public void onFailure(Call<Passenger> call, Throwable t) {
-//                Log.e("Login", t.toString());
-//            }
-//        });
 
     }
 
