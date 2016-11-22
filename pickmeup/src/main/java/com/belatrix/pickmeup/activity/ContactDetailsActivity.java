@@ -1,24 +1,16 @@
 package com.belatrix.pickmeup.activity;
 
-import com.belatrix.pickmeup.R;
-import com.belatrix.pickmeup.model.MyUser;
-import com.belatrix.pickmeup.rest.PickMeUpFirebaseClient;
-import com.belatrix.pickmeup.rest.ServiceGenerator;
-import com.belatrix.pickmeup.util.SharedPreferenceManager;
-
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.widget.TextView;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import com.belatrix.pickmeup.R;
+import com.belatrix.pickmeup.model.MyUser;
+import com.belatrix.pickmeup.util.SharedPreferenceManager;
 
 public class ContactDetailsActivity extends AppCompatActivity {
-    private TextView fullnameTil;
     private TextView cellphoneTil;
     private TextView skypeTil;
     private TextView mailTil;

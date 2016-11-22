@@ -1,26 +1,11 @@
 package com.belatrix.pickmeup.activity;
 
-import com.belatrix.pickmeup.R;
-import com.belatrix.pickmeup.fragment.AllRoutesFragment;
-import com.belatrix.pickmeup.fragment.MyRoutesFragment;
-import com.belatrix.pickmeup.model.MyRoute;
-import com.belatrix.pickmeup.model.MyUser;
-import com.belatrix.pickmeup.model.RouteDto;
-import com.belatrix.pickmeup.rest.PickMeUpClient;
-import com.belatrix.pickmeup.rest.PickMeUpFirebaseClient;
-import com.belatrix.pickmeup.rest.ServiceGenerator;
-import com.belatrix.pickmeup.util.DataConverter;
-
-import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -30,6 +15,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+
+import com.belatrix.pickmeup.R;
+import com.belatrix.pickmeup.adapter.ViewPagerAdapter;
+import com.belatrix.pickmeup.fragment.AllRoutesFragment;
+import com.belatrix.pickmeup.fragment.MyRoutesFragment;
+import com.belatrix.pickmeup.model.MyRoute;
+import com.belatrix.pickmeup.model.MyUser;
+import com.belatrix.pickmeup.model.RouteDto;
+import com.belatrix.pickmeup.rest.PickMeUpFirebaseClient;
+import com.belatrix.pickmeup.rest.ServiceGenerator;
+import com.belatrix.pickmeup.util.DataConverter;
+import com.belatrix.pickmeup.util.SharedPreferenceManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,12 +44,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     private ViewPager viewPager;
 
+    private MyUser mUser;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nav_drawer);
-        //INICIALIZACION DE VARIABLES A UTILIZAR
 
         //toolbar manejará el toolbar del HomeActivity
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -95,7 +93,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     public void onClick(DialogInterface dialog, int which) {
                         Intent intent = new Intent(getApplication(), LoginActivity.class);
                         startActivity(intent);
-                        finish();                    }
+                        finish();
+                    }
                 })
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
@@ -132,94 +131,43 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     //Se añade los fragments al adaptar y luego al viewPager. (Se debe agregar el fragment y su titulo
     private void setupViewPager(ViewPager viewPager, List<MyRoute> routes) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        mUser = SharedPreferenceManager.readMyUser(this);
+
         adapter.addFragment(new AllRoutesFragment(routes), "Todas las rutas");
-        adapter.addFragment(new MyRoutesFragment(), "Mis rutas");
+        adapter.addFragment(new MyRoutesFragment(routes, mUser), "Mis rutas");
         viewPager.setAdapter(adapter);
     }
 
-    //Clase para el manejo de los fragment que serán agregados a HomeActivity
-    class ViewPagerAdapter extends FragmentPagerAdapter {
-
-        private final List<Fragment> mFragmentList = new ArrayList<>();
-
-        private final List<String> mFragmentTitleList = new ArrayList<>();
-
-        public ViewPagerAdapter(FragmentManager manager) {
-            super(manager);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return mFragmentList.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return mFragmentList.size();
-        }
-
-        public void addFragment(Fragment fragment, String title) {
-            mFragmentList.add(fragment);
-            mFragmentTitleList.add(title);
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return mFragmentTitleList.get(position);
-        }
-
-    }
 
     public void getRoute() {
 
-        Call<Map<String,RouteDto>> call = ServiceGenerator.createService(PickMeUpFirebaseClient.class).getRoutes();
+        Call<Map<String, RouteDto>> call = ServiceGenerator.createService(PickMeUpFirebaseClient.class).getRoutes();
 
-        call.enqueue(new Callback<Map<String,RouteDto>>() {
+        call.enqueue(new Callback<Map<String, RouteDto>>() {
 
             @Override
-            public void onResponse(Call<Map<String,RouteDto>> call, Response<Map<String,RouteDto>> response) {
+            public void onResponse(Call<Map<String, RouteDto>> call, Response<Map<String, RouteDto>> response) {
                 Map<String, RouteDto> mapRoutes = response.body();
                 List<MyRoute> routes = new ArrayList<>();
-                for (Map.Entry<String, RouteDto> entryRoute : mapRoutes.entrySet())
-                {
-                    MyRoute route = DataConverter.convertRouteData(entryRoute.getKey(), entryRoute.getValue());
-                    routes.add(route);
-                }
 
-                viewPager = (ViewPager) findViewById(R.id.viewpager);
-                setupViewPager(viewPager, routes);
+                try {
+                    for (Map.Entry<String, RouteDto> entryRoute : mapRoutes.entrySet()) {
+                        MyRoute route = DataConverter.convertRouteData(entryRoute.getKey(), entryRoute.getValue());
+                        routes.add(route);
+                    }
+
+                    viewPager = (ViewPager) findViewById(R.id.viewpager);
+                    setupViewPager(viewPager, routes);
+                } catch (Exception e) {
+                }
             }
 
             @Override
-            public void onFailure(Call<Map<String,RouteDto>> call, Throwable t) {
+            public void onFailure(Call<Map<String, RouteDto>> call, Throwable t) {
                 // Toast.makeText(HomeActivity.this, t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 
-    }
-
-    public void getUsers() {
-        Call<Map<String,MyUser>> call = ServiceGenerator.createService(PickMeUpFirebaseClient.class).getUsers();
-
-        Integer size = 0;
-        call.enqueue(new Callback<Map<String,MyUser>>() {
-            @Override
-            public void onResponse(Call<Map<String,MyUser>> call, Response<Map<String,MyUser>> response) {
-                Map<String, MyUser> map = response.body();
-                List<MyUser> users = new ArrayList<>();
-                for (Map.Entry<String, MyUser> entry : map.entrySet())
-                {
-                    MyUser user = entry.getValue();
-                    user.setId(entry.getKey());
-                    users.add(user);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Map<String,MyUser>> call, Throwable t) {
-                //System.out.println("FAIL " + t.getMessage());
-            }
-        });
     }
 
 }

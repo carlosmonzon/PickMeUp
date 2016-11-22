@@ -9,6 +9,7 @@ import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
+import com.belatrix.pickmeup.model.FirebaseResponse;
 import com.belatrix.pickmeup.model.MyRoute;
 import com.belatrix.pickmeup.model.MyUser;
 import com.belatrix.pickmeup.model.RouteDto;
@@ -21,7 +22,7 @@ import java.util.Map;
 public interface PickMeUpFirebaseClient {
 
     @POST("/routes.json")
-    Call<RouteDto> registerRoute(@Body MyRoute route);
+    Call<FirebaseResponse> registerRoute(@Body MyRoute route);
 
     @GET("/routes.json")
     Call<Map<String,RouteDto>> getRoutes();

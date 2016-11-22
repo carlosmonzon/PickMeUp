@@ -22,9 +22,9 @@ public class MyUser {
 
     private UserType userType;
 
-    private String password;
+    private transient String password;
 
-    private boolean isChecked;
+    private transient boolean isChecked;
 
     public MyUser() {
 

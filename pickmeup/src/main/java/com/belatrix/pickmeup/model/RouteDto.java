@@ -37,7 +37,7 @@ public class RouteDto {
     private Map<String, MyUser> members;
 
     @SerializedName("owner")
-    private String owner;
+    private MyUser owner;
 
 
     public Departure getDeparture() {
@@ -92,7 +92,7 @@ public class RouteDto {
 
     public void setMembers(Map<String, MyUser> members) { this.members = members; }
 
-    public String getOwner() { return owner; }
+    public MyUser getOwner() { return owner; }
 
-    public void setOwner(String owner) { this.owner = owner; }
+    public void setOwner(MyUser owner) { this.owner = owner; }
 }

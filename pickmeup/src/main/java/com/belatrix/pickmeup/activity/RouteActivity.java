@@ -1,21 +1,5 @@
 package com.belatrix.pickmeup.activity;
 
-import com.belatrix.pickmeup.R;
-import com.belatrix.pickmeup.enums.Departure;
-import com.belatrix.pickmeup.enums.Destination;
-import com.belatrix.pickmeup.enums.PaymentType;
-import com.belatrix.pickmeup.fragment.DatePickerFragment;
-import com.belatrix.pickmeup.fragment.TimePickerFragment;
-import com.belatrix.pickmeup.model.MyRoute;
-import com.belatrix.pickmeup.model.MyUser;
-import com.belatrix.pickmeup.model.Passenger;
-import com.belatrix.pickmeup.model.RouteDto;
-import com.belatrix.pickmeup.model.TimePicked;
-import com.belatrix.pickmeup.rest.PickMeUpFirebaseClient;
-import com.belatrix.pickmeup.rest.ServiceGenerator;
-import com.belatrix.pickmeup.util.DataConverter;
-import com.belatrix.pickmeup.util.SharedPreferenceManager;
-
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -24,18 +8,32 @@ import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
-
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.belatrix.pickmeup.R;
+import com.belatrix.pickmeup.enums.Departure;
+import com.belatrix.pickmeup.enums.Destination;
+import com.belatrix.pickmeup.enums.PaymentType;
+import com.belatrix.pickmeup.fragment.DatePickerFragment;
+import com.belatrix.pickmeup.fragment.TimePickerFragment;
+import com.belatrix.pickmeup.model.FirebaseResponse;
+import com.belatrix.pickmeup.model.MyRoute;
+import com.belatrix.pickmeup.model.MyUser;
+import com.belatrix.pickmeup.model.RouteDto;
+import com.belatrix.pickmeup.model.TimePicked;
+import com.belatrix.pickmeup.rest.PickMeUpFirebaseClient;
+import com.belatrix.pickmeup.rest.ServiceGenerator;
+import com.belatrix.pickmeup.util.DataConverter;
+import com.belatrix.pickmeup.util.SharedPreferenceManager;
+
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -45,6 +43,7 @@ import retrofit2.Response;
 public class RouteActivity extends AppCompatActivity
         implements TimePickerFragment.TimeSelected, DatePickerFragment.DateSelected {
 
+    String routeId;
     private Spinner paymentMethodSpn;
     private Spinner departureSpn;
     private Spinner destinationSpn;
@@ -66,9 +65,6 @@ public class RouteActivity extends AppCompatActivity
     private TextInputEditText passengerMaxCapacityTiet;
     private MyUser mUser;
     private TimePicked timePicked = new TimePicked();
-    String routeId;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,7 +99,6 @@ public class RouteActivity extends AppCompatActivity
         passengerMaxCapacityTil = (TextInputLayout) findViewById(R.id.passenger_max_capacity_til);
         passengerMaxCapacityTiet = (TextInputEditText) findViewById(R.id.passenger_max_capacity_tiet);
 
-        contactTiet.setText(mUser.getFirst_name() +" "+ mUser.getLast_name());
         contactTiet.setEnabled(false);
 
         //set data to Lists
@@ -153,7 +148,6 @@ public class RouteActivity extends AppCompatActivity
         MyRoute newRoute = new MyRoute();
 
         //TODO
-        int[] passengers = {1,2};
 
         fromTil.setError(null);
         toTil.setError(null);
@@ -178,13 +172,12 @@ public class RouteActivity extends AppCompatActivity
             costTil.setError(getResources().getString(R.string.add_route_cost_empty_error));
             hasError = true;
         }
-        newRoute.setDepartureTime(String.valueOf(new Date().getTime()));
 
         if (contactTiet.getText().toString().trim().equals("")) {
             contactTil.setError(getResources().getString(R.string.add_route_contact_empty_error));
             hasError = true;
         } else {
-            newRoute.setOwner(mUser.getId() + "");
+            newRoute.setOwner(mUser);
         }
 
         if (departureTimeTiet.getText().equals("")) {
@@ -202,8 +195,6 @@ public class RouteActivity extends AppCompatActivity
         }
 
         newRoute.setAddressDestination(streetsTiet.getText().toString());
-
-
 
         if (hasError) {
             Toast.makeText(RouteActivity.this, getResources().getString(R.string.add_route_form_error),
@@ -244,10 +235,19 @@ public class RouteActivity extends AppCompatActivity
         populateSpinner(departureSpn, Departure.getList(), route.getDeparture().toString());
         populateSpinner(destinationSpn, Destination.getList(), route.getDestination().toString());
         costTiet.setText(route.getCost().toString());
-        departureTimeTiet.setText(route.getDepartureTime().toString());
-        contactTiet.setText(route.getOwner());//needs work
+
+        Long dateDeparture = Long.parseLong(route.getDepartureTime());
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(dateDeparture);
+
+        SimpleDateFormat sdf = new SimpleDateFormat("MMM dd HH:mm");
+
+        departureTimeTiet.setText(sdf.format(calendar.getTime()).toString());
+
+        String FullName = route.getOwner().getFirst_name() + " " + route.getOwner().getLast_name();
+        contactTiet.setText(FullName);
         streetsTiet.setText(route.getAddressDestination());
-        passengerMaxCapacityTiet.setText(route.getPlaceAvailable()+"");
+        passengerMaxCapacityTiet.setText(route.getPlaceAvailable() + "");
         addRouteBtn.setVisibility(View.GONE);
 
         paymentMethodSpn.setFocusable(false);
@@ -263,41 +263,55 @@ public class RouteActivity extends AppCompatActivity
         if (mUser == null)
             return;
 
-        if (route.getOwner().equals(mUser.getId())) {
+        int takenPlaces = route.getPassengers() != null ? route.getPassengers().size() : 0;
+        int totalPlaces = route.getPlaceAvailable() - takenPlaces;
+
+        if (totalPlaces <= 0) {
+            joinRouteBtn.setVisibility(View.GONE);
+        }
+
+        if (route.getOwner().getId().equals(mUser.getId())) {
             deleteRouteBtn.setVisibility(View.VISIBLE);
+            joinRouteBtn.setVisibility(View.GONE);
             disjointRouteBtn.setVisibility(View.GONE);
         } else {
-
-            for (MyUser user : route.getPassengers()) {
-                if (user.getId().equals(mUser.getId())) {
-                    disjointRouteBtn.setVisibility(View.VISIBLE);
-                    joinRouteBtn.setVisibility(View.GONE);
-                    break;
+            try {
+                for (MyUser user : route.getPassengers()) {
+                    if (user.getId().equals(mUser.getId())) {
+                        disjointRouteBtn.setVisibility(View.VISIBLE);
+                        joinRouteBtn.setVisibility(View.GONE);
+                        break;
+                    }
                 }
+            } catch (Exception e) {
+
             }
 
         }
     }
 
     public void saveRoute(MyRoute route) {
-        Call<RouteDto> call = ServiceGenerator.createService(PickMeUpFirebaseClient.class).registerRoute(route);
+        Call<FirebaseResponse> call = ServiceGenerator.createService(PickMeUpFirebaseClient.class).registerRoute(route);
 
-        call.enqueue(new Callback<RouteDto>() {
+        call.enqueue(new Callback<FirebaseResponse>() {
             @Override
-            public void onResponse(Call<RouteDto> call, Response<RouteDto> response) {
-                try
-                {
+            public void onResponse(Call<FirebaseResponse> call, Response<FirebaseResponse> response) {
+                try {
                     Toast.makeText(RouteActivity.this, "Route has been successfully created",
                             Toast.LENGTH_SHORT).show();
+                    FirebaseResponse firebaseResponse = response.body();
+
+                    routeId = firebaseResponse.getName();
+                    joinToRoute();
                     Intent k = new Intent(RouteActivity.this, HomeActivity.class);
                     startActivity(k);
-                }catch(Exception e){
+                } catch (Exception e) {
 
                 }
             }
 
             @Override
-            public void onFailure(Call<RouteDto> call, Throwable t) {
+            public void onFailure(Call<FirebaseResponse> call, Throwable t) {
                 Log.e("Failure saveRoute", t.toString());
             }
         });
@@ -345,7 +359,10 @@ public class RouteActivity extends AppCompatActivity
         //assign to text
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.MILLISECOND, (int) timePicked.timePickedToMiliseconds());
-        departureTimeTiet.setText(cal.getTime().toString());
+        SimpleDateFormat sdf = new SimpleDateFormat("MMM dd HH:mm");
+        Long dateDeparture = timePicked.timePickedToMiliseconds();
+
+        departureTimeTiet.setText(sdf.format(dateDeparture).toString());
     }
 
     @Override

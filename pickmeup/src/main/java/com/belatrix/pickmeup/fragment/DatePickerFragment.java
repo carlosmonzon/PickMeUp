@@ -17,11 +17,6 @@ public class DatePickerFragment extends DialogFragment
 
     DateSelected dateSelected;
 
-    public interface DateSelected {
-
-        void getDate(int year, int month, int day);
-    }
-
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -50,5 +45,10 @@ public class DatePickerFragment extends DialogFragment
 
     public void onDateSet(DatePicker view, int year, int month, int day) {
         dateSelected.getDate(year, month, day);
+    }
+
+    public interface DateSelected {
+
+        void getDate(int year, int month, int day);
     }
 }

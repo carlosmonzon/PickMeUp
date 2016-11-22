@@ -1,5 +1,29 @@
 package com.belatrix.pickmeup.activity;
 
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.TextInputEditText;
+import android.support.design.widget.TextInputLayout;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.belatrix.pickmeup.R;
+import com.belatrix.pickmeup.model.MyUser;
+import com.belatrix.pickmeup.model.Passenger;
+import com.belatrix.pickmeup.rest.PickMeUpClient;
+import com.belatrix.pickmeup.rest.PickMeUpFirebaseClient;
+import com.belatrix.pickmeup.rest.ServiceGenerator;
+import com.belatrix.pickmeup.util.RegularExpressionValidator;
+import com.belatrix.pickmeup.util.SharedPreferenceManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
@@ -7,39 +31,11 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AlertDialog;
-import android.util.Log;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.view.View;
-import android.support.v7.app.AppCompatActivity;
-import android.widget.TextView;
-import android.widget.Toast;
-import android.support.design.widget.TextInputEditText;
-import android.support.design.widget.TextInputLayout;
-import android.app.ProgressDialog;
-
-import com.belatrix.pickmeup.R;
-
-import com.belatrix.pickmeup.model.MyUser;
-import com.belatrix.pickmeup.model.Passenger;
-import com.belatrix.pickmeup.rest.PickMeUpClient;
-import com.belatrix.pickmeup.rest.PickMeUpFirebaseClient;
-import com.belatrix.pickmeup.rest.ServiceGenerator;
-
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import com.belatrix.pickmeup.model.Credentials;
-import com.belatrix.pickmeup.util.RegularExpressionValidator;
-import com.belatrix.pickmeup.util.SharedPreferenceManager;
 
 
 /**
@@ -73,14 +69,12 @@ public class LoginActivity extends AppCompatActivity {
 
     private String failedMessage = "Login Failed";
 
-    private Credentials credentials;
 
     private View nextView;
 
     private FirebaseAuth.AuthStateListener mAuthListener;
 
     private FirebaseAuth mAuth;
-
 
 
     @Override
@@ -116,15 +110,13 @@ public class LoginActivity extends AppCompatActivity {
         chIsChecked = (CheckBox) findViewById(R.id.checkBoxRemember);
         MyUser user = SharedPreferenceManager.readMyUser(this);
 
-        try{
+        try {
             inputUsername.setText(user.getEmail());
             inputPassword.setText(user.getPassword());
             chIsChecked.setChecked(user.getIsChecked());
-        }catch (Exception e){
-
+        } catch (Exception e) {
+            Log.d(TAG, e.getMessage());
         }
-     //   inputPassword.setText(user.get());
-        //chRemember.setChecked(user.getRemember());
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
 
@@ -133,7 +125,7 @@ public class LoginActivity extends AppCompatActivity {
                 login(v);
             }
         });
-      //  SharedPreferenceManager.readMyUser(this);
+
         textForgotUserPass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -194,6 +186,7 @@ public class LoginActivity extends AppCompatActivity {
                             Log.w(TAG, "signInWithEmail:failed", task.getException());
                             Toast.makeText(LoginActivity.this, "FAIL",
                                     Toast.LENGTH_SHORT).show();
+                            //return;
                         } else {
                             PickMeUpFirebaseClient client = ServiceGenerator.createService(PickMeUpFirebaseClient.class);
 
@@ -262,14 +255,16 @@ public class LoginActivity extends AppCompatActivity {
                 .setMessage("Would you like to logout?")
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        finish();                    }
+                        finish();
+                    }
                 })
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         // user doesn't want to logout
                     }
                 })
-                .show();    }
+                .show();
+    }
 
     public void onLoginSuccess() {
         btnLogin.setEnabled(true);

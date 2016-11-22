@@ -10,13 +10,9 @@ public enum Departure {
     BELATRIX_SAN_ISIDRO("San Isidro"), BELATRIX_LA_MOLINA("La Molina");
 
     private String stringValue;
+
     Departure(String toString) {
         stringValue = toString;
-    }
-
-    @Override
-    public String toString() {
-        return stringValue;
     }
 
     public static Departure getValue(String value) {
@@ -30,13 +26,17 @@ public enum Departure {
         }
     }
 
-
-    public static List<String> getList(){
+    public static List<String> getList() {
         List<String> listEnum = new ArrayList<>();
         Departure[] values = Departure.values();
         for (int i = 0; i < values.length; i++) {
             listEnum.add(values[i].toString());
         }
         return listEnum;
+    }
+
+    @Override
+    public String toString() {
+        return stringValue;
     }
 }

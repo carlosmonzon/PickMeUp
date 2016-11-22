@@ -5,12 +5,8 @@ import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
 import android.text.format.DateFormat;
 import android.widget.TimePicker;
-import android.widget.Toast;
-
-import com.belatrix.pickmeup.R;
 
 import java.util.Calendar;
 
@@ -21,11 +17,6 @@ public class TimePickerFragment extends DialogFragment
         implements TimePickerDialog.OnTimeSetListener {
 
     TimeSelected timeSelected;
-
-    public interface TimeSelected {
-
-        void getTime(int hourOfDay, int minute);
-    }
 
     @Override
     public void onAttach(Activity activity) {
@@ -58,6 +49,11 @@ public class TimePickerFragment extends DialogFragment
 
         timeSelected.getTime(hourOfDay, minute);
 
+    }
+
+    public interface TimeSelected {
+
+        void getTime(int hourOfDay, int minute);
     }
 }
 

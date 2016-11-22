@@ -5,10 +5,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 
-import com.belatrix.pickmeup.model.Credentials;
 import com.belatrix.pickmeup.model.MyUser;
-import com.belatrix.pickmeup.model.Passenger;
-
 import com.google.gson.Gson;
 
 /**

@@ -11,7 +11,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,6 +42,10 @@ public class SignUpActivity extends AppCompatActivity {
     private int counter = 3;
 
     private boolean validData = false;
+
+    public final static boolean isValidEmail(CharSequence target) {
+        return Patterns.EMAIL_ADDRESS.matcher(target).matches();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,13 +109,13 @@ public class SignUpActivity extends AppCompatActivity {
         }
 
         new android.os.Handler().postDelayed(
-                    new Runnable() {
-                        public void run() {
-                            if (validData) {
+                new Runnable() {
+                    public void run() {
+                        if (validData) {
                             Toast.makeText(getApplicationContext(), "Se ha registrado correctamente!", Toast.LENGTH_SHORT).show();
-                            }
                         }
-                    }, 5000);
+                    }
+                }, 5000);
 
         new android.os.Handler().postDelayed(
                 new Runnable() {
@@ -127,7 +130,7 @@ public class SignUpActivity extends AppCompatActivity {
                     }
                 }, 4000);
 
-        if(validData){
+        if (validData) {
             //Toast.makeText(getApplicationContext(), "Se ha registrado correctamente!", Toast.LENGTH_SHORT).show();
             checkPreferences();
             goToLoginActivity(view);
@@ -182,11 +185,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     }
 
-    public final static boolean isValidEmail(CharSequence target) {
-        return Patterns.EMAIL_ADDRESS.matcher(target).matches();
-    }
-
-    public void checkPreferences(){
+    public void checkPreferences() {
         String name = inputName.getText().toString();
         String username = inputUsername.getText().toString();
         String password = inputPassword.getText().toString();
@@ -194,7 +193,7 @@ public class SignUpActivity extends AppCompatActivity {
         saveInfo(name, username, password);
     }
 
-    public void saveInfo(String name, String username,String password){
+    public void saveInfo(String name, String username, String password) {
         SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString("name", name);
@@ -203,7 +202,7 @@ public class SignUpActivity extends AppCompatActivity {
         editor.commit();
     }
 
-    public void readInfo(){
+    public void readInfo() {
         SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
         String name = sharedPref.getString("name", null);
         String username = sharedPref.getString("username", null);
