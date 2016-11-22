@@ -186,29 +186,25 @@ public class LoginActivity extends AppCompatActivity {
                             Log.w(TAG, "signInWithEmail:failed", task.getException());
                             Toast.makeText(LoginActivity.this, "FAIL",
                                     Toast.LENGTH_SHORT).show();
-                            //return;
                         } else {
-                            PickMeUpFirebaseClient client = ServiceGenerator.createService(PickMeUpFirebaseClient.class);
+                            PickMeUpFirebaseClient client = ServiceGenerator.createServiceDeserializer(PickMeUpFirebaseClient.class);
 
-                            Call<MyUser> callPassengers = client.getUser(task.getResult().getUser().getUid().toString());
+                            Call<MyUser> callMyUsers = client.getUser("\""+task.getResult().getUser().getUid()+"\"", "\"$key\"");
 
-                            callPassengers.enqueue(new Callback<MyUser>() {
+                            callMyUsers.enqueue(new Callback<MyUser>() {
                                 @Override
                                 public void onResponse(Call<MyUser> call, Response<MyUser> response) {
                                     if (response.isSuccessful()) {
-                                        if (response.code() == 200) {
+                                        if (response.code() == 200 && response.body()!=null) {
                                             authenticated = true;
                                             MyUser user = response.body();
-                                            user.setId(mAuth.getCurrentUser().getUid());
-                                            user.setPassword(tilPassword.getEditText().getText().toString());
-                                            user.setIsChecked(chIsChecked.isChecked());
                                             SharedPreferenceManager.saveMyUser(LoginActivity.this, user);
                                         } else {
                                             authenticated = false;
                                             counter--;
 
                                             if (counter == 0) {
-                                                //btnLogin.setEnabled(false);
+                                                btnLogin.setEnabled(false);
                                             }
                                         }
                                     } else {
@@ -233,6 +229,8 @@ public class LoginActivity extends AppCompatActivity {
 
                                     if (authenticated) {
                                         goToHomeActivity(nextView);
+                                    } else if(response.body()==null) {
+                                        goToSignUpActivity(nextView);
                                     }
                                 }
 
@@ -241,10 +239,14 @@ public class LoginActivity extends AppCompatActivity {
                                     Log.e("SPManager.failure:", t.toString());
                                 }
                             });
+
+
+
                         }
+
+
                     }
                 });
-
     }
 
     @Override
@@ -286,6 +288,11 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void goToSignUpActivity(View view) {
+        Intent intent = new Intent(this, SignUpActivity.class);
+        startActivity(intent);
+    }
+
     public void goToSignIn(View view) {
 
         // Asynchronous Call in Retrofit 2.0
@@ -309,9 +316,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        //Todo: Go to Sign In
-        Intent intent = new Intent(this, SignUpActivity.class);
-        startActivity(intent);
+        goToSignUpActivity(view);
     }
 
     public boolean validateLogin() {

@@ -8,6 +8,7 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 import com.belatrix.pickmeup.model.FirebaseResponse;
 import com.belatrix.pickmeup.model.MyRoute;
@@ -35,6 +36,9 @@ public interface PickMeUpFirebaseClient {
 
     @GET("/users/{id}.json")
     Call<MyUser> getUser(@Path("id") String id);
+
+    @GET("/users.json")
+    Call<MyUser> getUser(@Query("equalTo") String uid, @Query("orderBy") String key);
 
     @PUT("/routes/{routeId}/members/{userId}.json")
     Call<MyUser> joinToRoute(@Path("routeId") String routeId, @Path("userId") String id, @Body MyUser user);

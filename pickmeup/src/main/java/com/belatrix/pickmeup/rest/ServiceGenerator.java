@@ -5,6 +5,9 @@ import android.util.Base64;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import com.belatrix.pickmeup.model.MyUser;
+import com.belatrix.pickmeup.util.MyUserDeserializer;
+
 import java.io.IOException;
 
 import okhttp3.Interceptor;
@@ -26,6 +29,8 @@ public class ServiceGenerator {
 
     private static Gson gson = new GsonBuilder().setLenient().create();
 
+    private static Gson gsonDeserializer =  new GsonBuilder().registerTypeAdapter(MyUser.class, new MyUserDeserializer()).setLenient().create();
+
     //Should be deleted
     private static OkHttpClient.Builder httpClient1 = new OkHttpClient.Builder();
 
@@ -43,8 +48,16 @@ public class ServiceGenerator {
     private static Retrofit.Builder builder = new Retrofit.Builder().baseUrl(FIREBASE_BASE_URL)
             .addConverterFactory(GsonConverterFactory.create(gson));
 
+    private static Retrofit.Builder builderDeserializer = new Retrofit.Builder().baseUrl(FIREBASE_BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create(gsonDeserializer));
+
     public static <S> S createService(Class<S> serviceClass) {
         Retrofit retrofit = builder.client(httpClient.build()).build();
+        return retrofit.create(serviceClass);
+    }
+
+    public static <S> S createServiceDeserializer(Class<S> serviceClass) {
+        Retrofit retrofit = builderDeserializer.client(httpClient.build()).build();
         return retrofit.create(serviceClass);
     }
 
