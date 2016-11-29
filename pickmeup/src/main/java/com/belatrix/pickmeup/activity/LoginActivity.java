@@ -45,8 +45,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = "LoginActivity";
 
-    private static final int REQUEST_SIGN_UP = 0;
-
     private Button btnLogin;
 
     private TextInputEditText inputUsername;
