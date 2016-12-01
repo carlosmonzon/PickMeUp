@@ -228,7 +228,7 @@ public class LoginActivity extends AppCompatActivity {
                                 @Override
                                 public void onResponse(Call<MyUser> call, Response<MyUser> response) {
 
-                                    if (response.code() == 200 && response.body() != null) {
+                                    if (response.code() == 200 && response.body().getEmail() != null) {
                                         authenticated = true;
                                         MyUser user = response.body();
                                         SharedPreferenceManager.saveMyUser(LoginActivity.this, user);
@@ -239,7 +239,8 @@ public class LoginActivity extends AppCompatActivity {
                                         }
                                     } else {
                                         authenticated = false;
-                                        failedMessage = response.errorBody().source().toString();
+                                        failedMessage = response.body().getEmail() != null?response.errorBody()
+                                                .source().toString():"Login Error, user should register again";
                                         Log.e("Login", failedMessage);
                                     }
 
@@ -247,7 +248,7 @@ public class LoginActivity extends AppCompatActivity {
                                         progressDialog.dismiss();
                                         finish();
                                         goToHomeActivity(nextView);
-                                    } else if (response.body() == null) {
+                                    } else if (response.body().getEmail() == null) {
                                         goToSignUpActivity(nextView);
                                     } else {
                                         onLoginFailed();
