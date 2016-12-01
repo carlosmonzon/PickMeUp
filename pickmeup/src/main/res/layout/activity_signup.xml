@@ -11,44 +11,85 @@
     android:gravity="center"
     android:paddingBottom="@dimen/activity_vertical_margin">
 
-    <TextView android:text="@string/app_name"
-        android:id="@+id/app_name_text"
-        style="@style/loginHeader"/>
-
-    <!-- Name Label -->
+    <!-- FirstName Label -->
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/signup_name_til"
+        android:id="@+id/signup_first_name_til"
         android:layout_below="@id/app_name_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:errorEnabled="true">
 
         <android.support.design.widget.TextInputEditText
-            android:id="@+id/signup_name_tiet"
+            android:id="@+id/signup_first_name_tiet"
             style="@style/loginEditText"
             android:hint="@string/name"/>
 
     </android.support.design.widget.TextInputLayout>
 
-    <!-- username Label -->
+    <!-- LastName Label -->
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/signup_username_til"
-        android:layout_below="@id/signup_name_til"
+        android:id="@+id/signup_last_name_til"
+        android:layout_below="@id/signup_first_name_til"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:errorEnabled="true">
 
         <android.support.design.widget.TextInputEditText
-            android:id="@+id/signup_username_tiet"
+            android:id="@+id/signup_last_name_tiet"
             style="@style/loginEditText"
-            android:hint="@string/username"/>
+            android:hint="@string/last_name"/>
+
+    </android.support.design.widget.TextInputLayout>
+
+    <!-- Email Label -->
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/signup_email_til"
+        android:layout_below="@id/signup_last_name_til"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:errorEnabled="true">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/signup_email_tiet"
+            style="@style/loginEditText"
+            android:hint="@string/email"/>
+
+    </android.support.design.widget.TextInputLayout>
+
+    <!-- SkypeId Label -->
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/signup_skype_id_til"
+        android:layout_below="@id/signup_email_til"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:errorEnabled="true">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/signup_skype_id_tiet"
+            style="@style/loginEditText"
+            android:hint="@string/skype_id"/>
+
+    </android.support.design.widget.TextInputLayout>
+
+    <!-- Cellphone Label -->
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/signup_cellphone_til"
+        android:layout_below="@id/signup_skype_id_til"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:errorEnabled="true">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/signup_cellphone_tiet"
+            style="@style/loginEditText"
+            android:hint="@string/cellphone"/>
 
     </android.support.design.widget.TextInputLayout>
 
     <!-- Password Label -->
     <android.support.design.widget.TextInputLayout
         android:id="@+id/signup_password_til"
-        android:layout_below="@id/signup_username_til"
+        android:layout_below="@id/signup_cellphone_til"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:errorEnabled="true">
@@ -67,7 +108,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:theme="@style/loginButton"
-        android:text="@string/sign_up"
+        android:text="@string/signup_button"
         android:onClick="signup"
         android:layout_below="@+id/signup_password_til"
         android:layout_alignParentRight="true"

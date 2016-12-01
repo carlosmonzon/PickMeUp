@@ -31,6 +31,9 @@ public interface PickMeUpFirebaseClient {
     @GET("/routes/{id}.json")
     Call<RouteDto> getRoute(@Path("id") String id);
 
+    @PUT("/users/{userId}.json")
+    Call<FirebaseResponse> registerUser(@Path("userId") String id, @Body MyUser user);
+
     @GET("/users.json")
     Call<Map<String,MyUser>> getUsers();
 
