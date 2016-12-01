@@ -22,10 +22,6 @@ public class MyUser {
 
     private UserType userType;
 
-    private transient String password;
-
-    private transient boolean isChecked;
-
     public MyUser() {
 
     }
@@ -91,19 +87,4 @@ public class MyUser {
 
     public void setUserType(UserType userType) { this.userType = userType; }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public boolean getIsChecked() {
-        return isChecked;
-    }
-
-    public void setIsChecked(boolean isChecked) {
-        this.isChecked = isChecked;
-    }
 }
