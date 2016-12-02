@@ -18,15 +18,14 @@ android {
     final DEBUG_PACKAGE_SUFFIX = ".debug"
     final QA_PACKAGE_SUFFIX = ".qa"
 
-    compileSdkVersion 23
-    buildToolsVersion "23.0.3"
+    compileSdkVersion 25
+    buildToolsVersion "25.0.1"
     defaultConfig {
         applicationId "com.belatrix.pickmeup"
         minSdkVersion 15
-        targetSdkVersion 23
+        targetSdkVersion 25
         versionCode 1
         versionName "1.0"
-        vectorDrawables.useSupportLibrary = true
     }
 
     signingConfigs {
@@ -36,10 +35,6 @@ android {
             keyAlias 'pickmeup-qa'
             keyPassword 'pickmeupqa'
         }
-    }
-
-    aaptOptions {
-        additionalParameters "--no-version-vectors"
     }
 
     buildTypes {
@@ -93,9 +88,6 @@ dependencies {
     compile "com.android.support:design:$android_support_ver"
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile "com.android.support:recyclerview-v7:$android_support_ver"
-    compile ('com.android.support:support-v4:23.4.0'){
-        force = true;
-    }
     compile 'com.google.code.gson:gson:2.6.2'
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'

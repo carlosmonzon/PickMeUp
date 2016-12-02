@@ -3,6 +3,7 @@ package com.belatrix.pickmeup.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 
@@ -11,8 +12,15 @@ import com.belatrix.pickmeup.model.MyUser;
 import com.belatrix.pickmeup.util.SharedPreferenceManager;
 
 public class ContactDetailsActivity extends AppCompatActivity {
+
+    static {
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+    }
+
     private TextView cellphoneTil;
+
     private TextView skypeTil;
+
     private TextView mailTil;
 
     @Override

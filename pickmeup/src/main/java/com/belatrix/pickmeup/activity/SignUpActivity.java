@@ -128,7 +128,6 @@ public class SignUpActivity extends AppCompatActivity {
             }
         };
 
-
         btnSignUp.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -177,8 +176,8 @@ public class SignUpActivity extends AppCompatActivity {
         } else {
             validData = true;
             btnSignUp.setEnabled(true);
-            MyUser user = new MyUser(Integer.parseInt(cellphone),email, firstName,lastName,skypeId);
-            createAccount(email,password, user);
+            MyUser user = new MyUser(Integer.parseInt(cellphone), email, firstName, lastName, skypeId);
+            createAccount(email, password, user);
         }
 
 
@@ -249,7 +248,7 @@ public class SignUpActivity extends AppCompatActivity {
                         if (!task.isSuccessful()) {
                             onSignUpFailed();
                         } else {
-                            Call<FirebaseResponse> call =  ServiceGenerator.createService(PickMeUpFirebaseClient.class)
+                            Call<FirebaseResponse> call = ServiceGenerator.createService(PickMeUpFirebaseClient.class)
                                     .registerUser(task.getResult().getUser().getUid(), user);
                             call.enqueue(new Callback<FirebaseResponse>() {
                                 @Override

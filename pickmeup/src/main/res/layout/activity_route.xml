@@ -79,6 +79,7 @@
                     android:id="@+id/passenger_max_capacity_tiet"
                     style="@style/addRouteEditText"
                     android:inputType="numberDecimal"
+                    android:maxLength="2"
                     android:hint="@string/passenger_quantity"/>
 
             </android.support.design.widget.TextInputLayout>
