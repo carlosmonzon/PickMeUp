@@ -27,6 +27,10 @@ public class TimePicked {
         return cal.getTimeInMillis();
     }
 
+    public TimePicked(){
+
+    }
+
     public int getHourOfDay() {
         return hourOfDay;
     }

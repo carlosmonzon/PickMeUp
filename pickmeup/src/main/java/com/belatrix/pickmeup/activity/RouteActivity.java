@@ -101,7 +101,8 @@ public class RouteActivity extends AppCompatActivity
         passengerMaxCapacityTiet = (TextInputEditText) findViewById(R.id.passenger_max_capacity_tiet);
 
         contactTiet.setEnabled(false);
-
+        String FullName = mUser.getFirst_name() + " " + mUser.getLast_name();
+        contactTiet.setText(FullName);
         //set data to Lists
         Intent intent = getIntent();
         routeId = intent.getStringExtra("routeId");
@@ -181,14 +182,14 @@ public class RouteActivity extends AppCompatActivity
             newRoute.setOwner(mUser);
         }
 
-        if (departureTimeTiet.getText().equals("")) {
-            streetsTil.setError(getResources().getString(R.string.add_route_departure_time_empty_error));
+        if (departureTimeTiet.getText().toString().trim().equals("")) {
+            departureTimeTil.setError(getResources().getString(R.string.add_route_departure_time_empty_error));
             hasError = true;
         } else {
             newRoute.setDepartureTime(Long.toString(timePicked.timePickedToMiliseconds()));
         }
 
-        if (passengerMaxCapacityTiet.getText().equals("")) {
+        if (passengerMaxCapacityTiet.getText().length()==0) {
             passengerMaxCapacityTil.setError(getResources().getString(R.string.add_route_passengers_max_capacity_empty_error));
             hasError = true;
         } else {
