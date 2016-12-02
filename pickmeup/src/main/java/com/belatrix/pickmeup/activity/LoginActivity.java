@@ -9,6 +9,7 @@ import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -23,6 +24,7 @@ import com.belatrix.pickmeup.rest.PickMeUpFirebaseClient;
 import com.belatrix.pickmeup.rest.ServiceGenerator;
 import com.belatrix.pickmeup.util.RegularExpressionValidator;
 import com.belatrix.pickmeup.util.SharedPreferenceManager;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
@@ -45,6 +47,9 @@ public class LoginActivity extends AppCompatActivity {
 
     private int passwordCounter = 3;
     private int noUserCounter = 3;
+    static {
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+    }
 
     private static final String TAG = "LoginActivity";
 
@@ -106,13 +111,10 @@ public class LoginActivity extends AppCompatActivity {
         tilPassword = (TextInputLayout) findViewById(R.id.password_til);
         chIsChecked = (CheckBox) findViewById(R.id.checkBoxRemember);
         MyUserCredentials user = SharedPreferenceManager.readMyUserCredentials(this);
-
-        try {
+        if(user!=null){
             inputUsername.setText(user.getEmail());
             inputPassword.setText(user.getPassword());
             chIsChecked.setChecked(user.getChecked());
-        } catch (Exception e) {
-            Log.d(TAG, e.getMessage());
         }
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -193,17 +195,14 @@ public class LoginActivity extends AppCompatActivity {
                 .show();
     }
 
-    public void signInWithEmailAndPassword(final ProgressDialog progressDialog, final String username, final String password, final boolean isChecked) {
-
+    public void signInWithEmailAndPassword(final ProgressDialog progressDialog, final String username, final String password,
+            final boolean isChecked) {
         mAuth.signInWithEmailAndPassword(username, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
 
-                        // If sign in fails, display a message to the user. If sign in succeeds
-                        // the auth state listener will be notified and logic to handle the
-                        // signed in user can be handled in the listener.
                         if (!task.isSuccessful()) {
                             Log.w(TAG, "signInWithEmail:failed", task.getException());
                             progressDialog.dismiss();
@@ -223,9 +222,11 @@ public class LoginActivity extends AppCompatActivity {
 
 
                         } else {
-                            PickMeUpFirebaseClient client = ServiceGenerator.createServiceDeserializer(PickMeUpFirebaseClient.class);
+                            PickMeUpFirebaseClient client = ServiceGenerator
+                                    .createServiceDeserializer(PickMeUpFirebaseClient.class);
 
-                            Call<MyUser> callMyUsers = client.getUser("\"" + task.getResult().getUser().getUid() + "\"", "\"$key\"");
+                            Call<MyUser> callMyUsers = client
+                                    .getUser("\"" + task.getResult().getUser().getUid() + "\"", "\"$key\"");
 
                             callMyUsers.enqueue(new Callback<MyUser>() {
                                 @Override
@@ -236,14 +237,17 @@ public class LoginActivity extends AppCompatActivity {
                                         MyUser user = response.body();
                                         SharedPreferenceManager.saveMyUser(LoginActivity.this, user);
                                         if (isChecked) {
-                                            SharedPreferenceManager.saveMyUserCredentials(LoginActivity.this, username, password, isChecked);
+                                            SharedPreferenceManager
+                                                    .saveMyUserCredentials(LoginActivity.this, username, password,
+                                                            isChecked);
                                         } else {
-                                            SharedPreferenceManager.saveMyUserCredentials(LoginActivity.this, null, null, false);
+                                            SharedPreferenceManager
+                                                    .saveMyUserCredentials(LoginActivity.this, null, null, false);
                                         }
                                     } else {
                                         authenticated = false;
-                                        failedMessage = response.body().getEmail() != null?response.errorBody()
-                                                .source().toString():"Login Error, user should register again";
+                                        failedMessage = response.body().getEmail() != null ? response.errorBody()
+                                                .source().toString() : "Login Error, user should register again";
                                         Log.e("Login", failedMessage);
                                     }
 
