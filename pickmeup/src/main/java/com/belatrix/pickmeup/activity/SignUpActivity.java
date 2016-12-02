@@ -140,7 +140,7 @@ public class SignUpActivity extends AppCompatActivity {
         textGoBackToLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goToLoginActivity(v);
+                onBackPressed();
             }
         });
     }
@@ -195,9 +195,10 @@ public class SignUpActivity extends AppCompatActivity {
         btnSignUp.setEnabled(true);
     }
 
-    public void goToLoginActivity(View view) {
+    public void onBackPressed() {
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
+        finish();
     }
 
     public boolean validateSignUp() {
