@@ -1,8 +1,8 @@
 package com.belatrix.pickmeup.adapter;
 
 import com.belatrix.pickmeup.R;
-import com.belatrix.pickmeup.activity.DetailPageActivity;
-import com.belatrix.pickmeup.model.Route;
+import com.belatrix.pickmeup.activity.RouteActivity;
+import com.belatrix.pickmeup.model.MyRoute;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,8 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import java.sql.Date;
 import java.util.List;
 
 /**
@@ -21,20 +21,35 @@ import java.util.List;
  */
 public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.MyViewHolder> {
 
-    private List<Route> routeList;
+    private List<MyRoute> routeList;
 
-    public RouteAdapter(List<Route> routeList) {
+    public RouteAdapter(List<MyRoute> routeList) {
         this.routeList = routeList;
     }
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        Route route = routeList.get(position);
+        MyRoute route = routeList.get(position);
         holder.txtDepartureName.setText(route.getDeparture().toString());
         holder.txtDestinationName.setText(route.getDestination().toString());
-        holder.txtUserName.setText(route.getRouteOwner().getName());
-        holder.txtDepartureTime.setText(route.getDepartureTime());
-        holder.txtPlaceAvailable.setText(String.valueOf(route.getPlaceAvailable()));
+        String FullName = route.getOwner().getFirst_name() + " " + route.getOwner().getLast_name();
+        holder.txtUserName.setText(FullName);//needs work
+
+        Long dateMilliseconds = Long.parseLong(route.getDepartureTime());
+
+        Date newDate = new Date(dateMilliseconds);
+
+        holder.txtDepartureTime.setText(newDate.toString());
+        holder.txtPrice.setText("S/ "+(route.getCost()==null?"0.00":route.getCost()));
+
+        int takenPlaces = route.getPassengers() != null ? route.getPassengers().size() : 0;
+        int totalPlaces = route.getPlaceAvailable() - takenPlaces;
+
+        if (totalPlaces < 0)
+            totalPlaces = 0;
+
+        holder.txtPlaceAvailable.setText(String.valueOf(totalPlaces));
+
         if (route.getPlaceAvailable() == 0) {
             holder.txtPlaceAvailable.setTextColor(Color.RED);
         }
@@ -57,7 +72,7 @@ public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.MyViewHolder
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public TextView txtDepartureName, txtDestinationName, txtUserName, txtDepartureTime,
-                txtPlaceAvailable;
+                txtPlaceAvailable, txtPrice;
 
 
         private final Context context;
@@ -72,15 +87,16 @@ public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.MyViewHolder
             txtUserName = (TextView) view.findViewById(R.id.txtUserName);
             txtDepartureTime = (TextView) view.findViewById(R.id.txtDepartureTime);
             txtPlaceAvailable = (TextView) view.findViewById(R.id.txtPlaceAvailable);
+            txtPrice = (TextView) view.findViewById(R.id.txtPrice);
 
             view.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-            Route currentRoute = routeList.get(this.getLayoutPosition());
+            MyRoute currentRoute = routeList.get(this.getLayoutPosition());
             final Intent intent;
-            intent = new Intent(context, DetailPageActivity.class);
+            intent = new Intent(context, RouteActivity.class);
             intent.putExtra("routeId", currentRoute.getId());
             context.startActivity(intent);
         }

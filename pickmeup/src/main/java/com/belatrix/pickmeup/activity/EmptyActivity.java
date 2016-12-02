@@ -1,16 +1,14 @@
 package com.belatrix.pickmeup.activity;
 
-import com.belatrix.pickmeup.R;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
-public class EmptyActivity extends AppCompatActivity {
+import com.belatrix.pickmeup.R;
 
-    private Button showPageDetail;
+public class EmptyActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,19 +21,11 @@ public class EmptyActivity extends AppCompatActivity {
         addRouteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(EmptyActivity.this, AddRouteActivity.class);
+                Intent intent = new Intent(EmptyActivity.this, RouteActivity.class);
                 startActivity(intent);
             }
         });
 
-        showPageDetail = (Button) findViewById(R.id.page_detail_btn);
-        showPageDetail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(EmptyActivity.this, DetailPageActivity.class);
-                startActivity(intent);
-            }
-        });
     }
 
     public void openHomeActivity(View view) {

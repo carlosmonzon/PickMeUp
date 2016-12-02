@@ -1,0 +1,73 @@
+{
+  "project_info": {
+    "project_number": "898517095247",
+    "firebase_url": "https://pickmeup-belatrix-dev.firebaseio.com",
+    "project_id": "pickmeup-belatrix-dev",
+    "storage_bucket": "pickmeup-belatrix-dev.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:898517095247:android:db4ff69697f7f223",
+        "android_client_info": {
+          "package_name": "com.belatrix.pickmeup"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "898517095247-ev8duagoreqh0ofdlkob8vpgeqjol757.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCJXSPMXlv67gAbBx6Pi83fRZD7E-PhCPY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:898517095247:android:b87fdc2fbf9deaaa",
+        "android_client_info": {
+          "package_name": "com.belatrix.pickmeup.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "898517095247-ev8duagoreqh0ofdlkob8vpgeqjol757.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCJXSPMXlv67gAbBx6Pi83fRZD7E-PhCPY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

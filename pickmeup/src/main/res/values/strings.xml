@@ -14,6 +14,10 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="title_activity_nav_drawer">NavDrawerActivity</string>
 
+    <string name="saving_message">Grabando...</string>
+    <string name="delete_route_message">Borrando ruta...</string>
+    <string name="disjoint_from_route_message">Abandonando ruta...</string>
+
     <!-- Login Page -->
     <string name="username">Username</string>
     <string name="password">Password</string>
@@ -25,10 +29,17 @@
     <string name="username_invalid_error">The username should be an email address</string>
 
     <!-- sign up Page -->
-    <string name="name">Name</string>
-    <string name="name_empty_error">Name should not be empty</string>
+    <string name="name">First Name</string>
+    <string name="name_empty_error">First Name should not be empty</string>
+    <string name="last_name">Last Name</string>
+    <string name="last_name_empty_error">Last Name should not be empty</string>
+    <string name="skype_id">Skype ID</string>
+    <string name="skype_id_empty_error">Skype ID should not be empty</string>
+    <string name="cellphone">Cellphone Number</string>
+    <string name="cellphone_empty_error">Cellphone number should not be empty</string>
     <string name="backToLogin">Si ya estas registrado, volver a Login</string>
     <string name="title_activity_signup">Registrarse</string>
+    <string name="signup_button">Register</string>
 
     <!-- Forgot Password Page -->
     <string name="forgot_password"><u>Forgot Password</u></string>
@@ -41,9 +52,10 @@
     <!-- New Route -->
     <string name="departure">Salida</string>
     <string name="destination">Destino</string>
-    <string name="cost">Costo (S/)</string>
+    <string name="cost">Costo por Pasajero(S/)</string>
+    <string name="passenger_quantity">Cantidad de Pasajeros</string>
     <string name="payment_method">Forma de pago</string>
-    <string name="departure_time">Partida</string>
+    <string name="departure_time">Fecha de Partida</string>
     <string name="contact">Contacto</string>
     <string name="avenues_streets_comments">Avenidas, Calles, Comentarios</string>
     <string name="publish">Publicar</string>
@@ -57,12 +69,24 @@
     <string name="add_route_departure_time_empty_error">Ingrese la hora de salida</string>
     <string name="add_route_contact_empty_error">Ingrese el contacto</string>
     <string name="add_route_streets_empty_error">Ingrese las avenidas o calles</string>
+    <string name="add_route_passengers_max_capacity_empty_error">Ingrese la capacidad maxima de pasajeros para la ruta</string>
 
     <!-- Page Detail -->
     <string name="seat">Asientos</string>
     <string name="available">Disponibles</string>
     <string name="passengers">Pasajeros</string>
     <string name="join">Unirte</string>
+    <string name="disjoint">Salir de la Ruta</string>
+    <string name="delete_route">Borrar Ruta</string>
+    <string name="join_route_message">Te has unido a la ruta satisfactoriamente</string>
+    <string name="delete_route_success">La ruta ha sido borrada satisfactoriamente</string>
+    <string name="disjoint_route_success">Has abandonado la ruta satisfactoriamente</string>
+
+
+    <!-- Confirmation Dialog-->
+    <string name="logout">Would you like to logout?</string>
+    <string name="confirmationDialog">Yes</string>
+    <string name="refuseDialog">No</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

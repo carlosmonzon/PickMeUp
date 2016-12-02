@@ -4,7 +4,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            tools:context=".activity.AddRouteActivity">
+            tools:context=".activity.RouteActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -69,9 +69,23 @@
 
             </android.support.design.widget.TextInputLayout>
 
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/passenger_max_capacity_til"
+                android:layout_below="@+id/cost_til"
+                app:errorEnabled="true"
+                style="@style/addRouteLabel">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/passenger_max_capacity_tiet"
+                    style="@style/addRouteEditText"
+                    android:inputType="numberDecimal"
+                    android:hint="@string/passenger_quantity"/>
+
+            </android.support.design.widget.TextInputLayout>
+
             <TextView
                 android:id="@+id/payment_method_tv"
-                android:layout_below="@+id/cost_til"
+                android:layout_below="@+id/passenger_max_capacity_til"
                 android:textSize="12sp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -87,22 +101,11 @@
                 android:paddingTop="10dp"
                 android:layout_marginBottom="20dp"/>
 
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/departure_time_til"
-                android:layout_below="@+id/payment_method_spn"
-                app:errorEnabled="true"
-                style="@style/addRouteLabel">
 
-                <android.support.design.widget.TextInputEditText
-                    android:id="@+id/departure_time_tiet"
-                    style="@style/addRouteEditText"
-                    android:hint="@string/departure_time"/>
-
-            </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/contact_til"
-                android:layout_below="@+id/departure_time_til"
+                android:layout_below="@+id/payment_method_spn"
                 app:errorEnabled="true"
                 style="@style/addRouteLabel">
 
@@ -113,9 +116,37 @@
 
             </android.support.design.widget.TextInputLayout>
 
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/departure_time_til"
+                android:layout_below="@+id/contact_til"
+                android:layout_width="290dp"
+                app:errorEnabled="true"
+                android:layout_alignParentLeft="true"
+                style="@style/addRouteLabel">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/departure_time_tiet"
+                    style="@style/addRouteEditText"
+                    android:editable="false"
+                    android:hint="@string/departure_time"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+            <Button
+                android:id="@+id/pick_date_btn"
+                android:layout_width="50dp"
+                android:background="@drawable/ic_date_range"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/departure_time_til"
+                android:layout_below="@+id/contact_til"
+                android:onClick="showTimePickerDialog"
+                android:gravity="right"
+                android:textColor="@android:color/holo_red_light"/>
+
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/streets_til"
-                android:layout_below="@+id/contact_til"
+                android:layout_below="@+id/departure_time_til"
                 app:errorEnabled="true"
                 style="@style/addRouteLabel">
 
@@ -136,6 +167,35 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/streets_til"
                 android:text="@string/publish"
+                android:textColor="@android:color/white"/>
+
+            <Button
+                android:id="@+id/join_btn"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/streets_til"
+                android:text="@string/join"
+                android:textColor="@android:color/white"/>
+
+            <Button
+                android:id="@+id/disjoint_btn"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/join_btn"
+                android:text="@string/disjoint"
+                android:visibility="gone"
+                android:textColor="@android:color/white"/>
+
+            <Button
+                android:id="@+id/delete_route_btn"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/disjoint_btn"
+                android:text="@string/delete_route"
+                android:visibility="gone"
                 android:textColor="@android:color/white"/>
 
         </RelativeLayout>

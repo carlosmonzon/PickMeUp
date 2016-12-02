@@ -1,48 +1,50 @@
 package com.belatrix.pickmeup.activity;
 
-import android.content.Context;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
-import android.util.Patterns;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.view.View;
-import android.support.v7.app.AppCompatActivity;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
-import android.app.ProgressDialog;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.belatrix.pickmeup.R;
-
+import com.belatrix.pickmeup.model.MyUser;
+import com.belatrix.pickmeup.model.MyUserCredentials;
 import com.belatrix.pickmeup.model.Passenger;
 import com.belatrix.pickmeup.rest.PickMeUpClient;
+import com.belatrix.pickmeup.rest.PickMeUpFirebaseClient;
 import com.belatrix.pickmeup.rest.ServiceGenerator;
+import com.belatrix.pickmeup.util.RegularExpressionValidator;
+import com.belatrix.pickmeup.util.SharedPreferenceManager;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import com.belatrix.pickmeup.model.Credentials;
-import com.belatrix.pickmeup.util.RegularExpressionValidator;
-import com.belatrix.pickmeup.util.SharedPreferenceManager;
-
 
 /**
  * Created by root on 13/05/16.
  */
-public class  LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = "LoginActivity";
-
-    private static final int REQUEST_SIGN_UP = 0;
 
     private Button btnLogin;
 
@@ -58,21 +60,42 @@ public class  LoginActivity extends AppCompatActivity {
 
     private TextInputLayout tilPassword;
 
-    private CheckBox chRemember;
+    private CheckBox chIsChecked;
 
     private int counter = 3;
 
     private boolean authenticated = false;
 
-    private  SharedPreferences sharedPref;
+    private String failedMessage = "Complete Fields";
 
-    private Credentials credentials;
+    private View nextView;
+
+    private FirebaseAuth.AuthStateListener mAuthListener;
+
+    private FirebaseAuth mAuth;
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mAuth.addAuthStateListener(mAuthListener);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mAuthListener != null) {
+            mAuth.removeAuthStateListener(mAuthListener);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        mAuth = FirebaseAuth.getInstance();
 
         btnLogin = (Button) findViewById(R.id.login_btn);
         inputUsername = (TextInputEditText) findViewById(R.id.username_tiet);
@@ -81,16 +104,18 @@ public class  LoginActivity extends AppCompatActivity {
         textSingIn = (TextView) findViewById(R.id.sign_up_link);
         tilUsername = (TextInputLayout) findViewById(R.id.username_til);
         tilPassword = (TextInputLayout) findViewById(R.id.password_til);
-        chRemember = (CheckBox) findViewById(R.id.checkBoxRemember);
-        sharedPref = getPreferences(Context.MODE_PRIVATE);
-        credentials = SharedPreferenceManager.readCredentials(sharedPref);
+        chIsChecked = (CheckBox) findViewById(R.id.checkBoxRemember);
+        MyUserCredentials user = SharedPreferenceManager.readMyUserCredentials(this);
 
-        inputUsername.setText(credentials.getUsername());
-        inputPassword.setText(credentials.getPassword());
-        chRemember.setChecked(credentials.getRemember());
+        try {
+            inputUsername.setText(user.getEmail());
+            inputPassword.setText(user.getPassword());
+            chIsChecked.setChecked(user.getChecked());
+        } catch (Exception e) {
+            Log.d(TAG, e.getMessage());
+        }
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 login(v);
@@ -107,75 +132,147 @@ public class  LoginActivity extends AppCompatActivity {
         textSingIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goToSignIn(v);
+                goToSignUpActivity(nextView);
             }
         });
+
+        FirebaseApp.initializeApp(this);
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    // User is signed in
+                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+                } else {
+                    // User is signed out
+                    Log.d(TAG, "onAuthStateChanged:signed_out");
+                }
+            }
+        };
     }
 
-    public void login(View view) {
+    public void login(final View view) {
+        nextView = view;
         //Log.d(TAG, "Login");
         if (!validateLogin()) {
             onLoginFailed();
             return;
         }
-        btnLogin.setEnabled(false);
 
-        final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this,
+        ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this,
                 R.style.AppTheme_Dark_Dialog);
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Authenticating...");
         progressDialog.show();
 
-        credentials.setUsername(inputUsername.getText().toString());
-        credentials.setPassword(inputPassword.getText().toString());
-        credentials.setRemember(chRemember.isChecked());
+        String username = inputUsername.getText().toString();
+        String password = inputPassword.getText().toString();
+        boolean isChecked = chIsChecked.isChecked();
 
-        //Todo: Call service for authentication and Authorization
-        if (credentials.getUsername().equals("admin@belatrixsf.com") &&
-                credentials.getPassword().equals("admin")) {
-            authenticated = true;
-        } else {
-            authenticated = false;
-            counter--;
+        signInWithEmailAndPassword(progressDialog, username, password, isChecked);
 
-            if (counter == 0) {
-                btnLogin.setEnabled(false);
-            }
-        }
-
-        new android.os.Handler().postDelayed(
-                new Runnable() {
-                    public void run() {
-                        // On complete call either onLoginSuccess or onLoginFailed
-                        if (authenticated) {
-                            onLoginSuccess();
-                        } else {
-                            onLoginFailed();
-                        }
-                        progressDialog.dismiss();
-                    }
-                }, 3000);
-
-        if(authenticated){
-            SharedPreferenceManager.checkPreferences(sharedPref, credentials);
-            goToHomeActivity(view);
-        }
     }
 
     @Override
     public void onBackPressed() {
         // disable going back to the MainActivity
-        moveTaskToBack(true);
+        new AlertDialog.Builder(this)
+                .setTitle("Logout")
+                .setMessage("Would you like to logout?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // user doesn't want to logout
+                    }
+                })
+                .show();
     }
 
-    public void onLoginSuccess() {
-        btnLogin.setEnabled(true);
-        finish();
+    public void signInWithEmailAndPassword(final ProgressDialog progressDialog, final String username, final String password, final boolean isChecked) {
+        mAuth.signInWithEmailAndPassword(username, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
+
+                        // If sign in fails, display a message to the user. If sign in succeeds
+                        // the auth state listener will be notified and logic to handle the
+                        // signed in user can be handled in the listener.
+                        if (!task.isSuccessful()) {
+                            Log.w(TAG, "signInWithEmail:failed", task.getException());
+                            progressDialog.dismiss();
+                            counter--;
+
+                            if (counter == 0) {
+                                btnLogin.setEnabled(false);
+                                Toast.makeText(LoginActivity.this, "Recover your password",
+                                        Toast.LENGTH_SHORT).show();
+                                goToForgotUsernamePassword(nextView);
+                                finish();
+                            } else {
+                                Toast.makeText(LoginActivity.this, "Incorrect password",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+
+                        } else {
+                            PickMeUpFirebaseClient client = ServiceGenerator.createServiceDeserializer(PickMeUpFirebaseClient.class);
+
+                            Call<MyUser> callMyUsers = client.getUser("\"" + task.getResult().getUser().getUid() + "\"", "\"$key\"");
+
+                            callMyUsers.enqueue(new Callback<MyUser>() {
+                                @Override
+                                public void onResponse(Call<MyUser> call, Response<MyUser> response) {
+
+                                    if (response.code() == 200 && response.body().getEmail() != null) {
+                                        authenticated = true;
+                                        MyUser user = response.body();
+                                        SharedPreferenceManager.saveMyUser(LoginActivity.this, user);
+                                        if (isChecked) {
+                                            SharedPreferenceManager.saveMyUserCredentials(LoginActivity.this, username, password, isChecked);
+                                        } else {
+                                            SharedPreferenceManager.saveMyUserCredentials(LoginActivity.this, null, null, false);
+                                        }
+                                    } else {
+                                        authenticated = false;
+                                        failedMessage = response.body().getEmail() != null?response.errorBody()
+                                                .source().toString():"Login Error, user should register again";
+                                        Log.e("Login", failedMessage);
+                                    }
+
+                                    if (authenticated) {
+                                        progressDialog.dismiss();
+                                        finish();
+                                        goToHomeActivity(nextView);
+                                    } else if (response.body().getEmail() == null) {
+                                        goToSignUpActivity(nextView);
+                                    } else {
+                                        onLoginFailed();
+                                    }
+
+                                }
+
+                                @Override
+                                public void onFailure(Call<MyUser> call, Throwable t) {
+                                    Log.e("Login", failedMessage);
+                                    failedMessage = failedMessage.substring(1, failedMessage.length() - 1).split("=")[1];
+                                    Log.e("SPManager.failure:", t.toString());
+                                    goToSignUpActivity(nextView);
+                                }
+                            });
+
+
+                        }
+                    }
+                });
     }
 
     public void onLoginFailed() {
-        Toast.makeText(getApplicationContext(), "Login failed", Toast.LENGTH_SHORT).show();
-        btnLogin.setEnabled(true);
+        Toast.makeText(getApplicationContext(), failedMessage, Toast.LENGTH_SHORT).show();
     }
 
     public void goToHomeActivity(View view) {
@@ -188,30 +285,7 @@ public class  LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void goToSignIn(View view) {
-
-        // Asynchronous Call in Retrofit 2.0
-        /*
-        PickMeUpClient client = ServiceGenerator.createService(PickMeUpClient.class);
-
-        Call<List<Passenger>> callPassengers = client.getPassengers();
-
-        callPassengers.enqueue(new Callback<List<Passenger>>() {
-            @Override
-            public void onResponse(Call<List<Passenger>> call, Response<List<Passenger>> response) {
-                List<Passenger> passengers = response.body();
-                for(Passenger passenger : passengers){
-                    Log.d("Passenger", passenger.getUserName());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Passenger>> call, Throwable t) {
-                Log.e("Get Passengers",t.toString());
-            }
-        });*/
-
-        //Todo: Go to Sign In
+    public void goToSignUpActivity(View view) {
         Intent intent = new Intent(this, SignUpActivity.class);
         startActivity(intent);
     }
@@ -237,7 +311,5 @@ public class  LoginActivity extends AppCompatActivity {
         return valid;
 
     }
-
-
 
 }
