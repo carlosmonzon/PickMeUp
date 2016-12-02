@@ -27,7 +27,7 @@ android:
   - sys-img-armeabi-v7a-android-23
   - sys-img-x86-android-23
 script:
-- ./gradlew assembleDebug
+- ./gradlew testfairyDebug
 
 notifications:
   slack: pickmeup-bsf:NQfFpQo96qClEKvbjvy0lGly
