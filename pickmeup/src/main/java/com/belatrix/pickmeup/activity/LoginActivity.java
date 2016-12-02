@@ -112,9 +112,11 @@ public class LoginActivity extends AppCompatActivity {
         tilPassword = (TextInputLayout) findViewById(R.id.password_til);
         chIsChecked = (CheckBox) findViewById(R.id.checkBoxRemember);
         MyUserCredentials user = SharedPreferenceManager.readMyUserCredentials(this);
-        inputUsername.setText(user.getEmail());
-        inputPassword.setText(user.getPassword());
-        chIsChecked.setChecked(user.getChecked());
+        if(user!=null){
+            inputUsername.setText(user.getEmail());
+            inputPassword.setText(user.getPassword());
+            chIsChecked.setChecked(user.getChecked());
+        }
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
