@@ -8,6 +8,7 @@ import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -44,27 +45,52 @@ import retrofit2.Response;
 public class RouteActivity extends AppCompatActivity
         implements TimePickerFragment.TimeSelected, DatePickerFragment.DateSelected {
 
+    static {
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+    }
+
     String routeId;
+
     private Spinner paymentMethodSpn;
+
     private Spinner departureSpn;
+
     private Spinner destinationSpn;
+
     private Button addRouteBtn;
+
     private Button joinRouteBtn;
+
     private Button deleteRouteBtn;
+
     private Button disjointRouteBtn;
+
     private TextView fromTil;
+
     private TextView toTil;
+
     private TextInputLayout costTil;
+
     private TextInputEditText costTiet;
+
     private TextInputLayout departureTimeTil;
+
     private TextInputEditText departureTimeTiet;
+
     private TextInputLayout contactTil;
+
     private TextInputEditText contactTiet;
+
     private TextInputLayout streetsTil;
+
     private TextInputEditText streetsTiet;
+
     private TextInputLayout passengerMaxCapacityTil;
+
     private TextInputEditText passengerMaxCapacityTiet;
+
     private MyUser mUser;
+
     private TimePicked timePicked = new TimePicked();
 
     @Override
@@ -189,8 +215,9 @@ public class RouteActivity extends AppCompatActivity
             newRoute.setDepartureTime(Long.toString(timePicked.timePickedToMiliseconds()));
         }
 
-        if (passengerMaxCapacityTiet.getText().length()==0) {
-            passengerMaxCapacityTil.setError(getResources().getString(R.string.add_route_passengers_max_capacity_empty_error));
+        if (passengerMaxCapacityTiet.getText().length() == 0) {
+            passengerMaxCapacityTil
+                    .setError(getResources().getString(R.string.add_route_passengers_max_capacity_empty_error));
             hasError = true;
         } else {
             newRoute.setPlaceAvailable(Integer.parseInt(passengerMaxCapacityTiet.getText().toString()));
@@ -262,8 +289,9 @@ public class RouteActivity extends AppCompatActivity
         passengerMaxCapacityTiet.setFocusable(false);
         addRouteBtn.setFocusable(false);
 
-        if (mUser == null)
+        if (mUser == null) {
             return;
+        }
 
         int takenPlaces = route.getPassengers() != null ? route.getPassengers().size() : 0;
         int totalPlaces = route.getPlaceAvailable() - takenPlaces;
@@ -377,7 +405,8 @@ public class RouteActivity extends AppCompatActivity
     public void joinToRoute() {
         String userId = mUser.getId();
 
-        final ProgressDialog progressDialog = ProgressDialog.show(RouteActivity.this, "", getResources().getString(R.string.saving_message));
+        final ProgressDialog progressDialog = ProgressDialog
+                .show(RouteActivity.this, "", getResources().getString(R.string.saving_message));
 
         Call<MyUser> call = ServiceGenerator.createService(PickMeUpFirebaseClient.class).joinToRoute(routeId, userId, mUser);
 
@@ -386,7 +415,8 @@ public class RouteActivity extends AppCompatActivity
             @Override
             public void onResponse(Call<MyUser> call, Response<MyUser> response) {
                 MyUser myUser = response.body();
-                Toast.makeText(RouteActivity.this, getResources().getString(R.string.join_route_message), Toast.LENGTH_SHORT).show();
+                Toast.makeText(RouteActivity.this, getResources().getString(R.string.join_route_message), Toast.LENGTH_SHORT)
+                        .show();
                 progressDialog.dismiss();
                 onBackPressed();
             }
@@ -401,7 +431,8 @@ public class RouteActivity extends AppCompatActivity
     }
 
     public void deleteRoute() {
-        final ProgressDialog progressDialog = ProgressDialog.show(RouteActivity.this, "", getResources().getString(R.string.delete_route_message));
+        final ProgressDialog progressDialog = ProgressDialog
+                .show(RouteActivity.this, "", getResources().getString(R.string.delete_route_message));
 
         Call<RouteDto> call = ServiceGenerator.createService(PickMeUpFirebaseClient.class).deleteRoute(routeId);
 
@@ -409,7 +440,8 @@ public class RouteActivity extends AppCompatActivity
 
             @Override
             public void onResponse(Call<RouteDto> call, Response<RouteDto> response) {
-                Toast.makeText(RouteActivity.this, getResources().getString(R.string.delete_route_success), Toast.LENGTH_SHORT).show();
+                Toast.makeText(RouteActivity.this, getResources().getString(R.string.delete_route_success),
+                        Toast.LENGTH_SHORT).show();
                 progressDialog.dismiss();
                 onBackPressed();
             }
@@ -425,7 +457,8 @@ public class RouteActivity extends AppCompatActivity
     public void disjointFromRoute() {
         String userId = mUser.getId();
 
-        final ProgressDialog progressDialog = ProgressDialog.show(RouteActivity.this, "", getResources().getString(R.string.disjoint_from_route_message));
+        final ProgressDialog progressDialog = ProgressDialog
+                .show(RouteActivity.this, "", getResources().getString(R.string.disjoint_from_route_message));
 
         Call<MyUser> call = ServiceGenerator.createService(PickMeUpFirebaseClient.class).disjointFromRoute(routeId, userId);
 
@@ -433,7 +466,8 @@ public class RouteActivity extends AppCompatActivity
 
             @Override
             public void onResponse(Call<MyUser> call, Response<MyUser> response) {
-                Toast.makeText(RouteActivity.this, getResources().getString(R.string.disjoint_route_success), Toast.LENGTH_SHORT).show();
+                Toast.makeText(RouteActivity.this, getResources().getString(R.string.disjoint_route_success),
+                        Toast.LENGTH_SHORT).show();
                 progressDialog.dismiss();
                 onBackPressed();
             }
