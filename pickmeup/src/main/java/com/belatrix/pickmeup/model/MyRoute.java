@@ -1,8 +1,5 @@
 package com.belatrix.pickmeup.model;
 
-import com.belatrix.pickmeup.enums.Departure;
-import com.belatrix.pickmeup.enums.Destination;
-import com.belatrix.pickmeup.enums.PaymentType;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -11,7 +8,7 @@ import java.util.List;
 /**
  * Created by moogriento on 6/30/16.
  */
-public class MyRoute extends RouteDto{
+public class MyRoute extends RouteDto {
 
     @SerializedName("id")
     private String id;
@@ -56,8 +53,12 @@ public class MyRoute extends RouteDto{
         this.id = id;
     }
 
-    public List<MyUser> getPassengers() { return passengers; }
+    public List<MyUser> getPassengers() {
+        return passengers;
+    }
 
-    public void setPassengers(List<MyUser> passengers) { this.passengers = passengers; }
+    public void setPassengers(List<MyUser> passengers) {
+        this.passengers = passengers;
+    }
 
 }

@@ -105,6 +105,12 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         btnSendEmail.setEnabled(true);
     }
 
+    public void onBackPressed() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
 
     public boolean validateSendEmail() {
         boolean valid = true;

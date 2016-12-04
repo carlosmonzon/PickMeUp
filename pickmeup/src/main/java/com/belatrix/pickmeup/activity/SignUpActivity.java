@@ -7,9 +7,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
@@ -139,7 +137,7 @@ public class SignUpActivity extends AppCompatActivity {
         textGoBackToLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goToLoginActivity(v);
+                onBackPressed();
             }
         });
     }
@@ -194,9 +192,10 @@ public class SignUpActivity extends AppCompatActivity {
         btnSignUp.setEnabled(true);
     }
 
-    public void goToLoginActivity(View view) {
+    public void onBackPressed() {
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
+        finish();
     }
 
     public boolean validateSignUp() {

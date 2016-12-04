@@ -20,8 +20,6 @@ import android.widget.Toast;
 import com.belatrix.pickmeup.R;
 import com.belatrix.pickmeup.model.MyUser;
 import com.belatrix.pickmeup.model.MyUserCredentials;
-import com.belatrix.pickmeup.model.Passenger;
-import com.belatrix.pickmeup.rest.PickMeUpClient;
 import com.belatrix.pickmeup.rest.PickMeUpFirebaseClient;
 import com.belatrix.pickmeup.rest.ServiceGenerator;
 import com.belatrix.pickmeup.util.RegularExpressionValidator;
@@ -30,11 +28,12 @@ import com.belatrix.pickmeup.util.SharedPreferenceManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseTooManyRequestsException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseUser;
-
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -46,6 +45,8 @@ import retrofit2.Response;
  */
 public class LoginActivity extends AppCompatActivity {
 
+    private int passwordCounter = 3;
+    private int noUserCounter = 3;
     static {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
@@ -67,8 +68,6 @@ public class LoginActivity extends AppCompatActivity {
     private TextInputLayout tilPassword;
 
     private CheckBox chIsChecked;
-
-    private int counter = 3;
 
     private boolean authenticated = false;
 
@@ -204,24 +203,23 @@ public class LoginActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
 
-                        // If sign in fails, display a message to the user. If sign in succeeds
-                        // the auth state listener will be notified and logic to handle the
-                        // signed in user can be handled in the listener.
                         if (!task.isSuccessful()) {
                             Log.w(TAG, "signInWithEmail:failed", task.getException());
                             progressDialog.dismiss();
-                            counter--;
 
-                            if (counter == 0) {
-                                btnLogin.setEnabled(false);
-                                Toast.makeText(LoginActivity.this, "Recover your password",
-                                        Toast.LENGTH_SHORT).show();
-                                goToForgotUsernamePassword(nextView);
-                                finish();
-                            } else {
-                                Toast.makeText(LoginActivity.this, "Incorrect password",
-                                        Toast.LENGTH_SHORT).show();
+                            if(task.getException().getClass().equals(FirebaseAuthInvalidUserException.class))
+                                noUserCounter--;
+                            else if (task.getException().getClass().equals(FirebaseAuthInvalidCredentialsException.class)) {
+                                passwordCounter--;
                             }
+
+                            if(task.getException().getClass().equals(FirebaseTooManyRequestsException.class)) {
+                                Toast.makeText(LoginActivity.this, "Try again later",
+                                        Toast.LENGTH_SHORT).show();
+                            } else {
+                                errorCounterHandler(noUserCounter, passwordCounter);
+                            }
+
 
                         } else {
                             PickMeUpFirebaseClient client = ServiceGenerator
@@ -258,6 +256,18 @@ public class LoginActivity extends AppCompatActivity {
                                         finish();
                                         goToHomeActivity(nextView);
                                     } else if (response.body().getEmail() == null) {
+                                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                                        user.delete()
+                                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<Void> task) {
+                                                        if (task.isSuccessful()) {
+                                                            Log.d(TAG, "User account deleted.");
+                                                            Toast.makeText(LoginActivity.this, "User doesn't exists, must create a new account",
+                                                                    Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    }
+                                                });
                                         goToSignUpActivity(nextView);
                                     } else {
                                         onLoginFailed();
@@ -319,6 +329,24 @@ public class LoginActivity extends AppCompatActivity {
 
         return valid;
 
+    }
+
+    public void errorCounterHandler(int noUserCounter, int invalidPasswordCounter)
+    {
+        if (invalidPasswordCounter == 0) {
+            btnLogin.setEnabled(false);
+            Toast.makeText(LoginActivity.this, "Recover your Password",
+                    Toast.LENGTH_SHORT).show();
+            goToForgotUsernamePassword(nextView);
+        } else if (noUserCounter == 0) {
+            btnLogin.setEnabled(false);
+            Toast.makeText(LoginActivity.this, "Create a new User",
+                    Toast.LENGTH_SHORT).show();
+            goToSignUpActivity(nextView);        }
+        else {
+            Toast.makeText(LoginActivity.this, "Incorrect user or password",
+                    Toast.LENGTH_SHORT).show();
+        }
     }
 
 }
