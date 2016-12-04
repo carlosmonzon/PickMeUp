@@ -22,16 +22,18 @@ import java.util.List;
 @SuppressLint("ValidFragment")
 public class MyRoutesFragment extends Fragment {
 
-    private ArrayList<MyRoute> listRoutes;
-
     private RecyclerView recyclerView;
 
     private RouteAdapter routeAdapter;
 
-    @SuppressLint("ValidFragment")
-    public MyRoutesFragment(List<MyRoute> routes, MyUser mUser) {
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        //Inicializando las variables que se necesitan en el fragment
+        routeAdapter = new RouteAdapter();
+    }
 
-
+    public void updateRouteList(List<MyRoute> routes, MyUser mUser) {
         ArrayList<MyRoute> myRoutes = new ArrayList<>();
 
         for (int i = 0; i < routes.size(); i++) {
@@ -42,15 +44,7 @@ public class MyRoutesFragment extends Fragment {
                 }
             }
         }
-        this.listRoutes = new ArrayList<>(myRoutes);
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        //Inicializando las variables que se necesitan en el fragment
-
-        routeAdapter = new RouteAdapter(listRoutes);
+        routeAdapter.addRoutes(myRoutes);
     }
 
 
@@ -60,7 +54,7 @@ public class MyRoutesFragment extends Fragment {
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+            Bundle savedInstanceState) {
         //la instancia view será la contenedora del fragment_all_routes
         View view = inflater.inflate(R.layout.fragment_my_routes, container, false);
         //se usa el recyclerView para el manejo de la data de la lista de rutas
@@ -69,7 +63,6 @@ public class MyRoutesFragment extends Fragment {
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(routeAdapter);
-        routeAdapter.notifyDataSetChanged();
         return view;
     }
 

@@ -51,19 +51,24 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     private MyUser mUser;
 
+    private AllRoutesFragment mAllRoutesFragment;
+
+    private MyRoutesFragment mMyRoutesFragment;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nav_drawer);
-
+        mUser = SharedPreferenceManager.readMyUser(this);
         //toolbar manejará el toolbar del HomeActivity
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getRoute();
         //Esta linea es para dar soporte al Back Button (<-) | False = inactivo | True = activo
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        setupViewPager(viewPager);
         //tabLayout tendrá el control de los tabs
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
@@ -87,6 +92,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        if (savedInstanceState == null) {
+            getRoute();
+        }
     }
 
     @Override
@@ -136,15 +144,21 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     }
 
     //Se añade los fragments al adaptar y luego al viewPager. (Se debe agregar el fragment y su titulo
-    private void setupViewPager(ViewPager viewPager, List<MyRoute> routes) {
+    private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        mUser = SharedPreferenceManager.readMyUser(this);
-
-        adapter.addFragment(new AllRoutesFragment(routes), "Todas las rutas");
-        adapter.addFragment(new MyRoutesFragment(routes, mUser), "Mis rutas");
+        mAllRoutesFragment = new AllRoutesFragment();
+        mMyRoutesFragment = new MyRoutesFragment();
+        adapter.addFragment(mAllRoutesFragment, "Todas las rutas");
+        adapter.addFragment(mMyRoutesFragment, "Mis rutas");
         viewPager.setAdapter(adapter);
     }
 
+    private void updateRouteFragments(List<MyRoute> routes) {
+        if (mAllRoutesFragment != null && mMyRoutesFragment != null) {
+            mAllRoutesFragment.updateRouteList(routes);
+            mMyRoutesFragment.updateRouteList(routes, mUser);
+        }
+    }
 
     public void getRoute() {
 
@@ -162,9 +176,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                         MyRoute route = DataConverter.convertRouteData(entryRoute.getKey(), entryRoute.getValue());
                         routes.add(route);
                     }
-
-                    viewPager = (ViewPager) findViewById(R.id.viewpager);
-                    setupViewPager(viewPager, routes);
+                    //todo: refactor code
+                    updateRouteFragments(routes);
                 } catch (Exception e) {
                 }
             }

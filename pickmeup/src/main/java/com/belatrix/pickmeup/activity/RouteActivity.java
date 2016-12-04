@@ -397,8 +397,6 @@ public class RouteActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(this, HomeActivity.class);
-        startActivity(intent);
         finish();
     }
 

@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,8 +24,14 @@ public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.MyViewHolder
 
     private List<MyRoute> routeList;
 
-    public RouteAdapter(List<MyRoute> routeList) {
-        this.routeList = routeList;
+    public RouteAdapter() {
+        routeList = new ArrayList<>();
+    }
+
+    public void addRoutes(List<MyRoute> routeList) {
+        this.routeList.clear();
+        this.routeList.addAll(routeList);
+        notifyDataSetChanged();
     }
 
     @Override
@@ -40,13 +47,14 @@ public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.MyViewHolder
         Date newDate = new Date(dateMilliseconds);
 
         holder.txtDepartureTime.setText(newDate.toString());
-        holder.txtPrice.setText("S/ "+(route.getCost()==null?"0.00":route.getCost()));
+        holder.txtPrice.setText("S/ " + (route.getCost() == null ? "0.00" : route.getCost()));
 
         int takenPlaces = route.getPassengers() != null ? route.getPassengers().size() : 0;
         int totalPlaces = route.getPlaceAvailable() - takenPlaces;
 
-        if (totalPlaces < 0)
+        if (totalPlaces < 0) {
             totalPlaces = 0;
+        }
 
         holder.txtPlaceAvailable.setText(String.valueOf(totalPlaces));
 
@@ -66,7 +74,12 @@ public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.MyViewHolder
 
     @Override
     public int getItemCount() {
-        return routeList.size();
+        if (routeList == null) {
+            return 0;
+        } else {
+            return routeList.size();
+        }
+
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
