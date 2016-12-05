@@ -7,7 +7,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
@@ -17,7 +16,6 @@ import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.belatrix.pickmeup.R;
@@ -51,7 +49,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     private TextInputEditText inputPassword;
 
-    private TextView textGoBackToLogin;
+    private TextInputEditText inputConfirmPassword;
 
     private TextInputLayout tilFirstName;
 
@@ -64,6 +62,8 @@ public class SignUpActivity extends AppCompatActivity {
     private TextInputLayout tilSkypeId;
 
     private TextInputLayout tilPassword;
+
+    private TextInputLayout tilConfirmPassword;
 
     private FirebaseAuth.AuthStateListener mAuthListener;
 
@@ -95,6 +95,7 @@ public class SignUpActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
+
         btnSignUp = (Button) findViewById(R.id.signup_btn);
         inputFirstName = (TextInputEditText) findViewById(R.id.signup_first_name_tiet);
         inputLastName = (TextInputEditText) findViewById(R.id.signup_last_name_tiet);
@@ -102,13 +103,14 @@ public class SignUpActivity extends AppCompatActivity {
         inputSkypeId = (TextInputEditText) findViewById(R.id.signup_skype_id_tiet);
         inputCellphone = (TextInputEditText) findViewById(R.id.signup_cellphone_tiet);
         inputPassword = (TextInputEditText) findViewById(R.id.signup_password_tiet);
-        textGoBackToLogin = (TextView) findViewById(R.id.signup_backToLogin_txt);
+        inputConfirmPassword = (TextInputEditText) findViewById(R.id.signup_confirm_password_tiet);
         tilFirstName = (TextInputLayout) findViewById(R.id.signup_first_name_til);
         tilLastName = (TextInputLayout) findViewById(R.id.signup_last_name_til);
         tilEmail = (TextInputLayout) findViewById(R.id.signup_email_til);
         tilSkypeId = (TextInputLayout) findViewById(R.id.signup_skype_id_til);
         tilCellphone = (TextInputLayout) findViewById(R.id.signup_cellphone_til);
         tilPassword = (TextInputLayout) findViewById(R.id.signup_password_til);
+        tilConfirmPassword = (TextInputLayout) findViewById(R.id.signup_confirm_password_til);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -131,13 +133,6 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 signup(v);
-            }
-        });
-
-        textGoBackToLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
             }
         });
     }
@@ -175,10 +170,9 @@ public class SignUpActivity extends AppCompatActivity {
             validData = true;
             btnSignUp.setEnabled(true);
             MyUser user = new MyUser(Integer.parseInt(cellphone), email, firstName, lastName, skypeId);
+            progressDialog.dismiss();
             createAccount(email, password, user);
         }
-
-
     }
 
 
@@ -193,8 +187,6 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     public void onBackPressed() {
-        Intent intent = new Intent(this, LoginActivity.class);
-        startActivity(intent);
         finish();
     }
 
@@ -216,6 +208,11 @@ public class SignUpActivity extends AppCompatActivity {
             valid = false;
         }
 
+        if (inputConfirmPassword.getText().toString().trim().isEmpty()) {
+            tilConfirmPassword.setError(getResources().getString(R.string.password_empty_error));
+            valid = false;
+        }
+
         if (inputCellphone.getText().toString().trim().isEmpty()) {
             tilCellphone.setError(getResources().getString(R.string.cellphone_empty_error));
             valid = false;
@@ -230,6 +227,13 @@ public class SignUpActivity extends AppCompatActivity {
             tilEmail.setError(getResources().getString(R.string.email_invalid_error));
             valid = false;
         }
+
+        if(!inputConfirmPassword.getText().toString().trim().equals(inputPassword.getText().toString().trim())){
+            tilConfirmPassword.setError(getResources().getString(R.string.password_invalid_match));
+            valid = false;
+        }
+
+
 
         return valid;
 

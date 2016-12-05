@@ -217,7 +217,7 @@ public class LoginActivity extends AppCompatActivity {
                                 Toast.makeText(LoginActivity.this, "Try again later",
                                         Toast.LENGTH_SHORT).show();
                             } else {
-                                errorCounterHandler(noUserCounter, passwordCounter);
+                                errorCounterHandler();
                             }
 
 
@@ -297,6 +297,7 @@ public class LoginActivity extends AppCompatActivity {
     public void goToHomeActivity(View view) {
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
+        finish();
     }
 
     public void goToForgotUsernamePassword(View view) {
@@ -331,18 +332,19 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    public void errorCounterHandler(int noUserCounter, int invalidPasswordCounter)
+    public void errorCounterHandler()
     {
-        if (invalidPasswordCounter == 0) {
-            btnLogin.setEnabled(false);
+        if (passwordCounter == 0) {
+            passwordCounter++;
             Toast.makeText(LoginActivity.this, "Recover your Password",
                     Toast.LENGTH_SHORT).show();
             goToForgotUsernamePassword(nextView);
         } else if (noUserCounter == 0) {
-            btnLogin.setEnabled(false);
+            noUserCounter++;
             Toast.makeText(LoginActivity.this, "Create a new User",
                     Toast.LENGTH_SHORT).show();
-            goToSignUpActivity(nextView);        }
+            goToSignUpActivity(nextView);
+        }
         else {
             Toast.makeText(LoginActivity.this, "Incorrect user or password",
                     Toast.LENGTH_SHORT).show();

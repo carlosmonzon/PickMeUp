@@ -26,6 +26,7 @@
     <string name="sign_up"><u>Or Sign Up</u></string>
     <string name="username_empty_error">The username should not be empty</string>
     <string name="password_empty_error">The password should not be empty</string>
+    <string name="password_invalid_match">Password and Confirmation didn\'t match </string>
     <string name="username_invalid_error">The username should be an email address</string>
 
     <!-- sign up Page -->
@@ -40,6 +41,7 @@
     <string name="backToLogin">Si ya estas registrado, volver a Login</string>
     <string name="title_activity_signup">Registrarse</string>
     <string name="signup_button">Register</string>
+    <string name="password_confirmation">Confirm Password</string>
 
     <!-- Forgot Password Page -->
     <string name="forgot_password"><u>Forgot Password</u></string>
