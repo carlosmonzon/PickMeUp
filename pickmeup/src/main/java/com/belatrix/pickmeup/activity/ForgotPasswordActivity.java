@@ -29,7 +29,6 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
     private TextInputLayout tilEmail;
 
-
     private FirebaseAuth mAuth;
 
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -86,6 +85,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                             progressDialog.dismiss();
                             onSendSuccess();
                         } else {
+                            progressDialog.dismiss();
                             onSendFailed();
                         }
                     }
@@ -100,7 +100,8 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     }
 
     public void onSendFailed() {
-        Toast.makeText(getApplicationContext(), "Send failed", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Incorrect email", Toast.LENGTH_SHORT).show();
+        textEmail.setText("");
         btnSendEmail.setEnabled(true);
     }
 
