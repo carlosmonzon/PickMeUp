@@ -276,7 +276,8 @@ public class RouteActivity extends AppCompatActivity
         String FullName = route.getOwner().getFirst_name() + " " + route.getOwner().getLast_name();
         contactTiet.setText(FullName);
         streetsTiet.setText(route.getAddressDestination());
-        passengerMaxCapacityTiet.setText(route.getPlaceAvailable() + "");
+        passengerMaxCapacityTiet.setText(String.valueOf(route.getPlaceAvailable() -
+                (route.getPassengers() != null ? route.getPassengers().size() : 0)));
         addRouteBtn.setVisibility(View.GONE);
 
         paymentMethodSpn.setFocusable(false);
