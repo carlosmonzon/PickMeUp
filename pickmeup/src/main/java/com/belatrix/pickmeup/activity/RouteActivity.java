@@ -281,7 +281,8 @@ public class RouteActivity extends AppCompatActivity
         departureTimeTiet.setText(sdf.format(calendar.getTime()).toString());
 
         streetsTiet.setText(route.getAddressDestination());
-        passengerMaxCapacityTiet.setText(route.getPlaceAvailable() + "");
+        passengerMaxCapacityTiet.setText(String.valueOf(route.getPlaceAvailable() -
+                (route.getPassengers() != null ? route.getPassengers().size() : 0)));
         addRouteBtn.setVisibility(View.GONE);
 
         paymentMethodSpn.setFocusable(false);

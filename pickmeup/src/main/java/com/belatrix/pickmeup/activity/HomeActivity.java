@@ -16,6 +16,7 @@ import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.belatrix.pickmeup.R;
 import com.belatrix.pickmeup.adapter.ViewPagerAdapter;
@@ -28,6 +29,8 @@ import com.belatrix.pickmeup.rest.PickMeUpFirebaseClient;
 import com.belatrix.pickmeup.rest.ServiceGenerator;
 import com.belatrix.pickmeup.util.DataConverter;
 import com.belatrix.pickmeup.util.SharedPreferenceManager;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +57,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private AllRoutesFragment mAllRoutesFragment;
 
     private MyRoutesFragment mMyRoutesFragment;
+
+    private TextView headerName;
+
+    private TextView headerMail;
 
 
     @Override
@@ -92,6 +99,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        View header=navigationView.getHeaderView(0);
+        headerMail = (TextView)header.findViewById(R.id.userMail);
+        headerName = (TextView)header.findViewById(R.id.userName);
+        headerMail.setText(mUser.getEmail());
+        headerName.setText(mUser.getFirst_name().concat(" ").concat(mUser.getLast_name()));
+        
         if (savedInstanceState == null) {
             getRoute();
         }

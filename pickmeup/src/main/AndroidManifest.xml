@@ -33,7 +33,7 @@
             android:name=".activity.SignUpActivity"
             android:screenOrientation="portrait"
             android:label="@string/title_activity_signup"
-            android:theme="@style/AppTheme.LoginTheme"/>
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".activity.ForgotPasswordActivity"
             android:label="@string/forgot_password"

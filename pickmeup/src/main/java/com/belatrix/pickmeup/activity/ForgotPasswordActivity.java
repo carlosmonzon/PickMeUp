@@ -6,7 +6,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
@@ -29,7 +28,6 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     private TextInputEditText textEmail;
 
     private TextInputLayout tilEmail;
-
 
     private FirebaseAuth mAuth;
 
@@ -87,6 +85,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                             progressDialog.dismiss();
                             onSendSuccess();
                         } else {
+                            progressDialog.dismiss();
                             onSendFailed();
                         }
                     }
@@ -101,13 +100,12 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     }
 
     public void onSendFailed() {
-        Toast.makeText(getApplicationContext(), "Send failed", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Incorrect email", Toast.LENGTH_SHORT).show();
+        textEmail.setText("");
         btnSendEmail.setEnabled(true);
     }
 
     public void onBackPressed() {
-        Intent intent = new Intent(this, LoginActivity.class);
-        startActivity(intent);
         finish();
     }
 

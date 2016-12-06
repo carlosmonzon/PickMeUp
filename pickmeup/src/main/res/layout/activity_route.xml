@@ -80,7 +80,7 @@
                     style="@style/addRouteEditText"
                     android:inputType="numberDecimal"
                     android:maxLength="2"
-                    android:hint="@string/passenger_quantity"/>
+                    android:hint="@string/availability"/>
 
             </android.support.design.widget.TextInputLayout>
 
