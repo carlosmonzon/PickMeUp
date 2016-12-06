@@ -3,10 +3,13 @@ package com.belatrix.pickmeup.adapter;
 import com.belatrix.pickmeup.R;
 import com.belatrix.pickmeup.activity.RouteActivity;
 import com.belatrix.pickmeup.model.MyRoute;
+import com.google.gson.Gson;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -110,8 +113,12 @@ public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.MyViewHolder
             MyRoute currentRoute = routeList.get(this.getLayoutPosition());
             final Intent intent;
             intent = new Intent(context, RouteActivity.class);
-            intent.putExtra("routeId", currentRoute.getId());
+
+            Gson gson = new Gson();
+            intent.putExtra("routeJson", gson.toJson(currentRoute));
             context.startActivity(intent);
+
+
         }
     }
 

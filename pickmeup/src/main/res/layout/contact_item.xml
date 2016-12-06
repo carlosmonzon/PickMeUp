@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/card_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+
+>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_height="match_parent"
+        >
+
+        <TextView
+            android:id="@+id/iconContact"
+            android:layout_width="55dip"
+            android:layout_height="55dip"
+            android:background="@drawable/ic_account_circle_black_24dp"/>
+
+        <TextView
+            android:id="@+id/nameContact"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@+id/iconContact"
+            />
+    </RelativeLayout>
+
+
+</android.support.v7.widget.CardView>

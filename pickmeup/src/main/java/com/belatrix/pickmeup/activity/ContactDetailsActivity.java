@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.belatrix.pickmeup.R;
 import com.belatrix.pickmeup.model.MyUser;
 import com.belatrix.pickmeup.util.SharedPreferenceManager;
+import com.google.gson.Gson;
 
 public class ContactDetailsActivity extends AppCompatActivity {
 
@@ -33,13 +34,20 @@ public class ContactDetailsActivity extends AppCompatActivity {
         mailTil = (TextView) findViewById(R.id.tvNumber2);
         skypeTil = (TextView) findViewById(R.id.tvNumber3);
 
-        MyUser mUser = SharedPreferenceManager.readMyUser(this);
-        cellphoneTil.setText(mUser.getCellphone().toString());
-        mailTil.setText(mUser.getEmail());
-        skypeTil.setText(mUser.getSkype_id());
+        Gson gson = new Gson();
+        Intent intent = getIntent();
+        MyUser currentUser = gson.fromJson(intent.getStringExtra("userJson"), MyUser.class);
+
+        if(currentUser==null){
+            currentUser = SharedPreferenceManager.readMyUser(this);
+        }
+        cellphoneTil.setText(currentUser.getCellphone().toString());
+        mailTil.setText(currentUser.getEmail());
+        skypeTil.setText(currentUser.getSkype_id());
         System.out.print("");
-        toolbar.setTitle(mUser.getFirst_name() + " " + mUser.getLast_name()
+        toolbar.setTitle(currentUser.getFirst_name() + " " + currentUser.getLast_name()
         );
+
         setSupportActionBar(toolbar);
 
     }

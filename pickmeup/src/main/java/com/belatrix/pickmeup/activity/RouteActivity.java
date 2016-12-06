@@ -1,6 +1,5 @@
 package com.belatrix.pickmeup.activity;
 
-import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +8,9 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.belatrix.pickmeup.R;
+import com.belatrix.pickmeup.adapter.ContactsAdapter;
 import com.belatrix.pickmeup.enums.Departure;
 import com.belatrix.pickmeup.enums.Destination;
 import com.belatrix.pickmeup.enums.PaymentType;
@@ -31,8 +34,8 @@ import com.belatrix.pickmeup.model.RouteDto;
 import com.belatrix.pickmeup.model.TimePicked;
 import com.belatrix.pickmeup.rest.PickMeUpFirebaseClient;
 import com.belatrix.pickmeup.rest.ServiceGenerator;
-import com.belatrix.pickmeup.util.DataConverter;
 import com.belatrix.pickmeup.util.SharedPreferenceManager;
+import com.google.gson.Gson;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -77,10 +80,6 @@ public class RouteActivity extends AppCompatActivity
 
     private TextInputEditText departureTimeTiet;
 
-    private TextInputLayout contactTil;
-
-    private TextInputEditText contactTiet;
-
     private TextInputLayout streetsTil;
 
     private TextInputEditText streetsTiet;
@@ -92,6 +91,8 @@ public class RouteActivity extends AppCompatActivity
     private MyUser mUser;
 
     private TimePicked timePicked = new TimePicked();
+
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,23 +119,37 @@ public class RouteActivity extends AppCompatActivity
         departureTimeTil = (TextInputLayout) findViewById(R.id.departure_time_til);
         departureTimeTiet = (TextInputEditText) findViewById(R.id.departure_time_tiet);
 
-        contactTil = (TextInputLayout) findViewById(R.id.contact_til);
-        contactTiet = (TextInputEditText) findViewById(R.id.contact_tiet);
+
         streetsTil = (TextInputLayout) findViewById(R.id.streets_til);
         streetsTiet = (TextInputEditText) findViewById(R.id.streets_tiet);
 
         passengerMaxCapacityTil = (TextInputLayout) findViewById(R.id.passenger_max_capacity_til);
         passengerMaxCapacityTiet = (TextInputEditText) findViewById(R.id.passenger_max_capacity_tiet);
 
-        contactTiet.setEnabled(false);
+       // contactTiet.setEnabled(false);
         String FullName = mUser.getFirst_name() + " " + mUser.getLast_name();
-        contactTiet.setText(FullName);
+        //contactTiet.setText(FullName);
         //set data to Lists
-        Intent intent = getIntent();
-        routeId = intent.getStringExtra("routeId");
 
-        if (null != routeId && !routeId.isEmpty()) {
-            getRoute(routeId);
+        Gson gson = new Gson();
+        // return gson.fromJson(sharedPref.getString("myUser", ""), MyUser.class);
+        Intent intent = getIntent();
+        final MyRoute currentRoute = gson.fromJson(intent.getStringExtra("routeJson"), MyRoute.class);
+
+        if (null != currentRoute) {
+            setListsData(currentRoute);
+            routeId = currentRoute.getId();
+
+            ContactsAdapter contactsAdapter = new ContactsAdapter();
+
+            contactsAdapter.addUsers(currentRoute.getPassengers());
+            contactsAdapter.addOwner(currentRoute.getOwner().getId());
+            recyclerView = (RecyclerView) findViewById(R.id.listContacts);
+
+            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+            recyclerView.setLayoutManager(mLayoutManager);
+            recyclerView.setItemAnimator(new DefaultItemAnimator());
+            recyclerView.setAdapter(contactsAdapter);
         } else {
             setLists();
         }
@@ -149,7 +164,7 @@ public class RouteActivity extends AppCompatActivity
         joinRouteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                joinToRoute();
+                joinToRoute(currentRoute.getId());
             }
         });
         deleteRouteBtn.setOnClickListener(new View.OnClickListener() {
@@ -175,13 +190,10 @@ public class RouteActivity extends AppCompatActivity
         boolean hasError = false;
         MyRoute newRoute = new MyRoute();
 
-        //TODO
-
         fromTil.setError(null);
         toTil.setError(null);
         costTil.setError(null);
         departureTimeTil.setError(null);
-        contactTil.setError(null);
         streetsTil.setError(null);
 
         newRoute.setDeparture(Departure.getValue(departureSpn.getSelectedItem().toString()));
@@ -201,12 +213,7 @@ public class RouteActivity extends AppCompatActivity
             hasError = true;
         }
 
-        if (contactTiet.getText().toString().trim().equals("")) {
-            contactTil.setError(getResources().getString(R.string.add_route_contact_empty_error));
-            hasError = true;
-        } else {
             newRoute.setOwner(mUser);
-        }
 
         if (departureTimeTiet.getText().toString().trim().equals("")) {
             departureTimeTil.setError(getResources().getString(R.string.add_route_departure_time_empty_error));
@@ -273,8 +280,6 @@ public class RouteActivity extends AppCompatActivity
 
         departureTimeTiet.setText(sdf.format(calendar.getTime()).toString());
 
-        String FullName = route.getOwner().getFirst_name() + " " + route.getOwner().getLast_name();
-        contactTiet.setText(FullName);
         streetsTiet.setText(route.getAddressDestination());
         passengerMaxCapacityTiet.setText(route.getPlaceAvailable() + "");
         addRouteBtn.setVisibility(View.GONE);
@@ -284,7 +289,6 @@ public class RouteActivity extends AppCompatActivity
         destinationSpn.setFocusable(false);
         costTiet.setFocusable(false);
         departureTimeTiet.setFocusable(false);
-        contactTiet.setFocusable(false);
         streetsTiet.setFocusable(false);
         passengerMaxCapacityTiet.setFocusable(false);
         addRouteBtn.setFocusable(false);
@@ -332,7 +336,7 @@ public class RouteActivity extends AppCompatActivity
                     FirebaseResponse firebaseResponse = response.body();
 
                     routeId = firebaseResponse.getName();
-                    joinToRoute();
+                    joinToRoute(routeId);
                     Intent k = new Intent(RouteActivity.this, HomeActivity.class);
                     startActivity(k);
                 } catch (Exception e) {
@@ -347,27 +351,6 @@ public class RouteActivity extends AppCompatActivity
         });
         Intent k = new Intent(RouteActivity.this, HomeActivity.class);
         startActivity(k);
-    }
-
-    public void getRoute(final String routeId) {
-        Call<RouteDto> call = ServiceGenerator.createService(PickMeUpFirebaseClient.class).getRoute(routeId);
-
-        call.enqueue(new Callback<RouteDto>() {
-
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onResponse(Call<RouteDto> call, Response<RouteDto> response) {
-                RouteDto routeDto = response.body();
-                MyRoute route = DataConverter.convertRouteData(routeId, routeDto);
-                setListsData(route);
-            }
-
-            @Override
-            public void onFailure(Call<RouteDto> call, Throwable t) {
-                Toast.makeText(RouteActivity.this, t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-
     }
 
     @Override
@@ -400,7 +383,7 @@ public class RouteActivity extends AppCompatActivity
         finish();
     }
 
-    public void joinToRoute() {
+    public void joinToRoute(String routeId) {
         String userId = mUser.getId();
 
         final ProgressDialog progressDialog = ProgressDialog
