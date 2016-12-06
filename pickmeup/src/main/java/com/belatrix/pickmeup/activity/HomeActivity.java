@@ -133,7 +133,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 })
                 .show();
     }
-
+    @Override
+    public void onResume(){
+        super.onResume();
+            getRoute();
+            getRoute();
+    }
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.

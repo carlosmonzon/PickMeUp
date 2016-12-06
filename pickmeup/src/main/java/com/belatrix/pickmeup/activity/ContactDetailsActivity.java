@@ -1,11 +1,14 @@
 package com.belatrix.pickmeup.activity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.belatrix.pickmeup.R;
 import com.belatrix.pickmeup.model.MyUser;
@@ -24,6 +27,7 @@ public class ContactDetailsActivity extends AppCompatActivity {
 
     private TextView mailTil;
 
+    private String cellphone;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,9 +48,20 @@ public class ContactDetailsActivity extends AppCompatActivity {
         cellphoneTil.setText(currentUser.getCellphone().toString());
         mailTil.setText(currentUser.getEmail());
         skypeTil.setText(currentUser.getSkype_id());
-        System.out.print("");
+        cellphone = currentUser.getCellphone().toString();
         toolbar.setTitle(currentUser.getFirst_name() + " " + currentUser.getLast_name()
         );
+
+
+        cellphoneTil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent phoneIntent = new Intent(Intent.ACTION_CALL);
+                phoneIntent.setData(Uri.parse("tel: "+cellphone));
+                Toast.makeText(ContactDetailsActivity.this, "Calling", Toast.LENGTH_SHORT).show();
+
+            }
+        });
 
         setSupportActionBar(toolbar);
 
