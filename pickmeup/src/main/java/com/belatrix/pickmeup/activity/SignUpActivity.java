@@ -12,6 +12,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.telephony.PhoneNumberUtils;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
@@ -142,7 +143,6 @@ public class SignUpActivity extends AppCompatActivity {
             onSignUpFailed();
             return;
         }
-        btnSignUp.setEnabled(false);
 
         final ProgressDialog progressDialog = new ProgressDialog(SignUpActivity.this,
                 R.style.AppTheme_Dark_Dialog);
@@ -157,22 +157,11 @@ public class SignUpActivity extends AppCompatActivity {
         String cellphone = inputCellphone.getText().toString();
         String password = inputPassword.getText().toString();
 
-        if (firstName.length() <= 3 || lastName.length() <= 3 ||
-                password.length() <= 5 || email.length() <= 5 ||
-                skypeId.length() <= 3 || cellphone.length() <= 3) {
-            validData = false;
-            counter--;
-
-            if (counter == 0) {
-                btnSignUp.setEnabled(false);
-            }
-        } else {
-            validData = true;
-            btnSignUp.setEnabled(true);
-            MyUser user = new MyUser(Integer.parseInt(cellphone), email, firstName, lastName, skypeId);
-            progressDialog.dismiss();
-            createAccount(email, password, user);
-        }
+        validData = true;
+        btnSignUp.setEnabled(true);
+        MyUser user = new MyUser(Integer.parseInt(cellphone), email, firstName, lastName, skypeId);
+        progressDialog.dismiss();
+        createAccount(email, password, user);
     }
 
 
@@ -183,7 +172,11 @@ public class SignUpActivity extends AppCompatActivity {
 
     public void onSignUpFailed() {
         Toast.makeText(getApplicationContext(), "Sign Up failed", Toast.LENGTH_SHORT).show();
-        btnSignUp.setEnabled(true);
+        counter--;
+        if (counter == 0)
+            btnSignUp.setEnabled(false);
+        else
+            btnSignUp.setEnabled(true);
     }
 
     public void onBackPressed() {
@@ -193,28 +186,33 @@ public class SignUpActivity extends AppCompatActivity {
     public boolean validateSignUp() {
         boolean valid = true;
 
-        if (inputFirstName.getText().toString().trim().isEmpty()) {
-            tilFirstName.setError(getResources().getString(R.string.name_empty_error));
+        if (inputFirstName.getText().toString().trim().isEmpty() ||
+                !isAlpha(inputFirstName.getText().toString())) {
+            tilFirstName.setError(getResources().getString(R.string.name_error));
             valid = false;
         }
 
-        if (inputLastName.getText().toString().trim().isEmpty()) {
-            tilLastName.setError(getResources().getString(R.string.last_name_empty_error));
+        if (inputLastName.getText().toString().trim().isEmpty() ||
+                !isAlpha(inputLastName.getText().toString())) {
+            tilLastName.setError(getResources().getString(R.string.last_name_error));
             valid = false;
         }
 
-        if (inputPassword.getText().toString().trim().isEmpty()) {
+        if (inputPassword.getText().toString().trim().isEmpty() ||
+                inputPassword.getText().toString().length()<6) {
             tilPassword.setError(getResources().getString(R.string.password_empty_error));
             valid = false;
         }
 
-        if (inputConfirmPassword.getText().toString().trim().isEmpty()) {
+        if (inputConfirmPassword.getText().toString().trim().isEmpty() ||
+                inputConfirmPassword.getText().toString().length()<6) {
             tilConfirmPassword.setError(getResources().getString(R.string.password_empty_error));
             valid = false;
         }
 
-        if (inputCellphone.getText().toString().trim().isEmpty()) {
-            tilCellphone.setError(getResources().getString(R.string.cellphone_empty_error));
+        if (!PhoneNumberUtils.isGlobalPhoneNumber(inputCellphone.getText().toString()) ||
+                inputCellphone.getText().toString().length()>10) {
+            tilCellphone.setError(getResources().getString(R.string.cellphone_error));
             valid = false;
         }
 
@@ -232,9 +230,6 @@ public class SignUpActivity extends AppCompatActivity {
             tilConfirmPassword.setError(getResources().getString(R.string.password_invalid_match));
             valid = false;
         }
-
-
-
         return valid;
 
     }
@@ -276,6 +271,11 @@ public class SignUpActivity extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+    public boolean isAlpha(String s){
+        String pattern= "^[\\p{L} .'-]+$";
+        return s.matches(pattern);
     }
 
 }
