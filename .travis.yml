@@ -1,15 +1,6 @@
 language: android
 jdk: oraclejdk8
 sudo: false
-
-cache:
-  directories:
-  - $HOME/.gradle/caches/2.14.1
-  - $HOME/.gradle/caches/jars-1
-  - $HOME/.gradle/daemon
-  - $HOME/.gradle/native
-  - $HOME/.gradle/wrapper
-
 branches:
   only:
   - master
@@ -27,7 +18,7 @@ android:
   - sys-img-armeabi-v7a-android-25
   - sys-img-x86-android-25
 script:
-- ./gradlew testfairyDebug
+- ./gradlew assembleDebug
 
 notifications:
   slack: pickmeup-bsf:NQfFpQo96qClEKvbjvy0lGly
