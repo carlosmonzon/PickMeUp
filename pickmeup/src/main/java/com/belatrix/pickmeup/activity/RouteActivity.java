@@ -267,6 +267,8 @@ public class RouteActivity extends AppCompatActivity
     }
 
     public void setListsData(MyRoute route) {
+
+        getSupportActionBar().setTitle("Route Detail");
         populateSpinner(paymentMethodSpn, PaymentType.getList(), route.getPaymentType().toString());
         populateSpinner(departureSpn, Departure.getList(), route.getDeparture().toString());
         populateSpinner(destinationSpn, Destination.getList(), route.getDestination().toString());

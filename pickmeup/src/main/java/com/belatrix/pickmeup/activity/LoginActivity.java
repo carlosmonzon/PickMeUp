@@ -1,8 +1,11 @@
 package com.belatrix.pickmeup.activity;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
@@ -161,6 +164,10 @@ public class LoginActivity extends AppCompatActivity {
             onLoginFailed();
             return;
         }
+//        if(!isNetworkAvailable(getApplicationContext())){
+//            Toast.makeText(getApplicationContext(), "Check your internet connection", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
 
         ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this,
                 R.style.AppTheme_Dark_Dialog);
@@ -349,6 +356,15 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(LoginActivity.this, "Incorrect user or password",
                     Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public static boolean isNetworkAvailable(Context context) {
+        boolean result = false;
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (connectivityManager != null && connectivityManager.getActiveNetworkInfo() != null) {
+            result = connectivityManager.getActiveNetworkInfo().isConnectedOrConnecting();
+        }
+        return result;
     }
 
 }

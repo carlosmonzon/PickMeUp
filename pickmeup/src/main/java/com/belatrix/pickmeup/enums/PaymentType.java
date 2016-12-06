@@ -7,7 +7,7 @@ import java.util.List;
  * Created by gzavaleta on 17/06/16.
  */
 public enum PaymentType {
-    CASH("Cash"), CREDIT("Credit");
+    CASH("Cash");
 
     private String stringValue;
     PaymentType(String toString) {
@@ -18,8 +18,6 @@ public enum PaymentType {
         switch (value) {
             case "Cash":
                 return CASH;
-            case "Credit":
-                return CREDIT;
             default:
                 throw new IllegalArgumentException();
         }

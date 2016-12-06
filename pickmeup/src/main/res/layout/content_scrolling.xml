@@ -16,6 +16,7 @@
         android:orientation="vertical">
 
         <RelativeLayout
+            android:id="@+id/phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackground"
@@ -60,6 +61,7 @@
         <include layout="@layout/item_divider" />
 
         <RelativeLayout
+            android:id="@+id/mail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackground"
@@ -104,6 +106,7 @@
         <include layout="@layout/item_divider" />
 
         <RelativeLayout
+            android:id="@+id/skype"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackground"

@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.belatrix.pickmeup.R;
 import com.belatrix.pickmeup.adapter.RouteAdapter;
@@ -24,6 +25,8 @@ public class AllRoutesFragment extends Fragment {
 
     private RouteAdapter routeAdapter;
 
+    private TextView mTextView;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +36,7 @@ public class AllRoutesFragment extends Fragment {
 
     public void updateRouteList(List<MyRoute> routes) {
         routeAdapter.addRoutes(routes);
+        checkAdapterIsEmpty();
     }
 
 
@@ -45,12 +49,24 @@ public class AllRoutesFragment extends Fragment {
             Bundle savedInstanceState) {
         //la instancia view será la contenedora del fragment_all_routes
         View view = inflater.inflate(R.layout.fragment_all_routes, container, false);
+        mTextView = (TextView) view.findViewById(R.id.empty_view);
         //se usa el recyclerView para el manejo de la data de la lista de rutas
         recyclerView = (RecyclerView) view.findViewById(R.id.listViewRoutes);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(routeAdapter);
+
         return view;
+    }
+
+    private void checkAdapterIsEmpty () {
+        if (routeAdapter.getItemCount() == 0) {
+            recyclerView.setVisibility(View.GONE);
+            mTextView.setVisibility(View.VISIBLE);
+        } else {
+            recyclerView.setVisibility(View.VISIBLE);
+            mTextView.setVisibility(View.GONE);
+        }
     }
 }

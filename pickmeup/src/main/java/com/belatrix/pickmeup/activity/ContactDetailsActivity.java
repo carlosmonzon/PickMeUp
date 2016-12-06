@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +21,12 @@ public class ContactDetailsActivity extends AppCompatActivity {
     static {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
+
+    private RelativeLayout mMail;
+
+    private RelativeLayout mCellphone;
+
+    private RelativeLayout mSkype;
 
     private TextView cellphoneTil;
 
@@ -38,6 +45,10 @@ public class ContactDetailsActivity extends AppCompatActivity {
         mailTil = (TextView) findViewById(R.id.tvNumber2);
         skypeTil = (TextView) findViewById(R.id.tvNumber3);
 
+        mCellphone = (RelativeLayout) findViewById(R.id.phone) ;
+        mMail = (RelativeLayout)  findViewById(R.id.mail);
+        mSkype = (RelativeLayout) findViewById(R.id.skype);
+
         Gson gson = new Gson();
         Intent intent = getIntent();
         MyUser currentUser = gson.fromJson(intent.getStringExtra("userJson"), MyUser.class);
@@ -53,15 +64,24 @@ public class ContactDetailsActivity extends AppCompatActivity {
         );
 
 
-        cellphoneTil.setOnClickListener(new View.OnClickListener() {
+        mCellphone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent phoneIntent = new Intent(Intent.ACTION_CALL);
+                Intent phoneIntent = new Intent(Intent.ACTION_DIAL);
                 phoneIntent.setData(Uri.parse("tel: "+cellphone));
-                Toast.makeText(ContactDetailsActivity.this, "Calling", Toast.LENGTH_SHORT).show();
-
+                startActivity(phoneIntent);
             }
         });
+
+        mMail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", mailTil.getText().toString(), null));
+                view.getContext().startActivity(Intent.createChooser(emailIntent,""));
+            }
+        });
+
+
 
         setSupportActionBar(toolbar);
 

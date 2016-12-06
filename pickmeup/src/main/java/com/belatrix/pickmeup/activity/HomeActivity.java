@@ -105,10 +105,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         headerName = (TextView)header.findViewById(R.id.userName);
         headerMail.setText(mUser.getEmail());
         headerName.setText(mUser.getFirst_name().concat(" ").concat(mUser.getLast_name()));
-        
-        if (savedInstanceState == null) {
-            getRoute();
-        }
+
     }
 
     @Override
@@ -137,7 +134,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     public void onResume(){
         super.onResume();
             getRoute();
-            getRoute();
+
     }
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
