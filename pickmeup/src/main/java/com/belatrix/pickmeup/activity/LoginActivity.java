@@ -164,10 +164,10 @@ public class LoginActivity extends AppCompatActivity {
             onLoginFailed();
             return;
         }
-//        if(!isNetworkAvailable(getApplicationContext())){
-//            Toast.makeText(getApplicationContext(), "Check your internet connection", Toast.LENGTH_SHORT).show();
-//            return;
-//        }
+        if(!isNetworkAvailable(getApplicationContext())){
+            Toast.makeText(getApplicationContext(), "Check your internet connection", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this,
                 R.style.AppTheme_Dark_Dialog);
