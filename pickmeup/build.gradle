@@ -91,8 +91,9 @@ dependencies {
     compile 'com.google.code.gson:gson:2.6.2'
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
-    compile 'com.google.firebase:firebase-auth:9.6.1'
-    compile 'com.google.firebase:firebase-database:9.6.1'
+    compile "com.google.firebase:firebase-auth:$firebase_ver"
+    compile "com.google.firebase:firebase-database:$firebase_ver"
+    compile "com.google.firebase:firebase-messaging:$firebase_ver"
 
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.8.5'
 
