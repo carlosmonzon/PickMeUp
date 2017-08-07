@@ -3,9 +3,11 @@ package com.belatrix.pickmeup.activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -17,6 +19,8 @@ import com.belatrix.pickmeup.util.SharedPreferenceManager;
 import com.google.gson.Gson;
 
 public class ContactDetailsActivity extends AppCompatActivity {
+
+    private static final String TAG = "ContactDetailsActivity";
 
     static {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
@@ -84,6 +88,18 @@ public class ContactDetailsActivity extends AppCompatActivity {
 
 
         setSupportActionBar(toolbar);
+
+        //Codigo para la opcion del floatingActionButton. + la funcionalidad despues que se hace click.
+        FloatingActionButton fabNewRoute = (FloatingActionButton) findViewById(R.id.fab);
+        if (fabNewRoute != null) {
+            fabNewRoute.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent act = new Intent(getApplicationContext(), ProfileActivity.class);
+                    startActivity(act);
+                }
+            });
+        }
 
     }
 
