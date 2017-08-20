@@ -16,6 +16,7 @@ public class DatePickerFragment extends DialogFragment
         implements DatePickerDialog.OnDateSetListener {
 
     DateSelected dateSelected;
+    static final int ONE_MONTH_LIMIT_TIME_ON_FUTURE = 30;
 
     @Override
     public void onAttach(Activity activity) {
@@ -40,7 +41,13 @@ public class DatePickerFragment extends DialogFragment
         int day = c.get(Calendar.DAY_OF_MONTH);
 
         // Create a new instance of DatePickerDialog and return it
-        return new DatePickerDialog(getActivity(), this, year, month, day);
+        DatePickerDialog datePicker = new DatePickerDialog(getActivity(), this, year, month, day);
+
+        // Limit time to 1 month on future
+        c.add(Calendar.DATE, ONE_MONTH_LIMIT_TIME_ON_FUTURE);
+        datePicker.getDatePicker().setMaxDate(c.getTimeInMillis());
+
+        return datePicker;
     }
 
     public void onDateSet(DatePicker view, int year, int month, int day) {

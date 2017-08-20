@@ -25,6 +25,7 @@ import com.belatrix.pickmeup.model.MyUser;
 import com.belatrix.pickmeup.model.MyUserCredentials;
 import com.belatrix.pickmeup.rest.PickMeUpFirebaseClient;
 import com.belatrix.pickmeup.rest.ServiceGenerator;
+import com.belatrix.pickmeup.util.FCMTokenUpdater;
 import com.belatrix.pickmeup.util.RegularExpressionValidator;
 import com.belatrix.pickmeup.util.SharedPreferenceManager;
 
@@ -37,6 +38,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -164,10 +166,10 @@ public class LoginActivity extends AppCompatActivity {
             onLoginFailed();
             return;
         }
-//        if(!isNetworkAvailable(getApplicationContext())){
-//            Toast.makeText(getApplicationContext(), "Check your internet connection", Toast.LENGTH_SHORT).show();
-//            return;
-//        }
+        if(!isNetworkAvailable(getApplicationContext())){
+            Toast.makeText(getApplicationContext(), "Check your internet connection", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this,
                 R.style.AppTheme_Dark_Dialog);
@@ -175,8 +177,8 @@ public class LoginActivity extends AppCompatActivity {
         progressDialog.setMessage("Authenticating...");
         progressDialog.show();
 
-        String username = inputUsername.getText().toString();
-        String password = inputPassword.getText().toString();
+        String username = inputUsername.getText().toString().trim();
+        String password = inputPassword.getText().toString().trim();
         boolean isChecked = chIsChecked.isChecked();
 
         signInWithEmailAndPassword(progressDialog, username, password, isChecked);
@@ -251,6 +253,12 @@ public class LoginActivity extends AppCompatActivity {
                                             SharedPreferenceManager
                                                     .saveMyUserCredentials(LoginActivity.this, null, null, false);
                                         }
+
+                                        // Recover FCMID
+                                        String token = FirebaseInstanceId.getInstance().getToken();
+                                        Log.d(TAG, "FMCID: " + token);
+                                        user.setFcm_id(token);
+                                        FCMTokenUpdater.updateToken(user);
                                     } else {
                                         authenticated = false;
                                         failedMessage = response.body().getEmail() != null ? response.errorBody()
