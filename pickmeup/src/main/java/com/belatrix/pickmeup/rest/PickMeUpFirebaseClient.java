@@ -5,6 +5,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
@@ -15,6 +16,7 @@ import com.belatrix.pickmeup.model.MyRoute;
 import com.belatrix.pickmeup.model.MyUser;
 import com.belatrix.pickmeup.model.RouteDto;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -51,4 +53,8 @@ public interface PickMeUpFirebaseClient {
 
     @DELETE("/routes/{routeId}/members/{userId}.json")
     Call<MyUser> disjointFromRoute(@Path("routeId") String routeId, @Path("userId") String userId);
+
+    @PATCH("/users/{id}.json")
+    Call<MyUser> setFCMId(@Path("id") String id, @Body HashMap<String, String> fcmId);
+
 }

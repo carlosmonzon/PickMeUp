@@ -2,6 +2,8 @@ package com.belatrix.pickmeup.model;
 
 import com.belatrix.pickmeup.enums.UserType;
 
+import java.util.HashMap;
+
 
 /**
  * Created by angel on 23/10/16.
@@ -22,6 +24,8 @@ public class MyUser {
 
     private UserType userType;
 
+    private String fcm_id;
+
     public MyUser() {
 
     }
@@ -41,6 +45,13 @@ public class MyUser {
         this.first_name = first_name;
         this.last_name = last_name;
         this.skype_id = skype_id;
+    }
+
+    public HashMap<String, String> getFcmIdBody() {
+        HashMap<String, String> fcmBody = new HashMap<String, String>();
+        fcmBody.put("fcm_id", this.fcm_id);
+
+        return fcmBody;
     }
 
     public String getId() {
@@ -95,4 +106,7 @@ public class MyUser {
 
     public void setUserType(UserType userType) { this.userType = userType; }
 
+    public String getFcm_id() { return fcm_id; }
+
+    public void setFcm_id(String fcm_id) { this.fcm_id = fcm_id; }
 }
